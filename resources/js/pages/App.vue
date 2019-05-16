@@ -10,7 +10,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
     export default {
         name: 'App',
     }
@@ -21,6 +21,6 @@
     @import url('https://fonts.googleapis.com/css?family=Delius+Unicase');
 
     * {
-
+        box-sizing: border-box;
     }
 </style>

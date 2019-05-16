@@ -348,9 +348,11 @@ template {
     display: none;
 }
 
-@import url(https://fonts.googleapis.com/css?family=Delius+Unicase);div p[data-v-01b3a6b2] {
+@import url(https://fonts.googleapis.com/css?family=Delius+Unicase);div[data-v-b3c5cf30] {
+  background-color: red;
+}div p[data-v-01b3a6b2] {
   color: #3490dc;
   font-family: "Delius Unicase", cursive;
-}div[data-v-b3c5cf30] {
-  background-color: red;
+}* {
+  box-sizing: border-box;
 }

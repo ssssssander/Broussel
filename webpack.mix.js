@@ -19,7 +19,7 @@ mix.options({
 mix.browserSync('http://localhost:8000');
 mix.disableSuccessNotifications();
 
-mix.js('resources/js/app.js', 'public/js')
+mix.ts('resources/js/app.ts', 'public/js')
     .styles([
     'public/css/normalize.css',
     'public/css/vue-styles.css'
