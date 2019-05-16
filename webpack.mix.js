@@ -11,10 +11,20 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.options({
+    extractVueStyles: true,
+    globalVueStyles: 'resources/sass/_variables.scss',
+});
+
 mix.browserSync('http://localhost:8000');
+mix.disableSuccessNotifications();
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .version();
+    .styles([
+    'public/css/normalize.css',
+    'public/css/vue-styles.css'
+    ], 'public/css/app.css');
 
-mix.disableSuccessNotifications();
+if(mix.inProduction()) {
+    mix.version();
+}
