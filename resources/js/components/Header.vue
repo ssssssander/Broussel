@@ -1,13 +1,15 @@
 <template>
+    <header>
 
+    </header>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
 
     @Component
-    export default class Contact extends Vue {
-        name: string = 'Contact';
+    export default class Header extends Vue {
+        name: string = 'Header';
     }
 </script>
 

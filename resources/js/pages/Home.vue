@@ -1,15 +1,16 @@
 <template>
-    <div>Home</div>
+
 </template>
 
 <script lang="ts">
-    export default {
-        name: 'Home',
+    import { Component, Vue } from 'vue-property-decorator';
+
+    @Component
+    export default class Home extends Vue {
+        name: string = 'Home';
     }
 </script>
 
 <style lang="scss" scoped>
-    div {
-        background-color: red;
-    }
+
 </style>

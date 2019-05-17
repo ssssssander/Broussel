@@ -1,8 +1,64 @@
-@import url(https://fonts.googleapis.com/css?family=Delius+Unicase);div[data-v-b3c5cf30] {
-  background-color: red;
-}div p[data-v-01b3a6b2] {
-  color: #3490dc;
+.f1[data-v-7ebbb9e5] {
   font-family: "Delius Unicase", cursive;
+}
+.f2[data-v-7ebbb9e5] {
+  font-family: "Pangolin", cursive;
+}
+.f3[data-v-7ebbb9e5] {
+  font-family: "Permanent Marker", cursive;
+}
+.f4[data-v-7ebbb9e5] {
+  font-family: "Patrick Hand", cursive;
+}
+.f5[data-v-7ebbb9e5] {
+  font-family: "Short Stack", cursive;
+}
+.f6[data-v-7ebbb9e5] {
+  font-family: "Walter Turncoat", cursive;
+}
+.f7[data-v-7ebbb9e5] {
+  font-family: "Gaegu", cursive;
+}
+.f8[data-v-7ebbb9e5] {
+  font-family: "Sedgwick Ave", cursive;
+}
+.f9[data-v-7ebbb9e5] {
+  font-family: "Sedgwick Ave Display", cursive;
+}
+.f10[data-v-7ebbb9e5] {
+  font-family: "Mali", cursive;
+}
+.f11[data-v-7ebbb9e5] {
+  font-family: "Unlock", cursive;
+}
+.f12[data-v-7ebbb9e5] {
+  font-family: "Stylish", cursive;
+}
+.hero[data-v-7ebbb9e5] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: linear-gradient(135deg, #70F570 10%, #49C628 100%);
+}
+.hero .hero-text[data-v-7ebbb9e5] {
+  color: #fcfdfe;
+}
+.hero h1[data-v-7ebbb9e5] {
+  font-size: 5rem;
+  margin: 20px 0;
 }* {
   box-sizing: border-box;
+}
+:root {
+  font-size: 1.2rem;
+}
+body {
+  font-size: 1rem;
+  position: relative;
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.6;
+}
+.wrapper {
+  margin: 0 auto;
+  max-width: 1300px;
 }

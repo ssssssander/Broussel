@@ -7,6 +7,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Delius+Unicase|Gaegu|Mali|Pangolin|Patrick+Hand|Patrick+Hand+SC|Permanent+Marker|Sedgwick+Ave|Sedgwick+Ave+Display|Short+Stack|Walter+Turncoat|Unlock|Stylish" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
     <title>{{ config('app.name', 'Broussel') }}</title>
 </head>
