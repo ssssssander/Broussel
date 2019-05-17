@@ -12,7 +12,6 @@ export default new VueRouter({
             path: '/',
             name: 'home',
             component: Home,
-            props: { test: 'hurrah' }
         },
         {
             path: '/contact',
