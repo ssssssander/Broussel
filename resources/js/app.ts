@@ -25,7 +25,7 @@ import './bootstrap';
 
 import router from './router'
 import store from './store';
-import App from './pages/App.vue';
+import App from './layouts/App.vue';
 import Vue from 'vue';
 
 const app = new Vue({

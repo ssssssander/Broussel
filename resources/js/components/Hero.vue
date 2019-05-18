@@ -23,20 +23,21 @@
 
 <style lang="scss" scoped>
     .hero {
-        padding: 20px 0 60px 0;
+        padding: 60px 0 100px 0;
 
         .hero-text {
             color: $secondary-color;
-            line-height: initial;
             display: inline-block;
             max-width: 55%;
 
             h1 {
                 font-size: 4em;
                 margin: 0 0 20px 0;
+                line-height: 1.1;
             }
             p {
                 font-size: 1.2em;
+                line-height: 1.2;
             }
         }
     }

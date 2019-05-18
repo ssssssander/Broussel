@@ -12,3 +12,6 @@
 */
 
 Route::get('/{any}', 'PageController@app')->name('app')->where('any', '.*');
+Route::post('/dothing', 'PageController@dothing')->name('dothing');
+
+Auth::routes();

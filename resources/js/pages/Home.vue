@@ -1,5 +1,5 @@
 <template>
-    <div>Whaddup</div>
+    <div></div>
 </template>
 
 <script lang="ts">

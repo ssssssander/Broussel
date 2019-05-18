@@ -67,6 +67,8 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'profile_picture_path' => 'default_path',
+            'is_guide' => false,
         ]);
     }
 }

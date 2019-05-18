@@ -1,38 +1,38 @@
 .hero[data-v-7ebbb9e5] {
-  padding: 20px 0 60px 0;
+  padding: 60px 0 100px 0;
 }
 .hero .hero-text[data-v-7ebbb9e5] {
   color: #fcfdfe;
-  line-height: initial;
   display: inline-block;
   max-width: 55%;
 }
 .hero .hero-text h1[data-v-7ebbb9e5] {
   font-size: 4em;
   margin: 0 0 20px 0;
+  line-height: 1.1;
 }
 .hero .hero-text p[data-v-7ebbb9e5] {
   font-size: 1.2em;
-}header a[data-v-1f42fb90] {
+  line-height: 1.2;
+}a[data-v-1f42fb90] {
   color: #fcfdfe;
 }
-header .wrapper[data-v-1f42fb90] {
-  display: flex;
+.wrapper[data-v-1f42fb90] {
   align-items: center;
 }
-header .logo[data-v-1f42fb90] {
+.logo[data-v-1f42fb90] {
   font-family: "Patrick Hand", cursive;
   font-size: 3rem;
-  margin-right: 20px;
+  margin-right: 40px;
 }
-header nav[data-v-1f42fb90] {
+nav[data-v-1f42fb90] {
   width: 100%;
   margin-top: 5px;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   display: flex;
   justify-content: space-between;
 }
-header li[data-v-1f42fb90] {
+li[data-v-1f42fb90] {
   margin: 0 10px;
 }* {
   margin: 0;
@@ -58,6 +58,7 @@ li {
   display: inline-block;
 }
 .wrapper {
+  display: flex;
   margin: 0 auto;
   max-width: 1300px;
   padding: 0 1.6em;

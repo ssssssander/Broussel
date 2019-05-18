@@ -10,6 +10,7 @@
         </template>
         <main>
             <router-view></router-view>
+            <p>Auth: {{ isAuth }}</p>
         </main>
     </div>
 </template>
@@ -26,13 +27,9 @@
         },
     })
     export default class App extends Vue {
-        @Prop(String) isAuth!: string;
+        @Prop(Boolean) isAuth: boolean;
 
         name: string = 'App';
-
-        mounted() {
-            console.log(this.isAuth);
-        }
     }
 </script>
 
@@ -62,6 +59,7 @@
         display: inline-block;
     }
     .wrapper {
+        display: flex;
         margin: 0 auto;
         max-width: 1300px;
         padding: 0 1.6em;
