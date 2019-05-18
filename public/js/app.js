@@ -2919,7 +2919,7 @@ var render = function() {
         _c(
           "router-link",
           { staticClass: "logo", attrs: { to: { name: "home" } } },
-          [_vm._v("broussel")]
+          [_vm._v("Broussel")]
         ),
         _vm._v(" "),
         _c("nav", [
@@ -2958,11 +2958,15 @@ var render = function() {
             _vm._v(" "),
             _c(
               "li",
-              { staticClass: "register" },
               [
-                _c("router-link", { attrs: { to: { name: "register" } } }, [
-                  _vm._v("Register")
-                ])
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "register",
+                    attrs: { to: { name: "register" } }
+                  },
+                  [_vm._v("Registreren")]
+                )
               ],
               1
             )
@@ -3017,6 +3021,12 @@ var staticRenderFns = [
               "Vind gidsen met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel"
             )
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "r" }, [
+          _c("img", {
+            attrs: { src: __webpack_require__(/*! ../../../public/img/n.jpg */ "./public/img/n.jpg"), alt: "" }
+          })
         ])
       ])
     ])
@@ -19270,6 +19280,17 @@ try {
 
 module.exports = g;
 
+
+/***/ }),
+
+/***/ "./public/img/n.jpg":
+/*!**************************!*\
+  !*** ./public/img/n.jpg ***!
+  \**************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/n.jpg?6f598898cc7aac15bd91346c397b9796";
 
 /***/ }),
 

@@ -65,6 +65,8 @@
         padding: 0 1.6em;
     }
     .bg {
-        background-image: $primary-gradient;
+        background: url("../../../public/img/bg.svg") no-repeat;
+        background-size: cover;
+        background-position: 0 -200px;
     }
 </style>
