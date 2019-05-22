@@ -9,7 +9,7 @@
             <Header></Header>
         </template>
         <main>
-            <router-view></router-view>
+            <router-view :is-auth="isAuth"></router-view>
             <p>Auth: {{ isAuth }}</p>
         </main>
     </div>

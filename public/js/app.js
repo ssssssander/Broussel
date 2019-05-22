@@ -2582,22 +2582,46 @@ var Register = /** @class */ (function (_super) {
         _this.formEmail = '';
         _this.formPassword = '';
         _this.formPasswordConfirmation = '';
+        _this.errors = {};
         return _this;
     }
     Register.prototype.register = function () {
-        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/dothing', {
+        var _this = this;
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/register', {
             name: this.formName,
             email: this.formEmail,
             password: this.formPassword,
             password_confirmation: this.formPasswordConfirmation,
         })
             .then(function (response) {
+            // this.$router.replace({ name: 'home' });
+            console.log(response);
+            axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/poll-auth')
+                .then(function (response) {
+                console.log(response);
+                _this.isAuth = response.data;
+            });
+        })
+            .catch(function (error) {
+            console.log(error.response);
+            if (error.response.status == 422) {
+                _this.errors = error.response.data.errors;
+            }
+        });
+    };
+    Register.prototype.logout = function () {
+        axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/logout')
+            .then(function (response) {
+            // this.$router.replace({ name: 'home' });
             console.log(response);
         })
             .catch(function (error) {
-            console.log(error);
+            console.log(error.response.data.errors);
         });
     };
+    __decorate([
+        Object(vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Prop"])(Boolean)
+    ], Register.prototype, "isAuth", void 0);
     Register = __decorate([
         vue_property_decorator__WEBPACK_IMPORTED_MODULE_0__["Component"]
     ], Register);
@@ -3063,7 +3087,7 @@ var render = function() {
       _c(
         "main",
         [
-          _c("router-view"),
+          _c("router-view", { attrs: { "is-auth": _vm.isAuth } }),
           _vm._v(" "),
           _c("p", [_vm._v("Auth: " + _vm._s(_vm.isAuth))])
         ],
@@ -3145,9 +3169,44 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.errors,
+            expression: "errors"
+          }
+        ],
+        staticClass: "errors"
+      },
+      [
+        _c(
+          "ul",
+          _vm._l(_vm.errors, function(errorArr) {
+            return _c(
+              "li",
+              _vm._l(errorArr, function(error) {
+                return _c("span", [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(error) +
+                      "\n                "
+                  )
+                ])
+              }),
+              0
+            )
+          }),
+          0
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
       "form",
       {
-        attrs: { method: "POST" },
         on: {
           submit: function($event) {
             $event.preventDefault()
@@ -3277,6 +3336,19 @@ var render = function() {
         _vm._v(" "),
         _c("input", { attrs: { type: "submit", value: "Registreren" } })
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.logout($event)
+          }
+        }
+      },
+      [_c("input", { attrs: { type: "submit", value: "Uitloggen" } })]
     )
   ])
 }

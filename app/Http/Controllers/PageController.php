@@ -13,6 +13,11 @@ class PageController extends Controller
         return view('app', compact('isAuth'));
     }
 
+    public function pollAuth(Request $request) {
+        $isAuth = Auth::check() ? 'true' : 'false';
+        return response($isAuth);
+    }
+
     public function dothing(Request $request) {
         return response()->json(
             $request->post()
