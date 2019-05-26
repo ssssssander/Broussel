@@ -1,37 +1,33 @@
 <template>
-    <div>
-        <template v-if="$route.name == 'home'">
-            <Hero>
-                <Header></Header>
-            </Hero>
-        </template>
-        <template v-else>
-            <Header></Header>
-        </template>
+    <div :class="[$route.name == 'home' ? 'bg-svg' :  $route.name != 'contact' ? 'bg-gradient': '', 'app']">
+        <Header :class="{ 'bg-gradient': $route.name == 'contact' }"></Header>
         <main>
-            <router-view :is-auth="isAuth"></router-view>
-            <p>Auth: {{ isAuth }}</p>
+            <router-view></router-view>
         </main>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Prop, Vue } from 'vue-property-decorator';
-    import Header from '../components/Header.vue';
-    import Hero from '../components/Hero.vue';
-
+    import Header from "../components/Header.vue";
     @Component({
-        components: {
-            Header,
-            Hero,
-        },
+        components: {Header}
     })
     export default class App extends Vue {
-        @Prop(Boolean) isAuth: boolean;
-
         name: string = 'App';
     }
 </script>
+
+<style lang="scss" scoped>
+    .app {
+        display: flex;
+        flex-flow: column nowrap;
+        height: 100%;
+    }
+    main {
+        flex-grow : 1;;
+    }
+</style>
 
 <style lang="scss">
     // Global Sass
@@ -42,6 +38,9 @@
     }
     :root {
         font-size: $base-font-size;
+    }
+    html, body, #app {
+        height: 100%;
     }
     body {
         font-size: 1rem;
@@ -64,9 +63,27 @@
         max-width: 1300px;
         padding: 0 1.6em;
     }
-    .bg {
-        background: url("../../../public/img/bg.svg") no-repeat;
+    .btn {
+        background-color: $primary-button-bg-color;
+        padding: 10px;
+        border-radius: $btn-border-radius;
+        color: $secondary-color;
+        border: none;
+        text-align: center;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lighten($primary-button-bg-color, 10%);
+        }
+    }
+    .btn-small {
+        font-size: 0.8em;
+    }
+    .bg-svg {
+        background: url("../../images/bg2.svg") no-repeat 0 -250px;
         background-size: cover;
-        background-position: 0 -200px;
+    }
+    .bg-gradient {
+        background: $primary-gradient;
     }
 </style>

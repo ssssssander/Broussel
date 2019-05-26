@@ -12,7 +12,4 @@
 */
 
 Route::get('/{any}', 'PageController@app')->name('app')->where('any', '.*');
-Route::post('/dothing', 'PageController@dothing')->name('dothing');
-Route::post('/poll-auth', 'PageController@pollAuth');
-
 Auth::routes();

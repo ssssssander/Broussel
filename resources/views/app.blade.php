@@ -13,7 +13,7 @@
 </head>
 <body>
     <div id="app">
-        <app :is-auth="{{ $isAuth }}"></app>
+        <app></app>
     </div>
 </body>
 </html>

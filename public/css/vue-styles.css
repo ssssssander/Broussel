@@ -1,35 +1,7 @@
-.hero[data-v-7ebbb9e5] {
-  padding: 60px 0 200px 0;
-}
-.hero .wrapper[data-v-7ebbb9e5] {
-  justify-content: space-between;
-}
-.hero .r[data-v-7ebbb9e5] {
-  width: 40%;
-}
-.hero img[data-v-7ebbb9e5] {
-  width: 100%;
-  height: auto;
-  border-radius: 1%;
-}
-.hero .hero-text[data-v-7ebbb9e5] {
-  color: #fcfdfe;
-  display: inline-block;
-  max-width: 55%;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.16);
-}
-.hero .hero-text h1[data-v-7ebbb9e5] {
-  font-size: 4em;
-  margin: 0 0 20px 0;
-  line-height: 1.2;
-}
-.hero .hero-text p[data-v-7ebbb9e5] {
-  font-size: 1.2em;
-  line-height: 1.2;
-}a[data-v-1f42fb90] {
+a[data-v-1f42fb90] {
   color: #fcfdfe;
 }
-a[data-v-1f42fb90]:hover:not(.register):not(.logo) {
+a[data-v-1f42fb90]:hover:not(.logo):not(.btn) {
   padding-bottom: 5px;
   border-bottom: 3px solid #ffffff;
 }
@@ -52,14 +24,99 @@ nav[data-v-1f42fb90] {
 }
 li[data-v-1f42fb90] {
   margin: 0 10px;
+}.hero[data-v-7ebbb9e5] {
+  padding: 60px 0 200px 0;
 }
-.register[data-v-1f42fb90] {
-  background-color: #0e8900;
-  padding: 10px;
-  border-radius: 5%;
+.hero .buttons[data-v-7ebbb9e5] {
+  margin-top: 40px;
+  display: flex;
+  align-items: flex-end;
 }
-.register[data-v-1f42fb90]:hover {
-  background-color: #095600;
+.hero .buttons .btn-start[data-v-7ebbb9e5] {
+  width: 50%;
+  margin-right: 20px;
+}
+.hero .wrapper[data-v-7ebbb9e5] {
+  justify-content: space-between;
+}
+.hero img[data-v-7ebbb9e5] {
+  width: 100%;
+  height: auto;
+  border-radius: 1%;
+}
+.hero .hero-text[data-v-7ebbb9e5] {
+  color: #fcfdfe;
+  display: inline-block;
+  max-width: 55%;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.16);
+}
+.hero .hero-text h1[data-v-7ebbb9e5], .hero .hero-text p[data-v-7ebbb9e5] {
+  line-height: 1.2;
+}
+.hero .hero-text h1[data-v-7ebbb9e5] {
+  font-size: 4em;
+  margin: 0 0 20px 0;
+  line-height: 1.2;
+}
+.hero .hero-text p[data-v-7ebbb9e5] {
+  font-size: 1.2em;
+  line-height: 1.2;
+}.register[data-v-364a2fac] {
+  padding: 100px 0;
+}
+form[data-v-364a2fac] {
+  margin: 0 auto;
+  width: 60%;
+  max-width: 500px;
+  padding: 30px;
+  border-radius: 4px;
+  background-color: #fcfdfe;
+  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+}
+form label[data-v-364a2fac], form input[data-v-364a2fac] {
+  display: block;
+}
+form input[data-v-364a2fac] {
+  margin-top: 5px;
+  width: 100%;
+  padding: 8px;
+  border: 2px solid #e9ebeb;
+  border-radius: 4px;
+}
+form input[data-v-364a2fac]:focus {
+  border: 2px solid #00f921;
+}
+form .form-block[data-v-364a2fac] {
+  margin-top: 10px;
+}
+form .side-text[data-v-364a2fac] {
+  margin-left: 10px;
+  font-size: 0.6em;
+  color: #4696b9;
+}
+form .errors[data-v-364a2fac] {
+  padding: 15px;
+  background-color: #f71d2c;
+  color: #fcfdfe;
+  border-radius: 4px;
+}
+form .errors li[data-v-364a2fac], form .errors span[data-v-364a2fac] {
+  display: block;
+  margin: 5px 0;
+}.dashboard[data-v-0c4fb327] {
+  margin: 0 auto;
+  width: 80%;
+  padding: 30px;
+  border-radius: 4px;
+  background-color: #fcfdfe;
+  box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+}.app[data-v-9087fe26] {
+  display: flex;
+  flex-flow: column nowrap;
+  height: 100%;
+}
+main[data-v-9087fe26] {
+  flex-grow: 1;
 }* {
   margin: 0;
   padding: 0;
@@ -67,6 +124,9 @@ li[data-v-1f42fb90] {
 }
 :root {
   font-size: 1.2rem;
+}
+html, body, #app {
+  height: 100%;
 }
 body {
   font-size: 1rem;
@@ -89,8 +149,25 @@ li {
   max-width: 1300px;
   padding: 0 1.6em;
 }
-.bg {
-  background: url(/images/bg.svg?65c0ea29a5f5ccd6b3180ef17d3d7ce6) no-repeat;
+.btn {
+  background-color: #00f921;
+  padding: 10px;
+  border-radius: 2.5px;
+  color: #fcfdfe;
+  border: none;
+  text-align: center;
+  cursor: pointer;
+}
+.btn:hover {
+  background-color: #2dff49;
+}
+.btn-small {
+  font-size: 0.8em;
+}
+.bg-svg {
+  background: url(/images/bg2.svg?08cae8c27175fcb9551c47d87f4d78f8) no-repeat 0 -250px;
   background-size: cover;
-  background-position: 0 -200px;
+}
+.bg-gradient {
+  background: linear-gradient(-60deg, #04e900 0%, #05e000 15.81%, #07c600 42.1%, #0c9d00 75.4%, #0f7b00 99.44%);
 }

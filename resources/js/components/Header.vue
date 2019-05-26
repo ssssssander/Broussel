@@ -1,11 +1,11 @@
 <template>
-    <header :class="{ 'bg': $route.name != 'home' }">
+    <header>
         <div class="wrapper">
             <router-link :to="{ name: 'home' }" class="logo">Broussel</router-link>
             <nav>
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'contact' }">Voor gidsen </router-link>
+                        <router-link :to="{ name: 'contact' }">Voor wandelbuddies</router-link>
                     </li>
                     <li>
                         <router-link :to="{ name: 'contact' }">Contact</router-link>
@@ -16,7 +16,7 @@
                         <router-link :to="{ name: 'contact' }">Log in</router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'register' }" class="register">Registreren</router-link>
+                        <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
                     </li>
                 </ul>
             </nav>
@@ -37,7 +37,7 @@
     a {
         color: $secondary-color;
 
-        &:hover:not(.register):not(.logo) {
+        &:hover:not(.logo):not(.btn) {
             padding-bottom: 5px;
             border-bottom: 3px solid #ffffff;
         }
@@ -61,14 +61,5 @@
     }
     li {
         margin: 0 10px;
-    }
-    .register {
-        background-color: #0e8900;
-        padding: 10px;
-        border-radius: 5%;
-
-        &:hover {
-            background-color: darken(#0e8900, 10%);
-        }
     }
 </style>

@@ -1,10 +1,14 @@
-$primary-gradient: linear-gradient(135deg, #70F570 10%, #49C628 100%);
+$primary-gradient: linear-gradient(-60deg, rgb(4, 233, 0) 0%, rgb(5, 224, 0) 15.809999999999999%, rgb(7, 198, 0) 42.1%, rgb(12, 157, 0) 75.4%, rgb(15, 123, 0) 99.44%);
 $primary-color: #0e1e25;
 $secondary-color: #fcfdfe;
-$primary-button-bg-color: green;
+$primary-button-bg-color: #00f921;
+$green: #00f921;
+$error-color: #f71d2c;
 
 $logo-font-family: 'Patrick Hand', cursive;
 $primary-font-family: 'Open Sans', sans-serif;
 $base-font-size: 1.2rem;
 $base-line-height: 1.6;
 
+$btn-border-radius: 2.5px;
+$default-border-radius: 4px;
