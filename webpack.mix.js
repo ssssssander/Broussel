@@ -12,18 +12,14 @@ const mix = require('laravel-mix');
  */
 
 mix.options({
-    extractVueStyles: true,
     globalVueStyles: 'resources/sass/_variables.scss',
 });
 
 mix.browserSync('http://localhost:8000');
 mix.disableSuccessNotifications();
 
-mix.ts('resources/js/app.ts', 'public/js')
-    .styles([
-    'public/css/normalize.css',
-    'public/css/vue-styles.css'
-    ], 'public/css/app.css');
+mix.ts('resources/js/app.ts', 'public/js/app.js')
+    .sass('resources/sass/global.scss', 'public/css/app.css');
 
 if(mix.inProduction()) {
     mix.version();

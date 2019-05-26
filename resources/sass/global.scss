@@ -1,0 +1,64 @@
+// Global Sass
+
+@import 'variables';
+@import 'normalize';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    font-size: $base-font-size;
+}
+//html, body, #app {
+//    height: 100%;
+//}
+body {
+    font-size: 1rem;
+    position: relative;
+    font-family: $primary-font-family;
+    line-height: $base-line-height;
+    color: $primary-color;
+}
+a {
+    text-decoration: none;
+}
+ul {
+    list-style-type: none;
+}
+li {
+    display: inline-block;
+}
+.wrapper {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1300px;
+    padding: 0 1.6em;
+}
+.btn {
+    background-color: $primary-button-bg-color;
+    padding: 10px;
+    border-radius: $btn-border-radius;
+    color: $secondary-color;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($primary-button-bg-color, 10%);
+    }
+}
+.btn-small {
+    font-size: 0.8em;
+}
+.bg-svg {
+    background: url("../../images/hero-bg.svg") no-repeat 0 -250px;
+    background-size: cover;
+}
+.bg-gradient {
+    background: $primary-gradient;
+}
+input[type="text"] {
+    color: $primary-color;
+}

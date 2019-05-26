@@ -30,9 +30,9 @@
                 <input type="submit" value="Registreren" class="btn" id="register-btn">
             </div>
         </form>
-<!--        <form @submit.prevent="logout">-->
-<!--            <input type="submit" value="Uitloggen">-->
-<!--        </form>-->
+        <form @submit.prevent="logout">
+            <input type="submit" value="Uitloggen">
+        </form>
     </div>
 </template>
 
@@ -102,7 +102,7 @@
 
 <style lang="scss" scoped>
     .register {
-        padding: 100px 0;
+        padding: 60px 0;
     }
     form {
         margin: 0 auto;
@@ -116,16 +116,19 @@
         label, input {
             display: block;
         }
-        input {
-            margin-top: 5px;
+        input[type="text"], input[type="email"], input[type="password"] {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 2px solid #e9ebeb;
             border-radius: $default-border-radius;
+            margin: 5px 0;
 
             &:focus {
                 border: 2px solid $green;
             }
+        }
+        input[type="submit"] {
+            width: 100%;
         }
         .form-block {
             margin-top: 10px;
@@ -133,7 +136,7 @@
         .side-text {
             margin-left: 10px;
             font-size: 0.6em;
-            color: lighten($primary-color, 40%);
+            color: grayscale(lighten($primary-color, 30%));
         }
         .errors {
             padding: 15px;
