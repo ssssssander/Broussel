@@ -12,6 +12,10 @@
     @Component
     export default class AppHome extends Vue {
         name: string = 'AppHome';
+
+        mounted() {
+            this.axios.post('')
+        }
     }
 </script>
 

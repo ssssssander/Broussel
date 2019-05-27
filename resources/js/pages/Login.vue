@@ -1,6 +1,6 @@
 <template>
     <div class="login fullscreen">
-        <form @submit.prevent="login" class="fullscreen-form">
+        <form @submit.prevent="login" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length" class="errors">
                 <ul>
                     <li v-for="errorArr in errors">
@@ -27,7 +27,6 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import axios from 'axios';
 
     @Component
     export default class Login extends Vue {
@@ -52,7 +51,7 @@
                 if (i > 3) i = 0;
             }, 200);
 
-            axios.post('/login', {
+            this.axios.post('/login', {
                 email: this.formEmail,
                 password: this.formPassword,
             })

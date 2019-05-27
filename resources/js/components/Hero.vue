@@ -6,7 +6,7 @@
                 <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
                 <div class="buttons">
                     <router-link :to="{ name: 'register' }" class="btn btn-start">Begin nu</router-link>
-                    <router-link :to="{ name: 'register' }" class="btn btn-small">Of wordt een wandelbuddy</router-link>
+                    <router-link :to="{ name: 'register' }" class="link">Of wordt een wandelbuddy →</router-link>
                 </div>
             </div>
         </div>
@@ -26,10 +26,13 @@
     .hero {
         padding: 60px 0 200px 0;
 
+        .link {
+            color: $light-color;
+        }
         .buttons {
             margin-top: 40px;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
 
             .btn-start {
                 width: 50%;

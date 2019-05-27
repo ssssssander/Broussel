@@ -1,6 +1,6 @@
 <template>
     <div class="register fullscreen">
-        <form @submit.prevent="register" class="fullscreen-form">
+        <form @submit.prevent="register" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length" class="errors">
                 <ul>
                     <li v-for="errorArr in errors">
@@ -41,7 +41,6 @@
 
 <script lang="ts">
     import { Component, Prop, Vue } from 'vue-property-decorator';
-    import axios from 'axios';
 
     @Component
     export default class Register extends Vue {
@@ -68,14 +67,14 @@
                 if (i > 3) i = 0;
             }, 200);
 
-            axios.post('/register', {
+            this.axios.post('/register', {
                 name: this.formName,
                 email: this.formEmail,
                 password: this.formPassword,
                 password_confirmation: this.formPasswordConfirmation,
             })
             .then((response: any) => {
-                this.$router.replace({ name: 'app-home' });
+                this.$router.replace({ name: 'dashboard' });
                 console.log(response);
                 clear();
             })
@@ -89,7 +88,7 @@
         }
 
         logout() {
-            axios.post('/logout')
+            this.axios.post('/logout')
             .then((response: any) => {
                 // this.$router.replace({ name: 'home' });
                 console.log(response);

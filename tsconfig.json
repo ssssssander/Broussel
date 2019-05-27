@@ -6,7 +6,6 @@
         "strictNullChecks": false,
         "moduleResolution": "node",
         "experimentalDecorators": true,
-        "baseUrl": "."
     },
     "include": [
         "resources/js/**/*"

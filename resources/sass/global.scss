@@ -44,12 +44,17 @@ li {
     padding: 0 1.6em;
 }
 .bg-svg {
-    background: url("../../images/hero-bg.svg") no-repeat 0 -250px;
+    background: url("~@/images/hero-bg.svg") no-repeat 0 -250px;
     background-size: cover;
 }
 .bg-gradient {
     background: $gradient fixed;
 }
-input[type="text"] {
-    color: $dark-color;
+.white-bg {
+    margin: 0 auto;
+    width: 80%;
+    padding: 30px;
+    border-radius: $default-border-radius;
+    background-color: $light-color;
+    box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
 }

@@ -22,15 +22,24 @@ const router = new VueRouter({
             component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register.vue')
         },
         {
+            path: '/app/dashboard',
+            name: 'dashboard',
+            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard.vue'),
+        },
+        {
             path: '/app',
-            name: 'app-home',
-            component: () => import(/* webpackChunkName: "js/chunks/app-home" */ '@/js/pages/AppHome.vue')
+            redirect: { name: 'dashboard'},
         },
         {
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "js/chunks/login" */ './pages/Login.vue')
         },
+        {
+            path: '*',
+            name: 'error404',
+            component: () => import(/* webpackChunkName: "js/chunks/error404" */ './pages/Error404.vue')
+        }
     ],
 });
 

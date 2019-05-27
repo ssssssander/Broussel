@@ -8,9 +8,13 @@
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-import axios from 'axios';
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+Vue.use(VueAxios, axios);
+
+Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -20,7 +24,7 @@ axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 let token: HTMLMetaElement | null = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+    Vue.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }

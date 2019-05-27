@@ -21,6 +21,7 @@ input[type="text"], input[type="email"], input[type="password"] {
     padding: 10px;
     border: 2px solid #e9ebeb;
     border-radius: $default-border-radius;
+    color: $dark-color;
 
     &:focus {
         border: 2px solid $primary-accent-color;
