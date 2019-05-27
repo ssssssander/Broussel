@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import Home from './pages/Home.vue';
 import Contact from './pages/Contact.vue';
 import Register from './pages/Register.vue';
+import Login from './pages/Login.vue';
 import AppHome from './pages/AppHome.vue';
 
 Vue.use(VueRouter);
@@ -29,6 +30,11 @@ export default new VueRouter({
             path: '/app',
             name: 'app-home',
             component: AppHome,
+        },
+        {
+            path: '/login',
+            name: 'login',
+            component: Login,
         },
     ],
 });

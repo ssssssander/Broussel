@@ -6,16 +6,14 @@
                 <ul>
                     <li>
                         <router-link :to="{ name: 'contact' }">Voor wandelbuddies</router-link>
-                    </li>
-                    <li>
+                    </li><li>
                         <router-link :to="{ name: 'contact' }">Contact</router-link>
                     </li>
                 </ul>
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'contact' }">Log in</router-link>
-                    </li>
-                    <li>
+                        <router-link :to="{ name: 'login' }">Log in</router-link>
+                    </li><li>
                         <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
                     </li>
                 </ul>
@@ -35,7 +33,7 @@
 
 <style lang="scss" scoped>
     a {
-        color: $secondary-color;
+        color: $light-color;
 
         &:hover:not(.logo):not(.btn) {
             padding-bottom: 5px;
@@ -56,6 +54,11 @@
         font-size: 1.1rem;
         display: flex;
         justify-content: space-between;
+    }
+    @media screen and (max-width: 900px) {
+        nav {
+            display: none;
+        }
     }
     li {
         margin: 0 10px;

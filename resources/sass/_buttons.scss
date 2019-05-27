@@ -1,0 +1,16 @@
+.btn {
+    background-color: $primary-accent-color;
+    padding: 10px;
+    border-radius: 2.5px;
+    color: $light-color;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($primary-accent-color, 10%);
+    }
+}
+.btn-small {
+    font-size: 0.8em;
+}

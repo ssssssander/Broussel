@@ -1,0 +1,59 @@
+.form-block {
+    margin-top: 10px;
+}
+.side-text {
+    margin-left: 10px;
+    font-size: 0.6em;
+    color: $dark-color-side;
+}
+.errors {
+    padding: 15px;
+    background-color: $error-color;
+    color: $light-color;
+    border-radius: $default-border-radius;
+
+    li, span {
+        display: block;
+        margin: 5px 0;
+    }
+}
+input[type="text"], input[type="email"], input[type="password"] {
+    padding: 10px;
+    border: 2px solid #e9ebeb;
+    border-radius: $default-border-radius;
+
+    &:focus {
+        border: 2px solid $primary-accent-color;
+    }
+}
+.fullscreen {
+    padding: 60px 0;
+}
+
+.fullscreen-form {
+    margin: 0 auto;
+    width: 60%;
+    max-width: 500px;
+    padding: 30px;
+    border-radius: $default-border-radius;
+    background-color: $light-color;
+    box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
+
+    label, input {
+        display: block;
+    }
+
+    input[type="text"], input[type="email"], input[type="password"] {
+        margin: 5px 0;
+        width: 100%;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 900px) {
+    .fullscreen-form {
+        width: 90%;
+    }
+}

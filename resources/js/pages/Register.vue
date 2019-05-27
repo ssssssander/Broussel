@@ -1,6 +1,6 @@
 <template>
-    <div class="register">
-        <form @submit.prevent="register">
+    <div class="register fullscreen">
+        <form @submit.prevent="register" class="fullscreen-form">
             <div v-show="Object.keys(errors).length" class="errors">
                 <ul>
                     <li v-for="errorArr in errors">
@@ -29,6 +29,9 @@
             <div class="form-block">
                 <input type="submit" value="Registreren" class="btn" id="register-btn">
             </div>
+            <div class="form-block center">
+                <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
+            </div>
         </form>
         <form @submit.prevent="logout">
             <input type="submit" value="Uitloggen">
@@ -42,8 +45,6 @@
 
     @Component
     export default class Register extends Vue {
-        @Prop(Boolean) isAuth: boolean;
-
         name: string = 'Register';
         formName: string = '';
         formEmail: string = '';
@@ -101,53 +102,7 @@
 </script>
 
 <style lang="scss" scoped>
-    .register {
-        padding: 60px 0;
-    }
-    form {
-        margin: 0 auto;
-        width: 60%;
-        max-width: 500px;
-        padding: 30px;
-        border-radius: $default-border-radius;
-        background-color: $secondary-color;
-        box-shadow: 0 2px 4px 0 rgba(14, 30, 37, 0.12);
-
-        label, input {
-            display: block;
-        }
-        input[type="text"], input[type="email"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #e9ebeb;
-            border-radius: $default-border-radius;
-            margin: 5px 0;
-
-            &:focus {
-                border: 2px solid $green;
-            }
-        }
-        input[type="submit"] {
-            width: 100%;
-        }
-        .form-block {
-            margin-top: 10px;
-        }
-        .side-text {
-            margin-left: 10px;
-            font-size: 0.6em;
-            color: grayscale(lighten($primary-color, 30%));
-        }
-        .errors {
-            padding: 15px;
-            background-color: $error-color;
-            color: $secondary-color;
-            border-radius: $default-border-radius;
-
-            li, span {
-                display: block;
-                margin: 5px 0;
-            }
-        }
+    .center {
+        text-align: center;
     }
 </style>

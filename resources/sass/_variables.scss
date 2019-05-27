@@ -1,14 +1,13 @@
-$primary-gradient: linear-gradient(-60deg, rgb(4, 233, 0) 0%, rgb(5, 224, 0) 15.809999999999999%, rgb(7, 198, 0) 42.1%, rgb(12, 157, 0) 75.4%, rgb(15, 123, 0) 99.44%);
-$primary-color: #0e1e25;
-$secondary-color: #fcfdfe;
-$primary-button-bg-color: #00f921;
-$green: #00f921;
+$gradient: linear-gradient(-60deg, rgb(4, 233, 0) 0%, rgb(5, 224, 0) 15.809999999999999%, rgb(7, 198, 0) 42.1%, rgb(12, 157, 0) 75.4%, rgb(15, 123, 0) 99.44%);
+$dark-color: #0e1e25;
+$dark-color-side: grayscale(lighten($dark-color, 30%));
+$light-color: #fcfdfe;
+$primary-accent-color: #00f921;
 $error-color: #f71d2c;
+$link-color: lighten($dark-color, 50%);
 
 $logo-font-family: 'Patrick Hand', cursive;
-$primary-font-family: 'Open Sans', sans-serif;
+$text-font-family: 'Open Sans', sans-serif;
 $base-font-size: 1.2rem;
 $base-line-height: 1.6;
-
-$btn-border-radius: 2.5px;
 $default-border-radius: 4px;

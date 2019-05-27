@@ -3,7 +3,7 @@
         <div class="wrapper">
             <div class="hero-text">
                 <h1>Ontdek het groen in Brussel</h1>
-                <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel</p>
+                <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
                 <div class="buttons">
                     <router-link :to="{ name: 'register' }" class="btn btn-start">Begin nu</router-link>
                     <router-link :to="{ name: 'register' }" class="btn btn-small">Of wordt een wandelbuddy</router-link>
@@ -45,7 +45,7 @@
             border-radius: 1%;
         }
         .hero-text {
-            color: $secondary-color;
+            color: $light-color;
             display: inline-block;
             max-width: 55%;
             text-shadow: 0 2px 20px rgba(0,0,0,.16);

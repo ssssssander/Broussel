@@ -1,7 +1,10 @@
 // Global Sass
+// Local Sass is in Vue pages
 
 @import 'variables';
 @import 'normalize';
+@import 'forms';
+@import 'buttons';
 
 * {
     margin: 0;
@@ -17,12 +20,19 @@
 body {
     font-size: 1rem;
     position: relative;
-    font-family: $primary-font-family;
+    font-family: $text-font-family;
     line-height: $base-line-height;
-    color: $primary-color;
+    color: $dark-color;
 }
 a {
     text-decoration: none;
+}
+.link {
+    color: $link-color;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 ul {
     list-style-type: none;
@@ -36,29 +46,13 @@ li {
     max-width: 1300px;
     padding: 0 1.6em;
 }
-.btn {
-    background-color: $primary-button-bg-color;
-    padding: 10px;
-    border-radius: $btn-border-radius;
-    color: $secondary-color;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-
-    &:hover {
-        background-color: lighten($primary-button-bg-color, 10%);
-    }
-}
-.btn-small {
-    font-size: 0.8em;
-}
 .bg-svg {
     background: url("../../images/hero-bg.svg") no-repeat 0 -250px;
     background-size: cover;
 }
 .bg-gradient {
-    background: $primary-gradient;
+    background: $gradient;
 }
 input[type="text"] {
-    color: $primary-color;
+    color: $dark-color;
 }
