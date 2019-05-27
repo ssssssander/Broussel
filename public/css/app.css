@@ -521,7 +521,7 @@ li {
 }
 
 .bg-gradient {
-  background: linear-gradient(-60deg, #04e900 0%, #05e000 15.81%, #07c600 42.1%, #0c9d00 75.4%, #0f7b00 99.44%);
+  background: linear-gradient(-60deg, #04e900 0%, #05e000 15.81%, #07c600 42.1%, #0c9d00 75.4%, #0f7b00 99.44%) fixed;
 }
 
 input[type=text] {

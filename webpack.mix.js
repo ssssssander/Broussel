@@ -11,6 +11,14 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@': __dirname + '/resources'
+        },
+    },
+});
+
 mix.options({
     globalVueStyles: 'resources/sass/_variables.scss',
 });

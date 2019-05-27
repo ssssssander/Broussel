@@ -18,6 +18,13 @@
                     </li>
                 </ul>
             </nav>
+            <ul class="langs">
+                <li>
+                    <router-link :to="{ name: 'register' }">Nederlands</router-link>
+                </li><li>
+                    <router-link :to="{ name: 'register' }">Français</router-link>
+                </li>
+            </ul>
         </div>
     </header>
 </template>
@@ -32,13 +39,12 @@
 </script>
 
 <style lang="scss" scoped>
-    a {
+    header, a {
         color: $light-color;
-
-        &:hover:not(.logo):not(.btn) {
-            padding-bottom: 5px;
-            border-bottom: 3px solid #ffffff;
-        }
+    }
+    nav a:hover:not(.logo):not(.btn) {
+        padding-bottom: 5px;
+        border-bottom: 3px solid #ffffff;
     }
     .wrapper {
         align-items: center;
@@ -62,5 +68,12 @@
     }
     li {
         margin: 0 10px;
+    }
+    .langs {
+        font-size: 0.8em;
+        
+        a:hover {
+            text-decoration: underline;
+        }
     }
 </style>

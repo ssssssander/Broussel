@@ -1,40 +1,53 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from './pages/Home.vue';
-import Contact from './pages/Contact.vue';
-import Register from './pages/Register.vue';
-import Login from './pages/Login.vue';
-import AppHome from './pages/AppHome.vue';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'history',
     routes: [
         {
             path: '/',
             name: 'home',
-            component: Home,
+            component: () => import(/* webpackChunkName: "js/chunks/home" */ '@/js/pages/Home.vue')
         },
         {
             path: '/contact',
             name: 'contact',
-            component: Contact,
+            component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact.vue')
         },
         {
             path: '/register',
             name: 'register',
-            component: Register,
+            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register.vue')
         },
         {
             path: '/app',
             name: 'app-home',
-            component: AppHome,
+            component: () => import(/* webpackChunkName: "js/chunks/app-home" */ '@/js/pages/AppHome.vue')
         },
         {
             path: '/login',
             name: 'login',
-            component: Login,
+            component: () => import(/* webpackChunkName: "js/chunks/login" */ './pages/Login.vue')
         },
     ],
 });
+
+router.afterEach((to: any, from: any) => {
+    document.getElementsByTagName('header')[0].className = '';
+    document.body.className = '';
+    let whiteBackgroundPages = ['contact'];
+
+    if (to.name == 'home') {
+        document.body.className = 'bg-svg';
+    }
+    else if (whiteBackgroundPages.indexOf(to.name) == -1) {
+        document.body.className = 'bg-gradient';
+    }
+    else {
+        document.getElementsByTagName('header')[0].className = 'bg-gradient';
+    }
+});
+
+export default router;
