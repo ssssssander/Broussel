@@ -31,7 +31,7 @@ const router = new VueRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import(/* webpackChunkName: "js/chunks/login" */ './pages/Login.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/Login.vue'),
             meta: {
                 title: 'Log in',
                 auth: false,
@@ -53,7 +53,7 @@ const router = new VueRouter({
         {
             path: '*',
             name: 'error404',
-            component: () => import(/* webpackChunkName: "js/chunks/error404" */ './pages/Error404.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404.vue'),
             meta: {
                 title: 'Error 404',
                 auth: false,
@@ -79,7 +79,7 @@ router.afterEach((to: any, from: any) => {
         document.body.className = 'bg-gradient';
     }
     else {
-        document.getElementsByTagName('header')[0].className = 'bg-gradient';
+        document.getElementsByTagName('header')[0].className = 'bg-gradient header-border';
     }
 });
 

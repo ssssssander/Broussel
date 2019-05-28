@@ -24,49 +24,48 @@
 
 <style lang="scss" scoped>
     .hero {
-        padding: 60px 0 150px 0;
+        padding-bottom: 80px;
+    }
+    .link {
+        color: $light-color;
+    }
+    .buttons {
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
 
-        .link {
-            color: $light-color;
+        .btn-start {
+            width: 50%;
+            margin-right: 20px;
         }
-        .buttons {
-            margin-top: 40px;
-            display: flex;
-            align-items: center;
+    }
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 1%;
+    }
+    .hero-text {
+        color: $light-color;
+        display: inline-block;
+        max-width: 55%;
+        text-shadow: $text-shadow;
 
-            .btn-start {
-                width: 50%;
-                margin-right: 20px;
-            }
+        h1, p {
+            line-height: 1.2;
         }
-        .wrapper {
-            display: flex;
-            justify-content: space-between;
+        h1 {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
         }
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 1%;
-        }
-        .hero-text {
-            color: $light-color;
-            display: inline-block;
-            max-width: 55%;
-            text-shadow: $text-shadow;
-
-            h1, p {
-                line-height: 1.2;
-            }
-            h1 {
-                font-size: 4em;
-                font-weight: bold;
-                margin-bottom: 20px;
-                line-height: 1.2;
-            }
-            p {
-                font-size: 1.2em;
-                line-height: 1.2;
-            }
+        p {
+            font-size: 1.2em;
+            line-height: 1.2;
         }
     }
 </style>

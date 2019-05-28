@@ -11,11 +11,19 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
-import { message } from 'ant-design-vue';
-import 'ant-design-vue/es/message/style/index.css'
+import { message, notification } from 'ant-design-vue';
+// import message from 'ant-design-vue/lib/message';
+// import notification from 'ant-design-vue/lib/notification';
+import 'ant-design-vue/lib/message/style/index.css';
+import 'ant-design-vue/lib/notification/style/index.css';
+
+message.config({
+    duration: 2,
+});
 
 Vue.use(VueAxios, axios);
-Vue.prototype.$message = message
+Vue.prototype.$message = message;
+Vue.prototype.$notification = notification;
 
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 // Vue.axios.defaults.baseURL = 'http://localhost:8000/api';

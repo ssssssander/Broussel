@@ -5,9 +5,9 @@
         "strict": true,
         "strictNullChecks": false,
         "moduleResolution": "node",
-        "experimentalDecorators": true,
+        "experimentalDecorators": true
     },
     "include": [
         "resources/js/**/*"
-    ],
+    ]
 }

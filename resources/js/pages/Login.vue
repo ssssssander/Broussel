@@ -1,5 +1,5 @@
 <template>
-    <div class="login fullscreen">
+    <div class="login">
         <form @submit.prevent="login" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length" class="errors">
                 <ul>

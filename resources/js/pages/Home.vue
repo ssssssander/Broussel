@@ -1,6 +1,10 @@
 <template>
     <div class="home">
         <Hero></Hero>
+        <div class="wrapper content">
+            <h2>Hoe het werkt</h2>
+            <p>Blabla</p>
+        </div>
     </div>
 </template>
 
@@ -14,5 +18,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .content {
+        margin-top: 20px;
+    }
 </style>

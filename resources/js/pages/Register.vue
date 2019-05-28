@@ -1,5 +1,5 @@
 <template>
-    <div class="register fullscreen">
+    <div class="register">
         <form @submit.prevent="register" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length" class="errors">
                 <ul>
@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Vue } from 'vue-property-decorator';
+    import { Component, Vue } from 'vue-property-decorator';
 
     @Component
     export default class Register extends Vue {

@@ -1,26 +1,29 @@
 <template>
-    <div class="dashboard fullscreen">
-        <div class="white-bg">
-            <div class="card">
-                <span>+</span>
-                <p>Nieuwe afspraak</p>
-            </div>
-            <div class="chats">
-                <h2>Chats</h2>
-            </div>
-            <div class="card">
-                <span>+</span>
-                <p>Nieuwe afspraak</p>
-            </div>
-            <div class="chats">
-                <h2>Chats</h2>
-            </div>
-            <div class="card">
-                <span>+</span>
-                <p>Nieuwe afspraak</p>
-            </div>
-            <div class="chats">
-                <h2>Chats</h2>
+    <div class="dashboard">
+        <div class="box">
+            <h1>Dashboard ofzo</h1>
+            <div class="dashboard-inner">
+                <div class="card" @click="c">
+                    <span>+</span>
+                    <p>Nieuwe afspraak</p>
+                </div>
+                <div class="chats">
+                    <h3>Chats</h3>
+                </div>
+                <div class="card">
+                    <span>+</span>
+                    <p>Nieuwe afspraak</p>
+                </div>
+                <div class="chats">
+                    <h3>Chats</h3>
+                </div>
+                <div class="card">
+                    <span>+</span>
+                    <p>Nieuwe afspraak</p>
+                </div>
+                <div class="chats">
+                    <h3>Chats</h3>
+                </div>
             </div>
 <!--            <div class="chats">-->
 <!--                <div class="chat-block">-->
@@ -41,21 +44,25 @@
     export default class Dashboard extends Vue {
         name: string = 'Dashboard';
 
-        mounted() {
-
+        c() {
+            this.$message.success('Nieuwe afspraak');
+            this.$notification.open({
+                message: 'Notification Title',
+                description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+            });
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    .white-bg {
+    .dashboard-inner {
         display: flex;
         flex-flow: row wrap;
-        justify-content: space-around;
+        justify-content: space-between;
     }
     .card {
-        width: 45%;
-        min-width: 370px;
+        width: 55%;
+        min-width: 240px;
         height: 250px;
         background-color: $primary-accent-color;
         padding: 10px;
@@ -81,21 +88,20 @@
         }
         p {
             color: $light-color;
-            font-size: 1.5em;
+            font-size: 1.3em;
         }
     }
     .chats {
-        width: 45%;
-        min-width: 370px;
+        width: 43%;
+        min-width: 240px;
         padding: 10px;
         height: 300px;
         border: $light-border;
         border-radius: $default-border-radius;
         margin-top: 20px;
 
-        h2 {
+        h3 {
             border-bottom: $light-border;
-            display: block;
         }
     }
 </style>
