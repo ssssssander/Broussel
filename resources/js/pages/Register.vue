@@ -76,6 +76,7 @@
             .then((response: any) => {
                 clear();
                 this.$router.replace({ name: 'dashboard' });
+                this.$message.success('Je bent met succes geregistreerd!');
             })
             .catch((error: any)=> {
                 if (error.response.status == 422) {

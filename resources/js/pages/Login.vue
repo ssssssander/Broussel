@@ -56,12 +56,11 @@
                 password: this.formPassword,
             })
             .then((response: any) => {
-                this.$router.replace({ name: 'app-home' });
-                console.log(response);
                 clear();
+                this.$router.replace({ name: 'dashboard' });
+                this.$message.success('Je bent met succes ingelogd!');
             })
             .catch((error: any)=> {
-                console.log(error.response);
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
                 }
