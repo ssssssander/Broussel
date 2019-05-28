@@ -12,19 +12,19 @@
             </div>
             <div class="form-block">
                 <label for="name">Naam</label>
-                <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" autofocus>
+                <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
             </div>
             <div class="form-block">
                 <label for="email">E-mailadres</label>
-                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email">
+                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
             </div>
             <div class="form-block">
                 <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
-                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password">
+                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" maxlength="255">
             </div>
             <div class="form-block">
                 <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
-                <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password">
+                <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" maxlength="255">
             </div>
             <div class="form-block">
                 <input type="submit" value="Registreren" class="btn" id="register-btn">

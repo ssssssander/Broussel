@@ -12,11 +12,11 @@
             </div>
             <div class="form-block">
                 <label for="email">E-mailadres</label>
-                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" autofocus>
+                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
             </div>
             <div class="form-block">
                 <label for="password">Wachtwoord</label>
-                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password">
+                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password" maxlength="255">
             </div>
             <div class="form-block">
                 <input type="submit" value="Inloggen" class="btn" id="login-btn">
