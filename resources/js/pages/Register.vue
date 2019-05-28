@@ -77,6 +77,7 @@
                 email: this.formEmail,
                 password: this.formPassword,
                 password_confirmation: this.formPasswordConfirmation,
+                is_guide: false,
             })
             .then((response: any) => {
                 clear();
