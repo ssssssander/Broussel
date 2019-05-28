@@ -15,12 +15,16 @@ const router = new VueRouter({
             path: '/contact',
             name: 'contact',
             component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact.vue'),
+            meta: {
+                title: 'Contact',
+            },
         },
         {
             path: '/register',
             name: 'register',
             component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register.vue'),
             meta: {
+                title: 'Registreren',
                 auth: false,
             }
         },
@@ -29,6 +33,7 @@ const router = new VueRouter({
             name: 'login',
             component: () => import(/* webpackChunkName: "js/chunks/login" */ './pages/Login.vue'),
             meta: {
+                title: 'Log in',
                 auth: false,
             }
         },
@@ -37,6 +42,7 @@ const router = new VueRouter({
             name: 'dashboard',
             component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard.vue'),
             meta: {
+                title: 'Dashboard',
                 auth: true,
             }
         },
@@ -48,8 +54,17 @@ const router = new VueRouter({
             path: '*',
             name: 'error404',
             component: () => import(/* webpackChunkName: "js/chunks/error404" */ './pages/Error404.vue'),
+            meta: {
+                title: 'Error 404',
+                auth: false,
+            }
         }
     ],
+});
+
+router.beforeEach((to: any, from: any, next: any) => {
+    document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
+    next();
 });
 
 router.afterEach((to: any, from: any) => {

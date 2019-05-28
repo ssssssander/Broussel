@@ -19,7 +19,7 @@
 }
 input[type="text"], input[type="email"], input[type="password"] {
     padding: 10px;
-    border: 2px solid $input-border-color;
+    border: $light-border;
     border-radius: $default-border-radius;
     color: $dark-color;
 

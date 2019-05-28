@@ -40,6 +40,7 @@
             }
         }
         .wrapper {
+            display: flex;
             justify-content: space-between;
         }
         img {
@@ -58,7 +59,8 @@
             }
             h1 {
                 font-size: 4em;
-                margin: 0 0 20px 0;
+                font-weight: bold;
+                margin-bottom: 20px;
                 line-height: 1.2;
             }
             p {

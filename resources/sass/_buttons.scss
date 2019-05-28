@@ -8,7 +8,7 @@
     cursor: pointer;
 
     &:hover {
-        background-color: lighten($primary-accent-color, 10%);
+        background-color: $light-primary-accent-color;
     }
 }
 .btn-small {

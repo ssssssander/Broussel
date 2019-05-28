@@ -47,6 +47,7 @@
         border-bottom: 3px solid #ffffff;
     }
     .wrapper {
+        display: flex;
         align-items: center;
     }
     .logo {
