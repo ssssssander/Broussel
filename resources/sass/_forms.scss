@@ -27,6 +27,9 @@ input[type="text"], input[type="email"], input[type="password"] {
         border: 2px solid $primary-accent-color;
     }
 }
+form .input-error {
+    border: 2px solid $error-color;
+}
 .fullscreen {
     padding: 60px 0;
 }

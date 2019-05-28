@@ -45,6 +45,10 @@
                 document.getElementById('login-btn').setAttribute('value', 'Inloggen');
             }
 
+            for (let key of Object.keys(this.errors)) {
+                document.getElementsByName(key)[0].className = '';
+            }
+
             let i = 0;
             let loadingInterval = window.setInterval(() => {
                 document.getElementById('login-btn').setAttribute('value', 'We zijn er mee bezig' + '.'.repeat(i++));
@@ -63,6 +67,9 @@
             .catch((error: any)=> {
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
+                    for (let key of Object.keys(this.errors)) {
+                        document.getElementsByName(key)[0].className = 'input-error';
+                    }
                 }
                 clear();
             });

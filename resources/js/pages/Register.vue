@@ -29,7 +29,7 @@
             <div class="form-block">
                 <input type="submit" value="Registreren" class="btn" id="register-btn">
             </div>
-            <div class="form-block center">
+            <div class="form-block text-center">
                 <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
             </div>
         </form>
@@ -61,6 +61,11 @@
                 document.getElementById('register-btn').setAttribute('value', 'Registreren');
             }
 
+            for (let key of Object.keys(this.errors)) {
+                document.getElementsByName(key)[0].className = '';
+                if (key == 'password') document.getElementsByName('password_confirmation')[0].className = '';
+            }
+
             let i = 0;
             let loadingInterval = window.setInterval(() => {
                 document.getElementById('register-btn').setAttribute('value', 'We zijn er mee bezig' + '.'.repeat(i++));
@@ -81,6 +86,10 @@
             .catch((error: any)=> {
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
+                    for (let key of Object.keys(this.errors)) {
+                        document.getElementsByName(key)[0].className = 'input-error';
+                        if (key == 'password') document.getElementsByName('password_confirmation')[0].className = 'input-error';
+                    }
                 }
                 clear();
             });
@@ -100,7 +109,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .center {
-        text-align: center;
-    }
+
 </style>
