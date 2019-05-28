@@ -23,11 +23,12 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@websanova/vue-auth": "^2.21.14-beta",
         "axios": "^0.18",
-        "vue-axios": "^2.1.4",
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "vue": "^2.5.17",
+        "vue-axios": "^2.1.4",
         "vue-class-component": "^7.1.0",
         "vue-property-decorator": "^8.1.1",
         "vue-router": "^3.0.6",

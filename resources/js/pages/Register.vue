@@ -74,12 +74,10 @@
                 password_confirmation: this.formPasswordConfirmation,
             })
             .then((response: any) => {
-                this.$router.replace({ name: 'dashboard' });
-                console.log(response);
                 clear();
+                this.$router.replace({ name: 'dashboard' });
             })
             .catch((error: any)=> {
-                console.log(error.response);
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
                 }

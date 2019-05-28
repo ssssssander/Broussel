@@ -24,7 +24,7 @@
 
 <style lang="scss" scoped>
     .hero {
-        padding: 60px 0 200px 0;
+        padding: 60px 0 150px 0;
 
         .link {
             color: $light-color;
@@ -51,7 +51,7 @@
             color: $light-color;
             display: inline-block;
             max-width: 55%;
-            text-shadow: 0 2px 20px rgba(0,0,0,.16);
+            text-shadow: $text-shadow;
 
             h1, p {
                 line-height: 1.2;
