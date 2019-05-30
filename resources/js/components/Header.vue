@@ -23,6 +23,7 @@
                     <router-link :to="{ name: 'register' }">Nederlands</router-link>
                 </li><li>
                     <router-link :to="{ name: 'register' }">Français</router-link>
+                    <router-link to="/api/user">d</router-link>
                 </li>
             </ul>
         </div>

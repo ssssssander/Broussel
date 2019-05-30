@@ -1,8 +1,11 @@
 <template>
     <div class="register">
         <form @submit.prevent="register" class="fullscreen-form" method="post">
-            <div v-show="Object.keys(errors).length" class="errors">
+            <div v-show="Object.keys(errors).length || errorType" class="errors">
                 <ul>
+                    <li>
+                        <span>{{ errorType }}</span>
+                    </li>
                     <li v-for="errorArr in errors">
                         <span v-for="error in errorArr">
                             {{ error }}
@@ -50,6 +53,7 @@
         formPassword: string = '';
         formPasswordConfirmation: string = '';
         errors: object = {};
+        errorType: string = '';
 
         mounted() {
             document.getElementById('name').focus();
@@ -85,6 +89,7 @@
                 this.$message.success('Je bent met succes geregistreerd!');
             })
             .catch((error: any)=> {
+                this.errorType = error.response.status + ' ' + error.response.statusText;
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;
                     for (let key of Object.keys(this.errors)) {
