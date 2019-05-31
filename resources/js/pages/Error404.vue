@@ -1,6 +1,6 @@
 <template>
     <div class="error-404">
-        <div class="white-bg">
+        <div class="box">
             <h1>Error 404</h1>
         </div>
     </div>

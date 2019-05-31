@@ -10,11 +10,16 @@
                         <router-link :to="{ name: 'contact' }">Contact</router-link>
                     </li>
                 </ul>
-                <ul>
+                <ul v-if="!$auth.check()">
                     <li>
                         <router-link :to="{ name: 'login' }">Log in</router-link>
                     </li><li>
                         <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
+                    </li>
+                </ul>
+                <ul v-if="$auth.check()">
+                    <li>
+                        <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                     </li>
                 </ul>
             </nav>
@@ -23,7 +28,6 @@
                     <router-link :to="{ name: 'register' }">Nederlands</router-link>
                 </li><li>
                     <router-link :to="{ name: 'register' }">Français</router-link>
-                    <router-link to="/api/user">d</router-link>
                 </li>
             </ul>
         </div>
@@ -36,6 +40,17 @@
     @Component
     export default class Header extends Vue {
         name: string = 'Header';
+
+        logout() {
+            this.$auth.logout({
+                success: (response: any) => {
+                    this.$message.success('Je bent met succes uitgelogd!');
+                },
+                error: (error: any) => {
+                    this.$message.error('Er is iets misgegaan bij het uitloggen, probeer het opnieuw.');
+                },
+            });
+        }
     }
 </script>
 

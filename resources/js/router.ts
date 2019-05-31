@@ -9,20 +9,24 @@ const router = new VueRouter({
         {
             path: '/',
             name: 'home',
-            component: () => import(/* webpackChunkName: "js/chunks/home" */ '@/js/pages/Home.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/home" */ '@/js/pages/Home'),
+            meta: {
+                auth: undefined,
+            }
         },
         {
             path: '/contact',
             name: 'contact',
-            component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact'),
             meta: {
                 title: 'Contact',
+                auth: undefined,
             },
         },
         {
             path: '/register',
             name: 'register',
-            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register'),
             meta: {
                 title: 'Registreren',
                 auth: false,
@@ -31,7 +35,7 @@ const router = new VueRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/Login.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/Login'),
             meta: {
                 title: 'Log in',
                 auth: false,
@@ -40,7 +44,7 @@ const router = new VueRouter({
         {
             path: '/app/dashboard',
             name: 'dashboard',
-            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard'),
             meta: {
                 title: 'Dashboard',
                 auth: true,
@@ -53,10 +57,10 @@ const router = new VueRouter({
         {
             path: '*',
             name: 'error404',
-            component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404.vue'),
+            component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
             meta: {
                 title: 'Error 404',
-                auth: false,
+                auth: undefined,
             }
         }
     ],

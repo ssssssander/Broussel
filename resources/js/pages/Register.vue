@@ -36,9 +36,6 @@
                 <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
             </div>
         </form>
-        <form @submit.prevent="logout">
-            <input type="submit" value="Uitloggen">
-        </form>
     </div>
 </template>
 
@@ -54,61 +51,53 @@
         formPasswordConfirmation: string = '';
         errors: object = {};
         errorType: string = '';
+        was422: boolean = false;
 
         mounted() {
             document.getElementById('name').focus();
         }
 
         register() {
-            function clear() {
-                window.clearInterval(loadingInterval);
-                document.getElementById('register-btn').setAttribute('value', 'Registreren');
-            }
+            let registerBtnElem: any = document.getElementById('register-btn');
 
-            for (let key of Object.keys(this.errors)) {
-                document.getElementsByName(key)[0].className = '';
-                if (key == 'password') document.getElementsByName('password_confirmation')[0].className = '';
-            }
-
-            let i = 0;
-            let loadingInterval = window.setInterval(() => {
-                document.getElementById('register-btn').setAttribute('value', 'We zijn er mee bezig' + '.'.repeat(i++));
-                if (i > 3) i = 0;
-            }, 200);
-
-            this.axios.post('/register', {
-                name: this.formName,
-                email: this.formEmail,
-                password: this.formPassword,
-                password_confirmation: this.formPasswordConfirmation,
-                is_guide: false,
-            })
-            .then((response: any) => {
-                clear();
-                this.$router.replace({ name: 'dashboard' });
-                this.$message.success('Je bent met succes geregistreerd!');
-            })
-            .catch((error: any)=> {
-                this.errorType = error.response.status + ' ' + error.response.statusText;
-                if (error.response.status == 422) {
-                    this.errors = error.response.data.errors;
-                    for (let key of Object.keys(this.errors)) {
-                        document.getElementsByName(key)[0].className = 'input-error';
-                        if (key == 'password') document.getElementsByName('password_confirmation')[0].className = 'input-error';
-                    }
+            if (this.was422) {
+                for (let key of Object.keys(this.errors)) {
+                    document.getElementsByName(key)[0].className = '';
+                    if (key == 'password') document.getElementsByName('password_confirmation')[0].className = '';
                 }
-                clear();
-            });
-        }
+            }
 
-        logout() {
-            this.axios.post('/logout')
-            .then((response: any) => {
-                // this.$router.replace({ name: 'home' });
-                console.log(response);
-            })
-            .catch((error: any)=> {
-                console.log(error.response.data.errors);
+            registerBtnElem.disabled = true;
+
+            this.$auth.register({
+                data: {
+                    name: this.formName,
+                    email: this.formEmail,
+                    password: this.formPassword,
+                    password_confirmation: this.formPasswordConfirmation,
+                },
+                success: (response: any) => {
+                    registerBtnElem.disabled = false;
+                    this.$message.success('Je bent met succes geregistreerd!');
+                },
+                error: (error: any) => {
+                    registerBtnElem.disabled = false;
+                    this.$message.error('Niet alle velden zijn juist ingevuld!');
+
+                    if (error.response.status == 422) {
+                        this.errors = error.response.data.errors;
+                        for (let key of Object.keys(this.errors)) {
+                            document.getElementsByName(key)[0].className = 'input-error';
+                            if (key == 'password') document.getElementsByName('password_confirmation')[0].className = 'input-error';
+                            this.was422 = true;
+                        }
+                    }
+                    else {
+                        this.errorType = error.response.status + ' ' + error.response.statusText;
+                    }
+
+                    document.getElementsByClassName('errors')[0].scrollIntoView();
+                },
             });
         }
     }

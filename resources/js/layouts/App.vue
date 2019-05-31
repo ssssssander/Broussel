@@ -1,23 +1,32 @@
 <template>
-    <div class="app">
-        <Header></Header>
-        <main>
-            <router-view></router-view>
-        </main>
+    <div>
+        <template v-if="$auth.ready()">
+            <div class="app">
+                <Header></Header>
+                <main>
+                    <router-view></router-view>
+                </main>
+            </div>
+        </template>
+        <template v-else>
+            <div class="wrapper">
+                <h1>Een momentje...</h1>
+            </div>
+        </template>
     </div>
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import Header from "../components/Header.vue";
-    @Component({
-        components: {Header}
-    })
+    import { Component, Vue, Watch} from 'vue-property-decorator';
+
+    @Component
     export default class App extends Vue {
         name: string = 'App';
     }
 </script>
 
 <style lang="scss" scoped>
-
+    h1 {
+        color: $light-color;
+    }
 </style>

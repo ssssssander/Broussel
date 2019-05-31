@@ -24,9 +24,9 @@ files.keys().map((key: any) => Vue.component(key.split('/').pop().split('.')[0],
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import router from './router'
+import router from './router';
 import store from './store';
-import App from './layouts/App.vue';
+import App from './layouts/App';
 import Vue from 'vue';
 
 const app = new Vue({
@@ -34,5 +34,5 @@ const app = new Vue({
     components: { App },
     router,
     store,
-    render: app => app(App)
+    render: app => app(App),
 });

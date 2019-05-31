@@ -24,7 +24,7 @@ class AuthController extends Controller
         $v = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:8|confirmed',
+            'password'  => 'required|string|min:8|max:255|confirmed',
         ]);
 
         if ($v->fails())  {
@@ -40,12 +40,14 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
+        $this->login($request);
+
         return response()->json(['status' => 'success'], 200);
     }
     public function login(Request $request) {
         $v = Validator::make($request->all(), [
-            'email' => 'required|string',
-            'password'  => 'required|string',
+            'email' => 'required|string|email|max:255',
+            'password'  => 'required|string|max:255',
         ]);
 
         if ($v->fails())  {
@@ -69,7 +71,6 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'msg' => 'Uitgelogd',
         ], 200);
     }
     public function user(Request $request) {
@@ -77,11 +78,13 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'data' => $user,
+            'user_data' => $user->toArray(),
         ]);
     }
     public function refresh() {
-        if ($token = $this->guard()->refresh()) {
+        $token = $this->guard()->refresh();
+
+        if ($token) {
             return response()
                 ->json(['status' => 'success'], 200)
                 ->header('Authorization', $token);

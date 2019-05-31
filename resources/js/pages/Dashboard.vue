@@ -1,23 +1,10 @@
 <template>
     <div class="dashboard">
         <div class="box">
-            <h1>Dashboard ofzo</h1>
+            <p>{{ user.name }}</p>
+            <p>{{ user.email }}</p>
             <div class="dashboard-inner">
                 <div class="card" @click="c">
-                    <span>+</span>
-                    <p>Nieuwe afspraak</p>
-                </div>
-                <div class="chats">
-                    <h3>Chats</h3>
-                </div>
-                <div class="card">
-                    <span>+</span>
-                    <p>Nieuwe afspraak</p>
-                </div>
-                <div class="chats">
-                    <h3>Chats</h3>
-                </div>
-                <div class="card">
                     <span>+</span>
                     <p>Nieuwe afspraak</p>
                 </div>
@@ -43,12 +30,29 @@
     @Component
     export default class Dashboard extends Vue {
         name: string = 'Dashboard';
+        user: object = {};
 
         c() {
             this.$message.success('Nieuwe afspraak');
             this.$notification.open({
-                message: 'Notification Title',
-                description: 'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+                message: 'Nieuwe afspraak',
+                description: 'Nieuwe afspraak',
+            });
+        }
+
+        mounted() {
+            this.getUser();
+        }
+
+        getUser() {
+            this.$http({
+                url: `auth/user`,
+                method: 'GET'
+            })
+            .then((response: any) => {
+                this.user = response.data.user_data;
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
             });
         }
     }

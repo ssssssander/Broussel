@@ -11,6 +11,9 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueAuth from '@websanova/vue-auth'
+import auth from './auth';
+import router from './router';
 import { message, notification } from 'ant-design-vue';
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
@@ -21,18 +24,14 @@ message.config({
     duration: 2,
 });
 
+Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// Vue.axios.defaults.baseURL = 'http://localhost:8000/api';
-//
-// Vue.use(require('@websanova/vue-auth'), {
-//     auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
-//     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
-//     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-// });
+Vue.axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;
+Vue.use(VueAuth, auth);
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
