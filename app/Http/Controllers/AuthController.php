@@ -40,8 +40,6 @@ class AuthController extends Controller
         $user->password = Hash::make($request->password);
         $user->save();
 
-        $this->login($request);
-
         return response()->json(['status' => 'success'], 200);
     }
     public function login(Request $request) {

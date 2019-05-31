@@ -40,7 +40,7 @@
             });
         }
 
-        mounted() {
+        created() {
             this.getUser();
         }
 

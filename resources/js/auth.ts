@@ -2,7 +2,7 @@ import bearer from '@websanova/vue-auth/drivers/auth/bearer';
 import axios from '@websanova/vue-auth/drivers/http/axios.1.x';
 import router from '@websanova/vue-auth/drivers/router/vue-router.2.x';
 
-const config = {
+const config: any = {
     auth: bearer,
     http: axios,
     router: router,
@@ -12,8 +12,8 @@ const config = {
     authRedirect: { path: '/login' },
     forbiddenRedirect: { path: '/' },
     notFoundRedirect: {path: '/'},
-    registerData: {url: 'auth/register', method: 'POST', redirect: '/app/dashboard'},
-    loginData: {url: 'auth/login', method: 'POST', redirect: '/app/dashboard', fetchUser: true},
+    registerData: {url: 'auth/register', method: 'POST', redirect: undefined},
+    loginData: {url: 'auth/login', method: 'POST', redirect: '/app', fetchUser: true},
     logoutData: {url: 'auth/logout', method: 'POST', redirect: '/', makeRequest: true},
     fetchData: {url: 'auth/user', method: 'GET', enabled: true},
     refreshData: {url: 'auth/refresh', method: 'GET', enabled: true, interval: 30},

@@ -42,17 +42,13 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/app/dashboard',
+            path: '/app',
             name: 'dashboard',
             component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard'),
             meta: {
-                title: 'Dashboard',
+                title: 'App',
                 auth: true,
             }
-        },
-        {
-            path: '/app',
-            redirect: { name: 'dashboard'},
         },
         {
             path: '*',

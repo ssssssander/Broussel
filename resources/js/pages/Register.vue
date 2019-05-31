@@ -3,7 +3,7 @@
         <form @submit.prevent="register" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length || errorType" class="errors">
                 <ul>
-                    <li>
+                    <li v-show="errorType">
                         <span>{{ errorType }}</span>
                     </li>
                     <li v-for="errorArr in errors">
@@ -76,8 +76,21 @@
                     password_confirmation: this.formPasswordConfirmation,
                 },
                 success: (response: any) => {
-                    this.loading = false;
-                    this.$message.success('Je bent met succes geregistreerd!');
+                    this.$auth.login({
+                        params: {
+                            email: this.formEmail,
+                            password: this.formPassword,
+                        },
+                        success: (response: any) => {
+                            this.$message.success('Je bent met succes geregistreerd!');
+                            this.loading = false;
+                        },
+                        error: (error: any) => {
+                            this.$router.push({ name: 'login' });
+                        },
+                        rememberMe: false,
+                        fetchUser: true
+                    });
                 },
                 error: (error: any) => {
                     this.loading = false;

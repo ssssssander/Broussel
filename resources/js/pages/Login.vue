@@ -3,7 +3,7 @@
         <form @submit.prevent="login" class="fullscreen-form" method="post">
             <div v-show="Object.keys(errors).length || errorType" class="errors">
                 <ul>
-                    <li>
+                    <li v-show="errorType">
                         <span>{{ errorType }}</span>
                     </li>
                     <li v-for="errorArr in errors">
@@ -62,7 +62,7 @@
             this.$auth.login({
                 params: {
                     email: this.formEmail,
-                    password: this.formPassword
+                    password: this.formPassword,
                 },
                 success: (response: any) => {
                     this.loading = false;
