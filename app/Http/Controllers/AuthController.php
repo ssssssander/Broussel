@@ -78,7 +78,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'user_data' => $user->toArray(),
+            'user_data' => $user,
         ]);
     }
     public function refresh() {

@@ -7,8 +7,8 @@
                         <span>{{ errorType }}</span>
                     </li>
                     <li v-for="errorArr in errors">
-                        <span v-for="error in errorArr">
-                            {{ error }}
+                        <span v-for="error in errorArr" class="error">
+                            <a-icon type="exclamation-circle" /><span>{{ error }}</span>
                         </span>
                     </li>
                 </ul>
@@ -26,7 +26,7 @@
                 <label for="remember-me"><span></span>Hou me ingelogd</label>
             </div>
             <div class="form-block">
-                <input type="submit" value="Inloggen" class="btn" id="login-btn">
+                <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" id="login-btn" :disabled="loading">
             </div>
         </form>
     </div>
@@ -44,21 +44,20 @@
         errors: object = {};
         errorType: string = '';
         was422: boolean = false;
+        loading: boolean = false;
 
         mounted() {
             document.getElementById('email').focus();
         }
 
         login() {
-            let loginBtnElem: any = document.getElementById('loigin-btn');
-
             if (this.was422) {
                 for (let key of Object.keys(this.errors)) {
                     document.getElementsByName(key)[0].className = '';
                 }
             }
 
-            loginBtnElem.disabled = true;
+            this.loading = true;
 
             this.$auth.login({
                 params: {
@@ -66,12 +65,12 @@
                     password: this.formPassword
                 },
                 success: (response: any) => {
-                    loginBtnElem.disabled = false;
+                    this.loading = false;
                     this.$message.success('Je bent met succes ingelogd!');
                 },
                 error: (error: any) => {
-                    loginBtnElem.disabled = false;
-                    this.$message.error('Niet alle velden zijn juist ingevuld!');
+                    this.loading = false;
+                    this.$message.error('Niet alle velden zijn juist ingevuld.');
 
                     if (error.response.status == 422) {
                         this.errors = error.response.data.errors;
@@ -81,7 +80,7 @@
                         }
                     }
                     else if (error.response.data.error === 'login_error') {
-                        this.errors = { 'login_error': ['Deze combinatie klopt niet!'] };
+                        this.errors = { 'login_error': ['Deze combinatie klopt niet.'] };
                     }
                     else {
                         this.errorType = error.response.status + ' ' + error.response.statusText;

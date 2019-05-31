@@ -7,8 +7,8 @@
                         <span>{{ errorType }}</span>
                     </li>
                     <li v-for="errorArr in errors">
-                        <span v-for="error in errorArr">
-                            {{ error }}
+                        <span v-for="error in errorArr" class="error">
+                            <a-icon type="exclamation-circle" /><span>{{ error }}</span>
                         </span>
                     </li>
                 </ul>
@@ -30,7 +30,7 @@
                 <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" maxlength="255">
             </div>
             <div class="form-block">
-                <input type="submit" value="Registreren" class="btn" id="register-btn">
+                <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" id="register-btn" :disabled="loading">
             </div>
             <div class="form-block text-center">
                 <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
@@ -52,14 +52,13 @@
         errors: object = {};
         errorType: string = '';
         was422: boolean = false;
+        loading: boolean = false;
 
         mounted() {
             document.getElementById('name').focus();
         }
 
         register() {
-            let registerBtnElem: any = document.getElementById('register-btn');
-
             if (this.was422) {
                 for (let key of Object.keys(this.errors)) {
                     document.getElementsByName(key)[0].className = '';
@@ -67,7 +66,7 @@
                 }
             }
 
-            registerBtnElem.disabled = true;
+            this.loading = true;
 
             this.$auth.register({
                 data: {
@@ -77,11 +76,11 @@
                     password_confirmation: this.formPasswordConfirmation,
                 },
                 success: (response: any) => {
-                    registerBtnElem.disabled = false;
+                    this.loading = false;
                     this.$message.success('Je bent met succes geregistreerd!');
                 },
                 error: (error: any) => {
-                    registerBtnElem.disabled = false;
+                    this.loading = false;
                     this.$message.error('Niet alle velden zijn juist ingevuld!');
 
                     if (error.response.status == 422) {

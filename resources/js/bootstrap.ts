@@ -14,7 +14,7 @@ import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth'
 import auth from './auth';
 import router from './router';
-import { message, notification } from 'ant-design-vue';
+import { message, notification, Icon } from 'ant-design-vue';
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
 import 'ant-design-vue/lib/message/style/index.css';
@@ -24,6 +24,7 @@ message.config({
     duration: 2,
 });
 
+Vue.use(Icon);
 Vue.router = router;
 Vue.use(VueAxios, axios);
 Vue.prototype.$message = message;

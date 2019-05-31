@@ -6,6 +6,11 @@
 @import 'forms';
 @import 'buttons';
 
+// Preloading images
+body::after{
+    display: none;
+    content: url("~@/images/button-loader.gif") url("~@/images/checkbox-checked.png");
+}
 * {
     margin: 0;
     padding: 0;
@@ -31,6 +36,9 @@ a {
         text-decoration: underline;
     }
 }
+:disabled {
+    cursor: not-allowed;
+}
 main {
     padding: 60px 0;
 }
@@ -44,6 +52,13 @@ li {
     margin: 0 auto;
     max-width: 1300px;
     padding: 0 1.6em;
+}
+.anticon {
+    margin-right: 5px;
+
+    svg {
+        vertical-align: middle;
+    }
 }
 .bg-svg {
     background: url("~@/images/hero-bg.svg") no-repeat 0 -200px;

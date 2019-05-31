@@ -12,14 +12,13 @@
     color: $light-color;
     border-radius: $default-border-radius;
 
-    li, span {
+    li, li .error {
         display: block;
         margin: 5px 0;
     }
-}
-input[type="submit"]:disabled {
-    cursor: not-allowed;
-    background-color: $gray-color;
+    li .error span {
+        vertical-align: middle;
+    }
 }
 input[type="text"], input[type="email"], input[type="password"] {
     padding: 10px;
