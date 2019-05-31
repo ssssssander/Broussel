@@ -1,17 +1,10 @@
 <template>
-    <div>
+    <div class="app">
         <template v-if="$auth.ready()">
-            <div class="app">
-                <Header></Header>
-                <main>
-                    <router-view></router-view>
-                </main>
-            </div>
-        </template>
-        <template v-else>
-            <div class="wrapper">
-                <h1>Een momentje...</h1>
-            </div>
+            <Header></Header>
+            <main>
+                <router-view></router-view>
+            </main>
         </template>
     </div>
 </template>

@@ -16,11 +16,8 @@ body::after{
     padding: 0;
     box-sizing: border-box;
 }
-:root {
-    font-size: $base-font-size;
-}
 body {
-    font-size: 1rem;
+    font-size: 1.25rem;
     position: relative;
     font-family: $text-font-family;
     line-height: $base-line-height;
@@ -83,11 +80,21 @@ p {
 }
 @for $i from 1 through 6 {
     h#{$i} {
-        font-size: $base-font-size + $heading-scale * (6 - $i);
+        font-size: 1 + 0.4 * (6 - $i) + em;
         margin: 0;
         font-weight: normal;
     }
 }
 .header-border {
     border-bottom: 3px solid $primary-accent-color;
+}
+@media screen and (max-width: 1000px) {
+    body {
+        font-size: 1rem;
+    }
+}
+@media screen and (max-width: 500px) {
+    body {
+        font-size: 0.75rem;
+    }
 }

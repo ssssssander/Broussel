@@ -68,18 +68,18 @@
     }
     .logo {
         font-family: $logo-font-family;
-        font-size: 3rem;
+        font-size: 3em;
         margin-right: 40px;
         text-transform: lowercase;
     }
     nav {
         width: 100%;
-        font-size: 1.1rem;
+        font-size: 1.1em;
         display: flex;
         justify-content: space-between;
     }
-    @media screen and (max-width: 900px) {
-        nav {
+    @media screen and (max-width: 1000px) {
+        nav, .langs {
             display: none;
         }
     }
