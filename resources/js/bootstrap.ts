@@ -14,22 +14,33 @@ import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth'
 import auth from './auth';
 import router from './router';
-import { message, notification, Icon } from 'ant-design-vue';
+
+// Don't import whole ant-design-vue package?
+import { message, notification, Icon, DatePicker, TimePicker, Input } from 'ant-design-vue';
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
+
+// Integrate css in build system?
 import 'ant-design-vue/lib/message/style/index.css';
 import 'ant-design-vue/lib/notification/style/index.css';
+import 'ant-design-vue/lib/date-picker/style/index.css';
+import 'ant-design-vue/lib/time-picker/style/index.css';
+import 'ant-design-vue/lib/input/style/index.css';
 
+// ant-design-vue
 message.config({
     duration: 2,
 });
-
 Vue.use(Icon);
-Vue.router = router;
-Vue.use(VueAxios, axios);
+Vue.use(DatePicker);
+Vue.use(TimePicker);
+Vue.use(Input);
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 
+// Auth
+Vue.router = router;
+Vue.use(VueAxios, axios);
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;
 Vue.use(VueAuth, auth);

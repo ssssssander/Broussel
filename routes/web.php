@@ -12,4 +12,4 @@
 */
 
 // Route to handle page reload in Vue except for api routes
-Route::get('/{any?}', 'PageController@app')->name('app')->where('any', '^(?!api\/)[\/\w\.-]*');
+Route::get('/{any?}', 'AppController@app')->name('app')->where('any', '^(?!api\/)[\/\w\.-]*');

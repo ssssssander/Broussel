@@ -1,10 +1,15 @@
 <template>
     <div class="dashboard">
         <div class="box">
-            <p>{{ user.name }}</p>
-            <p>{{ user.email }}</p>
-            <div class="dashboard-inner">
-                <div class="card" @click="c">
+            <template v-if="Object.keys(user).length">
+                <p>{{ user.name }}</p>
+                <p>{{ user.email }}</p>
+            </template>
+            <template v-else>
+                <p>Laden...</p>
+            </template>
+            <div class="dashboard-inner" @click="toBuddy">
+                <div class="card">
                     <span>+</span>
                     <p>Nieuwe afspraak</p>
                 </div>
@@ -32,12 +37,8 @@
         name: string = 'Dashboard';
         user: object = {};
 
-        c() {
-            this.$message.success('Nieuwe afspraak');
-            this.$notification.open({
-                message: 'Nieuwe afspraak',
-                description: 'Nieuwe afspraak',
-            });
+        toBuddy() {
+            this.$router.push({ name: 'datetime-select' });
         }
 
         created() {

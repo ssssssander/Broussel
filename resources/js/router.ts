@@ -51,6 +51,24 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/app/datetime',
+            name: 'datetime-select',
+            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/DateTimeSelect'),
+            meta: {
+                title: 'Kies datum & tijdstip',
+                auth: true,
+            }
+        },
+        {
+            path: '/app/buddy',
+            name: 'choose-buddy',
+            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/ChooseBuddy'),
+            meta: {
+                title: 'Kies wandelbuddy',
+                auth: true,
+            }
+        },
+        {
             path: '*',
             name: 'error404',
             component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
