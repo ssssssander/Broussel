@@ -30,6 +30,9 @@ input[type="text"], input[type="email"], input[type="password"] {
         border: 2px solid $primary-accent-color;
     }
 }
+form .input-error {
+    border: 2px solid $error-color;
+}
 input[type="checkbox"] {
     display: none;
 
@@ -51,9 +54,6 @@ input[type="checkbox"] {
         background: url("~@/images/checkbox-checked.png") no-repeat;
         background-size: cover;
     }
-}
-form .input-error {
-    border: 2px solid $error-color;
 }
 .fullscreen-form {
     margin: 0 auto;

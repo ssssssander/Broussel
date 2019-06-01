@@ -69,6 +69,24 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/app/calendar',
+            name: 'calendar',
+            component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/Calendar'),
+            meta: {
+                title: 'Kalender',
+                auth: true,
+            }
+        },
+        {
+            path: '/app/buddy/:id',
+            name: 'buddy-detail',
+            component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/BuddyDetail'),
+            meta: {
+                title: 'Wandelbuddy',
+                auth: true,
+            }
+        },
+        {
             path: '*',
             name: 'error404',
             component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
@@ -80,12 +98,9 @@ const router = new VueRouter({
     ],
 });
 
-router.beforeEach((to: any, from: any, next: any) => {
-    document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
-    next();
-});
-
 router.afterEach((to: any, from: any) => {
+    document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
+
     document.getElementsByTagName('header')[0].className = '';
     document.body.className = '';
     let whiteBackgroundPages = ['contact'];

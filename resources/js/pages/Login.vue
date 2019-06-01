@@ -1,18 +1,7 @@
 <template>
     <div class="login">
         <form @submit.prevent="login" class="fullscreen-form" method="post">
-            <div v-show="Object.keys(errors).length || errorType" class="errors">
-                <ul>
-                    <li v-show="errorType">
-                        <span>{{ errorType }}</span>
-                    </li>
-                    <li v-for="errorArr in errors">
-                        <span v-for="error in errorArr" class="error">
-                            <a-icon type="exclamation-circle" /><span>{{ error }}</span>
-                        </span>
-                    </li>
-                </ul>
-            </div>
+            <Error :errors="errors" :errorType="errorType" />
             <div class="form-block">
                 <label for="email">E-mailadres</label>
                 <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
@@ -51,6 +40,10 @@
         }
 
         login() {
+            if (this.loading) {
+                return;
+            }
+
             if (this.was422) {
                 for (let key of Object.keys(this.errors)) {
                     document.getElementsByName(key)[0].className = '';
@@ -59,7 +52,7 @@
 
             this.loading = true;
 
-            this.$auth.login({
+            (this as any).$auth.login({
                 params: {
                     email: this.formEmail,
                     password: this.formPassword,

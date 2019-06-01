@@ -19,6 +19,9 @@
                 </ul>
                 <ul v-if="$auth.check()">
                     <li>
+                        <router-link :to="{ name: 'dashboard' }">App</router-link>
+                    </li>
+                    <li>
                         <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                     </li>
                 </ul>
@@ -42,7 +45,7 @@
         name: string = 'Header';
 
         logout() {
-            this.$auth.logout({
+            (this as any).$auth.logout({
                 success: (response: any) => {
                     this.$message.success('Je bent met succes uitgelogd!');
                 },

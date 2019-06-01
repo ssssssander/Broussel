@@ -14,9 +14,11 @@ import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth'
 import auth from './auth';
 import router from './router';
+import * as moment from 'moment';
+moment.locale('nl-be');
 
 // Don't import whole ant-design-vue package?
-import { message, notification, Icon, DatePicker, TimePicker, Input } from 'ant-design-vue';
+import { message, notification, Icon, DatePicker, TimePicker, Calendar } from 'ant-design-vue';
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
 
@@ -26,6 +28,9 @@ import 'ant-design-vue/lib/notification/style/index.css';
 import 'ant-design-vue/lib/date-picker/style/index.css';
 import 'ant-design-vue/lib/time-picker/style/index.css';
 import 'ant-design-vue/lib/input/style/index.css';
+import 'ant-design-vue/lib/calendar/style/index.css';
+import 'ant-design-vue/lib/select/style/index.css';
+import 'ant-design-vue/lib/radio/style/index.css';
 
 // ant-design-vue
 message.config({
@@ -34,12 +39,12 @@ message.config({
 Vue.use(Icon);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
-Vue.use(Input);
+Vue.use(Calendar);
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 
 // Auth
-Vue.router = router;
+(Vue as any).router = router;
 Vue.use(VueAxios, axios);
 Vue.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 Vue.axios.defaults.baseURL = `${process.env.MIX_APP_URL}/api`;

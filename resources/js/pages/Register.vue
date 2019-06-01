@@ -1,18 +1,7 @@
 <template>
     <div class="register">
         <form @submit.prevent="register" class="fullscreen-form" method="post">
-            <div v-show="Object.keys(errors).length || errorType" class="errors">
-                <ul>
-                    <li v-show="errorType">
-                        <span>{{ errorType }}</span>
-                    </li>
-                    <li v-for="errorArr in errors">
-                        <span v-for="error in errorArr" class="error">
-                            <a-icon type="exclamation-circle" /><span>{{ error }}</span>
-                        </span>
-                    </li>
-                </ul>
-            </div>
+            <Error :errors="errors" :errorType="errorType" />
             <div class="form-block">
                 <label for="name">Naam</label>
                 <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
@@ -59,6 +48,10 @@
         }
 
         register() {
+            if (this.loading) {
+                return;
+            }
+
             if (this.was422) {
                 for (let key of Object.keys(this.errors)) {
                     document.getElementsByName(key)[0].className = '';
@@ -68,7 +61,7 @@
 
             this.loading = true;
 
-            this.$auth.register({
+            (this as any).$auth.register({
                 data: {
                     name: this.formName,
                     email: this.formEmail,
@@ -76,7 +69,7 @@
                     password_confirmation: this.formPasswordConfirmation,
                 },
                 success: (response: any) => {
-                    this.$auth.login({
+                    (this as any).$auth.login({
                         params: {
                             email: this.formEmail,
                             password: this.formPassword,

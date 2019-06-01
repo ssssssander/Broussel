@@ -8,6 +8,8 @@
             <template v-else>
                 <p>Laden...</p>
             </template>
+            <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
+            <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
             <div class="dashboard-inner" @click="toBuddy">
                 <div class="card">
                     <span>+</span>
