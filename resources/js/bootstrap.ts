@@ -14,23 +14,19 @@ import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth'
 import auth from './auth';
 import router from './router';
+
 import * as moment from 'moment';
 moment.locale('nl-be');
 
 // Don't import whole ant-design-vue package?
-import { message, notification, Icon, DatePicker, TimePicker, Calendar } from 'ant-design-vue';
+import { message, notification, Icon, DatePicker, TimePicker, Calendar, LocaleProvider } from 'ant-design-vue';
+
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
-
-// Integrate css in build system?
-import 'ant-design-vue/lib/message/style/index.css';
-import 'ant-design-vue/lib/notification/style/index.css';
-import 'ant-design-vue/lib/date-picker/style/index.css';
-import 'ant-design-vue/lib/time-picker/style/index.css';
-import 'ant-design-vue/lib/input/style/index.css';
-import 'ant-design-vue/lib/calendar/style/index.css';
-import 'ant-design-vue/lib/select/style/index.css';
-import 'ant-design-vue/lib/radio/style/index.css';
+// import Icon from 'ant-design-vue/lib/icon';
+// import DatePicker from 'ant-design-vue/lib/date-picker';
+// import TimePicker from 'ant-design-vue/lib/time-picker';
+// import Calendar from 'ant-design-vue/lib/calendar';
 
 // ant-design-vue
 message.config({
@@ -40,6 +36,8 @@ Vue.use(Icon);
 Vue.use(DatePicker);
 Vue.use(TimePicker);
 Vue.use(Calendar);
+Vue.use(LocaleProvider);
+Vue.prototype.$moment = moment;
 Vue.prototype.$message = message;
 Vue.prototype.$notification = notification;
 

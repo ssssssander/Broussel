@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import store from './store';
 
 Vue.use(VueRouter);
 
@@ -26,7 +27,7 @@ const router = new VueRouter({
         {
             path: '/register',
             name: 'register',
-            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/Register'),
+            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
             meta: {
                 title: 'Registreren',
                 auth: false,
@@ -35,7 +36,7 @@ const router = new VueRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/Login'),
+            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
             meta: {
                 title: 'Log in',
                 auth: false,
@@ -44,7 +45,7 @@ const router = new VueRouter({
         {
             path: '/app',
             name: 'dashboard',
-            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/Dashboard'),
+            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
             meta: {
                 title: 'App',
                 auth: true,
@@ -53,7 +54,7 @@ const router = new VueRouter({
         {
             path: '/app/datetime',
             name: 'datetime-select',
-            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/DateTimeSelect'),
+            component: () => import(/* webpackChunkName: "js/chunks/datetime-select" */ '@/js/pages/app/DateTimeSelect'),
             meta: {
                 title: 'Kies datum & tijdstip',
                 auth: true,
@@ -62,7 +63,7 @@ const router = new VueRouter({
         {
             path: '/app/buddy',
             name: 'choose-buddy',
-            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/ChooseBuddy'),
+            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/app/ChooseBuddy'),
             meta: {
                 title: 'Kies wandelbuddy',
                 auth: true,
@@ -71,7 +72,7 @@ const router = new VueRouter({
         {
             path: '/app/calendar',
             name: 'calendar',
-            component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/Calendar'),
+            component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
             meta: {
                 title: 'Kalender',
                 auth: true,
@@ -80,7 +81,7 @@ const router = new VueRouter({
         {
             path: '/app/buddy/:id',
             name: 'buddy-detail',
-            component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/BuddyDetail'),
+            component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/app/BuddyDetail'),
             meta: {
                 title: 'Wandelbuddy',
                 auth: true,
@@ -99,6 +100,20 @@ const router = new VueRouter({
 });
 
 router.afterEach((to: any, from: any) => {
+    if (to.meta.auth) {
+        if (!Object.keys(store.state.userData).length) {
+            (Vue.prototype as any).$http({
+                url: `auth/user`,
+                method: 'GET'
+            })
+            .then((response: any) => {
+                store.commit('setUserData', response.data.user_data);
+            }, (error: any) => {
+                Vue.prototype.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
+            });
+        }
+    }
+
     document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
 
     document.getElementsByTagName('header')[0].className = '';

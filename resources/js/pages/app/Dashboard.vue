@@ -19,44 +19,31 @@
                     <h3>Chats</h3>
                 </div>
             </div>
-<!--            <div class="chats">-->
-<!--                <div class="chat-block">-->
-<!--                    <span class="avatar"></span>-->
-<!--                    <p class="name">Bart</p>-->
-<!--                    <p class="last-message">Hoi</p>-->
-<!--                    <time datetime="2008-02-14 11:54">11:54</time>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="chats">-->
+            <!--                <div class="chat-block">-->
+            <!--                    <span class="avatar"></span>-->
+            <!--                    <p class="name">Bart</p>-->
+            <!--                    <p class="last-message">Hoi</p>-->
+            <!--                    <time datetime="2008-02-14 11:54">11:54</time>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import { State } from 'vuex-class';
+
 
     @Component
     export default class Dashboard extends Vue {
+        @State('userData') user: any;
+
         name: string = 'Dashboard';
-        user: object = {};
 
         toBuddy() {
             this.$router.push({ name: 'datetime-select' });
-        }
-
-        created() {
-            this.getUser();
-        }
-
-        getUser() {
-            this.$http({
-                url: `auth/user`,
-                method: 'GET'
-            })
-            .then((response: any) => {
-                this.user = response.data.user_data;
-            }, (error: any) => {
-                this.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
-            });
         }
     }
 </script>

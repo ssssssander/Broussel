@@ -39,14 +39,20 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import { State } from 'vuex-class';
 
     @Component
     export default class Header extends Vue {
+        @State('userData') user: any;
+
         name: string = 'Header';
 
         logout() {
             (this as any).$auth.logout({
                 success: (response: any) => {
+                    // Clear store of user data
+                    for (let data in this.user) delete this.user[data];
+
                     this.$message.success('Je bent met succes uitgelogd!');
                 },
                 error: (error: any) => {

@@ -11,6 +11,7 @@
         "watch-prod": "npm run production -- --watch"
     },
     "devDependencies": {
+        "babel-plugin-import": "^1.12.0",
         "browser-sync": "^2.26.5",
         "browser-sync-webpack-plugin": "^2.0.1",
         "cross-env": "^5.1",
@@ -35,6 +36,7 @@
         "vue-class-component": "^7.1.0",
         "vue-property-decorator": "^8.1.1",
         "vue-router": "^3.0.6",
-        "vuex": "^3.1.1"
+        "vuex": "^3.1.1",
+        "vuex-class": "^0.3.2"
     }
 }

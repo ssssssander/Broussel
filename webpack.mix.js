@@ -27,7 +27,19 @@ mix.browserSync('http://localhost:8000');
 mix.disableSuccessNotifications();
 
 mix.ts('resources/js/app.ts', 'public/js/app.js')
-    .sass('resources/sass/global.scss', 'public/css/app.css');
+    .sass('resources/sass/global.scss', 'public/css/global.css')
+    .styles(
+        [
+            'public/css/global.css',
+            'node_modules/ant-design-vue/lib/message/style/index.css',
+            'node_modules/node_modules/ant-design-vue/lib/notification/style/index.css',
+            'node_modules/ant-design-vue/lib/date-picker/style/index.css',
+            'node_modules/ant-design-vue/lib/time-picker/style/index.css',
+            'node_modules/ant-design-vue/lib/input/style/index.css',
+            'node_modules/ant-design-vue/lib/calendar/style/index.css',
+            'node_modules/ant-design-vue/lib/select/style/index.css',
+            'node_modules/ant-design-vue/lib/radio/style/index.css',
+        ], 'public/css/app.css');
 
 if(mix.inProduction()) {
     mix.version();

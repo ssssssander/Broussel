@@ -1,25 +1,29 @@
 <template>
-    <div class="app">
-        <template v-if="$auth.ready()">
-            <Header></Header>
-            <main>
-                <router-view></router-view>
-            </main>
-        </template>
-    </div>
+    <a-locale-provider :locale="nl_BE">
+        <div class="app">
+            <template v-if="$auth.ready()">
+                <Header></Header>
+                <main>
+                    <div class="wrapper">
+                        <router-view></router-view>
+                    </div>
+                </main>
+            </template>
+        </div>
+    </a-locale-provider>
 </template>
 
 <script lang="ts">
-    import { Component, Vue, Watch} from 'vue-property-decorator';
+    import { Component, Vue} from 'vue-property-decorator';
+    import nl_BE from 'ant-design-vue/lib/locale-provider/nl_BE';
 
     @Component
     export default class App extends Vue {
         name: string = 'App';
+        nl_BE: any = nl_BE;
     }
 </script>
 
 <style lang="scss" scoped>
-    h1 {
-        color: $light-color;
-    }
+
 </style>

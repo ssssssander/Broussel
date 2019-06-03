@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <Hero></Hero>
-        <div class="wrapper content">
+        <div class="content">
             <h2>Hoe het werkt</h2>
             <p>Blabla</p>
         </div>

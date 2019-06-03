@@ -4,6 +4,7 @@
         "module": "esnext",
         "strict": true,
         "strictNullChecks": false,
+        "noImplicitThis": false,
         "moduleResolution": "node",
         "experimentalDecorators": true
     },
