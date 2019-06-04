@@ -20,8 +20,10 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('profile_picture_path')->default('default_path');
-            $table->boolean('is_guide')->default(false);
+            $table->boolean('is_buddy')->default(false);
+            $table->string('status')->nullable();
             $table->text('info')->nullable();
+            $table->string('available_times')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -6,21 +6,7 @@
     font-size: 0.6em;
     color: $dark-color-side;
 }
-.errors {
-    padding: 15px;
-    background-color: $error-color;
-    color: $light-color;
-    border-radius: $default-border-radius;
-
-    li, li .error {
-        display: block;
-        margin: 5px 0;
-    }
-    li .error span {
-        vertical-align: middle;
-    }
-}
-input[type="text"], input[type="email"], input[type="password"] {
+input[type="text"], input[type="email"], input[type="password"], textarea {
     padding: 10px;
     border: $light-border;
     border-radius: $default-border-radius;
@@ -68,7 +54,7 @@ input[type="checkbox"] {
         display: block;
     }
 
-    input[type="text"], input[type="email"], input[type="password"] {
+    input[type="text"], input[type="email"], input[type="password"], textarea {
         margin: 5px 0;
         width: 100%;
     }
@@ -76,6 +62,10 @@ input[type="checkbox"] {
     input[type="submit"] {
         width: 100%;
     }
+}
+textarea {
+    resize: none;
+    height: 10em;
 }
 @media screen and (max-width: 900px) {
     .fullscreen-form {

@@ -1,30 +1,37 @@
 <template>
     <div class="register">
-        <form @submit.prevent="register" class="fullscreen-form" method="post">
-            <Error :errors="errors" :errorType="errorType" />
-            <div class="form-block">
-                <label for="name">Naam</label>
-                <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
-            </div>
-            <div class="form-block">
-                <label for="email">E-mailadres</label>
-                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
-            </div>
-            <div class="form-block">
-                <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
-                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" maxlength="255">
-            </div>
-            <div class="form-block">
-                <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
-                <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" maxlength="255">
-            </div>
-            <div class="form-block">
-                <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" id="register-btn" :disabled="loading">
-            </div>
-            <div class="form-block text-center">
-                <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
-            </div>
-        </form>
+        <div class="fullscreen-form">
+            <h1>Begin met wandelen!</h1>
+            <Message
+                message-type="error"
+                :messages="errors"
+                :extra-str="errorType"
+            />
+            <form @submit.prevent="register" method="post">
+                <div class="form-block">
+                    <label for="name">Naam</label>
+                    <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
+                </div>
+                <div class="form-block">
+                    <label for="email">E-mailadres</label>
+                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
+                </div>
+                <div class="form-block">
+                    <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                    <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" maxlength="255">
+                </div>
+                <div class="form-block">
+                    <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
+                    <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" maxlength="255">
+                </div>
+                <div class="form-block">
+                    <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" id="register-btn" :disabled="loading">
+                </div>
+                <div class="form-block text-center">
+                    <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -101,7 +108,7 @@
                         this.errorType = error.response.status + ' ' + error.response.statusText;
                     }
 
-                    document.getElementsByClassName('errors')[0].scrollIntoView();
+                    document.getElementsByClassName('fullscreen-form')[0].scrollIntoView();
                 },
             });
         }

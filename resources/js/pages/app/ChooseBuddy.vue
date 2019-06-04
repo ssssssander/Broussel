@@ -1,20 +1,21 @@
 <template>
     <div class="choose-buddy">
         <div class="box">
-            <template v-if="Object.keys(users).length">
+            <h1>Kies je buddy</h1>
+            <template v-if="Object.keys(buddies).length">
                 <ul>
-                    <li v-for="user in users" @click="select(user)">
-                        <div>{{ user.name }}</div>
+                    <li v-for="buddy in buddies" @click="select(buddy)">
+                        <div>{{ buddy.name }}</div>
                     </li>
                 </ul>
             </template>
             <template v-else>
                 <p>Laden...</p>
             </template>
-            <div v-show="Object.keys(selectedUser).length" class="detail">
-                <div>{{ selectedUser.id }}</div>
-                <div>{{ selectedUser.name }}</div>
-                <div>{{ selectedUser.email }}</div>
+            <div v-show="Object.keys(selectedBuddy).length" class="detail">
+                <div>{{ selectedBuddy.id }}</div>
+                <div>{{ selectedBuddy.name }}</div>
+                <div>{{ selectedBuddy.email }}</div>
                 <button class="btn">Kies</button>
             </div>
         </div>
@@ -27,28 +28,27 @@
     @Component
     export default class ChooseBuddy extends Vue {
         name: string = 'ChooseBuddy';
-        users: object[] = [];
-        selectedUser: object = {};
+        buddies: object[] = [];
+        selectedBuddy: object = {};
 
         created() {
-            this.getUsers();
+            this.getBuddies();
         }
 
-        getUsers() {
+        getBuddies() {
             this.$http({
-                url: `auth/users`,
-                method: 'GET'
+                url: `auth/buddies`,
+                method: 'get'
             })
             .then((response: any) => {
-                console.log(response);
-                this.users = response.data.users_data;
+                this.buddies = response.data.buddies_data;
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
         }
 
-        select(user: object) {
-            this.selectedUser = user;
+        select(buddy: object) {
+            this.selectedBuddy = buddy;
         }
     }
 </script>

@@ -34,6 +34,15 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/register-buddy',
+            name: 'register-buddy',
+            component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
+            meta: {
+                title: 'Word wandelbuddy',
+                auth: false,
+            }
+        },
+        {
             path: '/login',
             name: 'login',
             component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
@@ -104,7 +113,7 @@ router.afterEach((to: any, from: any) => {
         if (!Object.keys(store.state.userData).length) {
             (Vue.prototype as any).$http({
                 url: `auth/user`,
-                method: 'GET'
+                method: 'get'
             })
             .then((response: any) => {
                 store.commit('setUserData', response.data.user_data);

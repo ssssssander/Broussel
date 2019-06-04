@@ -10,8 +10,8 @@
             </template>
             <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
             <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
-            <div class="dashboard-inner" @click="toBuddy">
-                <div class="card">
+            <div class="dashboard-inner">
+                <div class="card" @click="toBuddy">
                     <span>+</span>
                     <p>Nieuwe afspraak</p>
                 </div>
@@ -34,7 +34,6 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import { State } from 'vuex-class';
-
 
     @Component
     export default class Dashboard extends Vue {

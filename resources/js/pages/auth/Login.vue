@@ -1,23 +1,30 @@
 <template>
     <div class="login">
-        <form @submit.prevent="login" class="fullscreen-form" method="post">
-            <Error :errors="errors" :errorType="errorType" />
-            <div class="form-block">
-                <label for="email">E-mailadres</label>
-                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
-            </div>
-            <div class="form-block">
-                <label for="password">Wachtwoord</label>
-                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password" maxlength="255">
-            </div>
-            <div class="form-block">
-                <input type="checkbox" id="remember-me" v-model="rememberMe">
-                <label for="remember-me"><span></span>Hou me ingelogd</label>
-            </div>
-            <div class="form-block">
-                <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" id="login-btn" :disabled="loading">
-            </div>
-        </form>
+        <div class="fullscreen-form">
+            <h1>Log in</h1>
+            <Message
+                message-type="error"
+                :messages="errors"
+                :extra-str="errorType"
+            />
+            <form @submit.prevent="login" method="post">
+                <div class="form-block">
+                    <label for="email">E-mailadres</label>
+                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
+                </div>
+                <div class="form-block">
+                    <label for="password">Wachtwoord</label>
+                    <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password" maxlength="255">
+                </div>
+                <div class="form-block">
+                    <input type="checkbox" id="remember-me" v-model="rememberMe">
+                    <label for="remember-me"><span></span>Hou me ingelogd</label>
+                </div>
+                <div class="form-block">
+                    <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" id="login-btn" :disabled="loading">
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -79,7 +86,7 @@
                         this.errorType = error.response.status + ' ' + error.response.statusText;
                     }
 
-                    document.getElementsByClassName('errors')[0].scrollIntoView();
+                    document.getElementsByClassName('fullscreen-form')[0].scrollIntoView();
                 },
                 rememberMe: this.rememberMe,
                 fetchUser: true

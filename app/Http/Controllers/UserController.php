@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function users(Request $request) {
-        $users = User::all();
+    public function buddies(Request $request) {
+        $buddies = User::where([['is_buddy', true], ['status', 'accepted']]);
 
         return response()->json([
             'status' => 'success',
-            'users_data' => $users->toArray(),
+            'buddies_data' => $buddies->get()->toArray(),
         ]);
     }
 }

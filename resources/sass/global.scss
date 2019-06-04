@@ -78,7 +78,7 @@ p {
 }
 @for $i from 1 through 6 {
     h#{$i} {
-        font-size: 1 + 0.4 * (6 - $i) + em;
+        font-size: 1 + 0.2 * (6 - $i) + em;
         margin: 0;
         font-weight: normal;
     }
