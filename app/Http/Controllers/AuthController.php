@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,23 +40,53 @@ class AuthController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
+        $user->ip_address = $request->ip();
         $user->save();
 
         return response()->json(['status' => 'success'], 200);
     }
 
     public function registerBuddy(Request $request) {
-        $v = Validator::make($request->all(), [
+        $availableTimes = json_decode($request->available_times, true);
+
+        $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'info'  => 'required|string|min:50|max:65000|',
-            'available_times' => 'required|string|max:255|json',
+            'info'  => 'required|string|min:500|max:65000|',
+            'available_times' => 'required|string|max:65000|json',
         ]);
 
-        if ($v->fails())  {
+        $availableTimesValidator = Validator::make($availableTimes, [
+            '*.available' => 'required|boolean',
+            '*.from' => 'present|date_format:H:i',
+            '*.to' => 'present|date_format:H:i|after:*.from',
+        ]);
+
+        $availableTimesValidator->after(function ($validator) use($availableTimes) {
+            $availableBools = array_column($availableTimes, 'available');
+            $atLeastOne = count(array_filter($availableBools, function($var) { return $var; })) >= 1;
+
+            if (!$atLeastOne) {
+                $validator->errors()->add('at_least_one_day', trans('validation.custom.available_times.at_least_one'));
+            }
+            $validator->errors()->add('e', $availableTimes);
+            foreach ($availableTimes as $availableTime) {
+
+//                if ($availableTime['available']) {
+//                    if (empty($availableTime['from']) || empty($availableTime['to'])) {
+//                        $validator->errors()->add(key($availableTimes) . '.empty_time', $availableTime);
+//                        // trans('validation.custom.empty_time')
+//                    }
+//                }
+            }
+        });
+
+        if($requestValidator->fails() || $availableTimesValidator->fails()) {
+            $errors = $requestValidator->errors()->merge($availableTimesValidator->errors());
+
             return response()->json([
                 'status' => 'error',
-                'errors' => $v->errors(),
+                'errors' => $errors,
             ], 422);
         }
 
@@ -63,6 +94,7 @@ class AuthController extends Controller
         $buddy->name = $request->name;
         $buddy->email = $request->email;
         $buddy->password =  Hash::make(Str::random(8)); // To be used later, when buddy is accepted
+        $buddy->ip_address = $request->ip();
         $buddy->info = $request->info;
         $buddy->available_times = $request->available_times;
         $buddy->is_buddy = true;

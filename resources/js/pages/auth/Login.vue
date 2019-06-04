@@ -18,7 +18,7 @@
                 </div>
                 <div class="form-block">
                     <input type="checkbox" id="remember-me" v-model="rememberMe">
-                    <label for="remember-me"><span></span>Hou me ingelogd</label>
+                    <label for="remember-me"><span class="checkbox"></span>Hou me ingelogd</label>
                 </div>
                 <div class="form-block">
                     <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" id="login-btn" :disabled="loading">

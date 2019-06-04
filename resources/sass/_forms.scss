@@ -1,5 +1,5 @@
 .form-block {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 .side-text {
     margin-left: 10px;
@@ -27,16 +27,16 @@ input[type="checkbox"] {
         cursor: pointer;
         user-select: none;
     }
-    & + label span {
+    & + label span.checkbox {
         background: url("~@/images/checkbox-unchecked.png") no-repeat;
         background-size: cover;
         display: inline-block;
         width: 32px;
         height: 32px;
         margin-right: 10px;
-        vertical-align: top;
+        vertical-align: middle;
     }
-    &:checked + label span {
+    &:checked + label span.checkbox {
         background: url("~@/images/checkbox-checked.png") no-repeat;
         background-size: cover;
     }
@@ -44,7 +44,7 @@ input[type="checkbox"] {
 .fullscreen-form {
     margin: 0 auto;
     width: 60%;
-    max-width: 500px;
+    max-width: 600px;
     padding: 30px;
     border-radius: $default-border-radius;
     background-color: $light-color;

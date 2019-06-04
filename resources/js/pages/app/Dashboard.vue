@@ -1,13 +1,12 @@
 <template>
     <div class="dashboard">
         <div class="box">
-            <template v-if="Object.keys(user).length">
-                <p>{{ user.name }}</p>
-                <p>{{ user.email }}</p>
-            </template>
-            <template v-else>
-                <p>Laden...</p>
-            </template>
+            <a-skeleton active :title="false" :paragraph="{ rows: 2, width: [250, 250] }" :loading="!Object.keys(user).length">
+                <div>
+                    <p>{{ user.name }}</p>
+                    <p>{{ user.email }}</p>
+                </div>
+            </a-skeleton>
             <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
             <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
             <div class="dashboard-inner">
@@ -43,6 +42,10 @@
 
         toBuddy() {
             this.$router.push({ name: 'datetime-select' });
+        }
+
+        mounted() {
+            (document.querySelector('.ant-skeleton-paragraph li') as any).style.display = 'block';
         }
     }
 </script>

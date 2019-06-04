@@ -18,48 +18,27 @@
                 </div>
                 <div class="form-block">
                     <label>Beschikbare dagen</label>
-                    <input type="checkbox" id="monday" v-model="availableTimes.monday.available">
-                    <label for="monday"><span></span>Maandag</label>
-                    <a-time-picker
-                        @change="onChangeTime"
-                        format="HH:mm"
-                        :allowEmpty="false"
-                        :minuteStep="5"
-                        :disabled="!availableTimes.monday.available"
-                    />
-                    <a-time-picker
-                        @change="onChangeTime"
-                        format="HH:mm"
-                        :allowEmpty="false"
-                        :minuteStep="5"
-                        :disabled="!availableTimes.monday.available || availableTimes.monday.from"
-                    />
-                    <input type="checkbox" id="tuesday" v-model="availableTimes.tuesday.available">
-                    <label for="tuesday"><span></span>Dinsdag</label>
-                    <a-time-picker
-                        @change="onChangeTime"
-                        format="HH:mm"
-                        :allowEmpty="false"
-                        :minuteStep="5"
-                        :disabled="!availableTimes.tuesday.available"
-                    />
-                    <a-time-picker
-                        @change="onChangeTime"
-                        format="HH:mm"
-                        :allowEmpty="false"
-                        :minuteStep="5"
-                        :disabled="!availableTimes.tuesday.available || availableTimes.tuesday.from"
-                    />
-                    <input type="checkbox" id="wednesday" v-model="availableTimes.wednesday">
-                    <label for="wednesday"><span></span>Woensdag</label>
-                    <input type="checkbox" id="thursday" v-model="availableTimes.thursday">
-                    <label for="thursday"><span></span>Donderdag</label>
-                    <input type="checkbox" id="friday" v-model="availableTimes.friday">
-                    <label for="friday"><span></span>Vrijdag</label>
-                    <input type="checkbox" id="saturday" v-model="availableTimes.saturday">
-                    <label for="saturday"><span></span>Zaterdag</label>
-                    <input type="checkbox" id="sunday" v-model="availableTimes.sunday">
-                    <label for="sunday"><span></span>Zondag</label>
+                    <div v-for="day in Object.keys(timeData.daysOfWeek)" class="time-picker-block" :name="day">
+                        <input type="checkbox" :id="day" v-model="availableTimes[day].available">
+                        <label :for="day"><span class="checkbox"></span>{{ timeData.daysOfWeek[day] }}</label>
+                        <span class="time-pickers">
+                            <a-time-picker
+                                v-for="w in Object.keys(timeData.when)"
+                                :key="day + '.' + w"
+                                :name="day + '.' + w"
+                                @click.native="setCurrentTimePicker(day, w)"
+                                @change="onChangeTime"
+                                :open="openTimePicker(day, w)"
+                                format="HH:mm"
+                                :allowEmpty="false"
+                                :minuteStep="5"
+                                :placeholder="timeData.when[w]"
+                                :disabled="isTimePickerDisabled(day, w)"
+                            >
+                                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose()">Ok</button>
+                            </a-time-picker>
+                        </span>
+                    </div>
                 </div>
                 <div class="form-block">
                     <label for="info">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
@@ -97,7 +76,11 @@
         loading: boolean = false;
         success: boolean = false;
         successStr: string = 'We hebben jouw inschrijving goed ontvangen, we gaan jouw aanmelding bekijken en spoedig krijg je van ons een e-mail, veel succes en nog een fijne dag!';
-        availableTimes: object = {
+        currentTimePicker: any = {
+            day: '',
+            when: '',
+        };
+        availableTimes: any = {
             monday: {
                 available: false,
                 from: '',
@@ -108,20 +91,80 @@
                 from: '',
                 to: '',
             },
-            wednesday: false,
-            thursday: false,
-            friday: false,
-            saturday: false,
-            sunday: false,
+            wednesday: {
+                available: false,
+                from: '',
+                to: '',
+            },
+            thursday: {
+                available: false,
+                from: '',
+                to: '',
+            },
+            friday: {
+                available: false,
+                from: '',
+                to: '',
+            },
+            saturday: {
+                available: false,
+                from: '',
+                to: '',
+            },
+            sunday: {
+                available: false,
+                from: '',
+                to: '',
+            },
         };
+        timeData: any = {
+            daysOfWeek: {
+                'monday': 'Maandag',
+                'tuesday': 'Dinsdag',
+                'wednesday': 'Woensdag',
+                'thursday': 'Donderdag',
+                'friday': 'Vrijdag',
+                'saturday': 'Zaterdag',
+                'sunday': 'Zondag',
+            },
+            when: {
+                'from': 'Van',
+                'to': 'Tot',
+            }
+        };
+
+        // minlength="50"
 
         mounted() {
             document.getElementById('name').focus();
         }
 
+        isTimePickerDisabled(day: string, when: string) {
+            if (when == 'from') {
+                return !this.availableTimes[day].available;
+            }
+            if (when == 'to') {
+                return !this.availableTimes[day].available || this.availableTimes[day].from == '';
+            }
+        }
+
+        setCurrentTimePicker(day: string, when: string) {
+            this.currentTimePicker.day = day;
+            this.currentTimePicker.when = when;
+        }
+
+        openTimePicker(day: string, when: string) {
+            return !this.isTimePickerDisabled(day, when) && this.currentTimePicker.day == day && this.currentTimePicker.when == when;
+        }
+
         onChangeTime(time: any, timeString: string) {
-            console.log(time);
-            console.log(timeString);
+            this.availableTimes[this.currentTimePicker.day][this.currentTimePicker.when] = timeString;
+        }
+
+        handleClose() {
+            this.currentTimePicker.day = '';
+            this.currentTimePicker.when = '';
+            console.log(this.availableTimes);
         }
 
         registerBuddy() {
@@ -131,7 +174,9 @@
 
             if (this.was422) {
                 for (let key of Object.keys(this.errors)) {
-                    document.getElementsByName(key)[0].className = '';
+                    if (document.getElementsByName(key)[0]) {
+                        document.getElementsByName(key)[0].className = '';
+                    }
                 }
             }
 
@@ -151,15 +196,19 @@
                 this.$message.success('Je inschrijving is goed ontvangen!');
                 this.success = true;
             }, (error: any) => {
+                console.log(error.response);
                 this.loading = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 
                 if (error.response.status == 422) {
+                    console.log(error.response);
                     this.errors = error.response.data.errors;
                     for (let key of Object.keys(this.errors)) {
-                        document.getElementsByName(key)[0].className = 'input-error';
-                        this.was422 = true;
+                        if (document.getElementsByName(key)[0]) {
+                            document.getElementsByName(key)[0].className = 'input-error';
+                        }
                     }
+                    this.was422 = true;
                 }
                 else {
                     this.errorType = error.response.status + ' ' + error.response.statusText;
@@ -172,5 +221,10 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .time-picker-block label {
+        width: 9em;
+    }
+    .time-pickers .ant-time-picker {
+        margin-right: 10px;
+    }
 </style>

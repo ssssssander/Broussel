@@ -20,7 +20,7 @@
                 :minuteStep="5"
                 :disabled="isFromTimePickerDisabled"
             >
-                <button slot="addon" slot-scope="panel" class="time-picker btn" @click="handleClose">Ok</button>
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
             </a-time-picker>
             <a-time-picker
                 @change="onChangeToTime"
@@ -33,7 +33,7 @@
                 :minuteStep="5"
                 :disabled="isToTimePickerDisabled"
             >
-                <button slot="addon" slot-scope="panel" class="time-picker btn" @click="handleClose">Ok</button>
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
             </a-time-picker>
             <button class="btn" @click="next">Kies</button>
         </div>
@@ -124,7 +124,5 @@
 </script>
 
 <style lang="scss" scoped>
-    .time-picker.btn {
-        width: 100%;
-    }
+
 </style>

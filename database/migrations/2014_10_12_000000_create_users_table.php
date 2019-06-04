@@ -23,7 +23,8 @@ class CreateUsersTable extends Migration
             $table->boolean('is_buddy')->default(false);
             $table->string('status')->nullable();
             $table->text('info')->nullable();
-            $table->string('available_times')->nullable();
+            $table->text('available_times')->nullable();
+            $table->ipAddress('ip_address');
             $table->rememberToken();
             $table->timestamps();
         });

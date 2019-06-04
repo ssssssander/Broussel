@@ -18,8 +18,8 @@ class CreateAppointmentsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('guide_id')->unsigned();
             $table->date('day');
-            $table->time('time_begin');
-            $table->time('time_end');
+            $table->time('time_from');
+            $table->time('time_to');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
