@@ -27,6 +27,7 @@
                 :open.sync="isToTimePickerOpen"
                 format="HH:mm"
                 :allowEmpty="false"
+                inputReadOnly
                 :defaultOpenValue="moment($store.state.selectedFromTime).add(2, 'hours')"
                 :disabledHours="disabledHours"
                 :disabledMinutes="disabledMinutes"

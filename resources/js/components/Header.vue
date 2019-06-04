@@ -87,11 +87,6 @@
         display: flex;
         justify-content: space-between;
     }
-    @media screen and (max-width: 1000px) {
-        nav, .langs {
-            display: none;
-        }
-    }
     li {
         margin: 0 10px;
     }

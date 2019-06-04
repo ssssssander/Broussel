@@ -35,7 +35,7 @@
 
         li, li .message-item {
             display: block;
-            margin: 5px 0;
+            margin: 10px 0;
         }
         li .message-item span {
             vertical-align: middle;

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -52,14 +51,14 @@ class AuthController extends Controller
         $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'info'  => 'required|string|min:500|max:65000|',
+            'info'  => 'required|string|min:500|max:65000|', // min:50
             'available_times' => 'required|string|max:65000|json',
         ]);
 
         $availableTimesValidator = Validator::make($availableTimes, [
             '*.available' => 'required|boolean',
-            '*.from' => 'present|date_format:H:i',
-            '*.to' => 'present|date_format:H:i|after:*.from',
+            '*.from' => 'required|date_format:H:i|',
+            '*.to' => 'required|date_format:H:i|after:*.from',
         ]);
 
         $availableTimesValidator->after(function ($validator) use($availableTimes) {
@@ -68,16 +67,6 @@ class AuthController extends Controller
 
             if (!$atLeastOne) {
                 $validator->errors()->add('at_least_one_day', trans('validation.custom.available_times.at_least_one'));
-            }
-            $validator->errors()->add('e', $availableTimes);
-            foreach ($availableTimes as $availableTime) {
-
-//                if ($availableTime['available']) {
-//                    if (empty($availableTime['from']) || empty($availableTime['to'])) {
-//                        $validator->errors()->add(key($availableTimes) . '.empty_time', $availableTime);
-//                        // trans('validation.custom.empty_time')
-//                    }
-//                }
             }
         });
 
@@ -93,7 +82,7 @@ class AuthController extends Controller
         $buddy = new User;
         $buddy->name = $request->name;
         $buddy->email = $request->email;
-        $buddy->password =  Hash::make(Str::random(8)); // To be used later, when buddy is accepted
+        $buddy->password =  Hash::make(Str::random(8)); // To be used later, when buddy is accepted???
         $buddy->ip_address = $request->ip();
         $buddy->info = $request->info;
         $buddy->available_times = $request->available_times;
