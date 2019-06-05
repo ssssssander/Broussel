@@ -48,7 +48,7 @@
                     <textarea v-model="formInfo" id="info" name="info" required maxlength="65000"></textarea>
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Inschrijven als wandelbuddy" :class="[{ 'btn-loading': loading }, 'btn']" id="register-btn" :disabled="loading">
+                    <input type="submit" value="Inschrijven als wandelbuddy" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
                 </div>
                 <div class="form-block text-center">
                     <router-link :to="{ name: 'login' }" class="link">Ben je al een wandelbuddy? Log hier in.</router-link>

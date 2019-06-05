@@ -174,6 +174,8 @@ return [
         'year'                  => 'Jaar',
 
         'info'                  => 'Informatie',
+        'from'                  => 'Van',
+        'to'                    => 'Tot',
         '*.from'                => 'Van',
         '*.to'                  => 'Tot',
     ],

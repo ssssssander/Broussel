@@ -172,6 +172,8 @@ return [
         'size'                  => 'Taille',
 
         'info'                  => 'information',
+        'from'                  => 'Du',
+        'to'                    => 'Au',
         '*.from'                => 'Du',
         '*.to'                  => 'Au',
     ],

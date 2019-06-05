@@ -25,7 +25,7 @@
                     <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" id="register-btn" :disabled="loading">
+                    <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
                 </div>
                 <div class="form-block text-center">
                     <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>

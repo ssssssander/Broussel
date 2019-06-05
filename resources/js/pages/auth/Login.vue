@@ -21,7 +21,7 @@
                     <label for="remember-me"><span class="checkbox"></span>Hou me ingelogd</label>
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" id="login-btn" :disabled="loading">
+                    <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
                 </div>
             </form>
         </div>
@@ -65,7 +65,6 @@
                     password: this.formPassword,
                 },
                 success: (response: any) => {
-                    this.loading = false;
                     this.$message.success('Je bent met succes ingelogd!');
                 },
                 error: (error: any) => {

@@ -45,7 +45,8 @@
         }
 
         mounted() {
-            (document.querySelector('.ant-skeleton-paragraph li') as any).style.display = 'block';
+            let skeletonBlock: any = document.querySelector('.ant-skeleton-paragraph li');
+            if (skeletonBlock) skeletonBlock.style.display = 'block';
         }
     }
 </script>

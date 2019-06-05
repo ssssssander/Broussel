@@ -22,5 +22,6 @@ Route::prefix('auth')->group(function () {
         Route::get('user', 'AuthController@user');
         Route::post('logout', 'AuthController@logout');
         Route::get('buddies', 'UserController@buddies');
+        Route::post('validate-datetime', 'DateTimeController@validateDateTime');
     });
 });
