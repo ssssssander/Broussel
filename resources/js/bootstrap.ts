@@ -19,7 +19,7 @@ import * as moment from 'moment';
 moment.locale('nl-be');
 
 // Don't import whole ant-design-vue package?
-import { message, notification, Icon, DatePicker, TimePicker, Calendar, LocaleProvider, Skeleton } from 'ant-design-vue';
+import { message, notification, Icon, DatePicker, TimePicker, Calendar, LocaleProvider, Skeleton, Divider } from 'ant-design-vue';
 
 // import message from 'ant-design-vue/lib/message';
 // import notification from 'ant-design-vue/lib/notification';
@@ -38,6 +38,7 @@ Vue.use(TimePicker);
 Vue.use(Calendar);
 Vue.use(LocaleProvider);
 Vue.use(Skeleton);
+Vue.use(Divider);
 
 Vue.prototype.$moment = moment;
 Vue.prototype.$message = message;

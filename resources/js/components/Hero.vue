@@ -4,7 +4,7 @@
             <h1>Ontdek het groen in Brussel</h1>
             <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
             <div class="buttons">
-                <router-link :to="{ name: 'register' }" class="btn btn-start">Begin nu</router-link>
+                <router-link :to="{ name: $auth.check() ? 'dashboard' : 'register' }" class="btn btn-start">Begin nu</router-link>
                 <router-link :to="{ name: 'register-buddy' }" class="link">Of wordt een wandelbuddy →</router-link>
             </div>
         </div>

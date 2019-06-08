@@ -10,19 +10,18 @@
                         <router-link :to="{ name: 'contact' }">Contact</router-link>
                     </li>
                 </ul>
-                <ul v-if="!$auth.check()">
+                <ul v-if="$auth.check()">
+                    <li>
+                        <router-link :to="{ name: 'dashboard' }">App</router-link>
+                    </li><li>
+                        <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
+                    </li>
+                </ul>
+                <ul v-else>
                     <li>
                         <router-link :to="{ name: 'login' }">Log in</router-link>
                     </li><li>
                         <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
-                    </li>
-                </ul>
-                <ul v-if="$auth.check()">
-                    <li>
-                        <router-link :to="{ name: 'dashboard' }">App</router-link>
-                    </li>
-                    <li>
-                        <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                     </li>
                 </ul>
             </nav>

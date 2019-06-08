@@ -45,7 +45,7 @@
         formEmail: string = '';
         formPassword: string = '';
         formPasswordConfirmation: string = '';
-        errors: object = {};
+        errors: any = {};
         errorType: string = '';
         was422: boolean = false;
         loading: boolean = false;

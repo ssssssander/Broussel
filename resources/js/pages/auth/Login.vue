@@ -37,7 +37,7 @@
         formEmail: string = '';
         formPassword: string = '';
         rememberMe: boolean = false;
-        errors: object = {};
+        errors: any = {};
         errorType: string = '';
         was422: boolean = false;
         loading: boolean = false;

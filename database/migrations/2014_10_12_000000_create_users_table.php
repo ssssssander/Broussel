@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('status')->nullable();
             $table->text('info')->nullable();
             $table->text('available_times')->nullable();
-            $table->ipAddress('ip_address');
+            $table->ipAddress('ip_address')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

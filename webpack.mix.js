@@ -40,6 +40,7 @@ mix.ts('resources/js/app.ts', 'public/js/app.js')
             'node_modules/ant-design-vue/lib/select/style/index.css',
             'node_modules/ant-design-vue/lib/radio/style/index.css',
             'node_modules/ant-design-vue/lib/skeleton/style/index.css',
+            'node_modules/ant-design-vue/lib/divider/style/index.css',
         ], 'public/css/app.css');
 
 if(mix.inProduction()) {

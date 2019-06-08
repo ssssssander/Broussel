@@ -6,9 +6,9 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         userData: {},
-        selectedDate: {},
-        selectedFromTime: {},
-        selectedToTime: {},
+        selectedDate: '',
+        selectedFromTime: '',
+        selectedToTime: '',
     },
     mutations: {
         setUserData(state: any, data: any) {

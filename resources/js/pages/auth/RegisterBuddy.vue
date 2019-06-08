@@ -29,8 +29,10 @@
                                 @click.native="setCurrentTimePicker(day, w)"
                                 @change="onChangeTime"
                                 :open="openTimePicker(day, w)"
+                                size="large"
                                 format="HH:mm"
                                 :allowEmpty="false"
+                                :defaultOpenValue="$moment().startOf('hour')"
                                 inputReadOnly
                                 :minuteStep="5"
                                 :placeholder="timeData.when[w]"
@@ -45,7 +47,7 @@
                 </div>
                 <div class="form-block">
                     <label for="info">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
-                    <textarea v-model="formInfo" id="info" name="info" required maxlength="65000"></textarea>
+                    <textarea v-model="formInfo" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
                 </div>
                 <div class="form-block">
                     <input type="submit" value="Inschrijven als wandelbuddy" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
@@ -72,7 +74,7 @@
         formName: string = '';
         formEmail: string = '';
         formInfo: string = '';
-        errors: object = {};
+        errors: any = {};
         errorType: string = '';
         was422: boolean = false;
         loading: boolean = false;
@@ -142,8 +144,6 @@
                 'to': 'Tot',
             }
         };
-
-        // minlength="50"
 
         mounted() {
             document.getElementById('name').focus();
@@ -218,7 +218,6 @@
                 this.$message.success('Je inschrijving is goed ontvangen!');
                 this.success = true;
             }, (error: any) => {
-                console.log(error.response);
                 this.loading = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 

@@ -39,7 +39,7 @@ const router = new VueRouter({
             component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
             meta: {
                 title: 'Word wandelbuddy',
-                auth: false,
+                auth: undefined,
             }
         },
         {
@@ -61,20 +61,11 @@ const router = new VueRouter({
             }
         },
         {
-            path: '/app/datetime',
-            name: 'datetime-select',
-            component: () => import(/* webpackChunkName: "js/chunks/datetime-select" */ '@/js/pages/app/DateTimeSelect'),
+            path: '/app/find',
+            name: 'find-buddies',
+            component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
             meta: {
-                title: 'Kies datum & tijdstip',
-                auth: true,
-            }
-        },
-        {
-            path: '/app/buddy',
-            name: 'choose-buddy',
-            component: () => import(/* webpackChunkName: "js/chunks/choose-buddy" */ '@/js/pages/app/ChooseBuddy'),
-            meta: {
-                title: 'Kies wandelbuddy',
+                title: 'Vind een wandelbuddy',
                 auth: true,
             }
         },
@@ -107,6 +98,20 @@ const router = new VueRouter({
         }
     ],
 });
+
+// router.beforeEach((to: any, from: any, next: any) => {
+//     if (to.name == 'choose-buddy') {
+//         if (from.name == 'datetime-select') {
+//             next();
+//         }
+//         else {
+//             next({ name: 'home' });
+//         }
+//     }
+//     else {
+//         next();
+//     }
+// });
 
 router.afterEach((to: any, from: any) => {
     if (to.meta.auth) {

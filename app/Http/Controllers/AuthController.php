@@ -51,7 +51,7 @@ class AuthController extends Controller
         $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'info'  => 'required|string|min:500|max:65000|', // min:50
+            'info'  => 'required|string|min:50|max:65000|',
             'available_times' => 'required|string|max:65000|json',
         ]);
 
@@ -125,7 +125,7 @@ class AuthController extends Controller
     }
 
     public function user(Request $request) {
-        $user = User::find(Auth::user()->id);
+        $user = User::find(Auth::id());
 
         return response()->json([
             'status' => 'success',

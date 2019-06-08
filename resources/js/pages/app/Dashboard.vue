@@ -41,7 +41,7 @@
         name: string = 'Dashboard';
 
         toBuddy() {
-            this.$router.push({ name: 'datetime-select' });
+            this.$router.push({ name: 'find-buddies' });
         }
 
         mounted() {

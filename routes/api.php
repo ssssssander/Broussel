@@ -21,7 +21,6 @@ Route::prefix('auth')->group(function () {
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('user', 'AuthController@user');
         Route::post('logout', 'AuthController@logout');
-        Route::get('buddies', 'UserController@buddies');
-        Route::post('validate-datetime', 'DateTimeController@validateDateTime');
+        Route::post('find-buddies', 'UserController@findBuddies');
     });
 });

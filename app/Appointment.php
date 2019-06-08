@@ -10,6 +10,10 @@ class Appointment extends Model
         'user_id', 'guide_id', 'day', 'time_begin', 'time_end',
     ];
 
+    protected $casts = [
+        'date' => 'date',
+    ];
+
     public function user() {
         return $this->belongsTo('App\User');
     }
