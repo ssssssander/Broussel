@@ -263,6 +263,11 @@
                     minutesToBeDisabled.push(i);
                 }
             }
+            else {
+                for (let i = 0; i < 60; i++) {
+                    minutesToBeDisabled.push(i);
+                }
+            }
 
             return minutesToBeDisabled;
         }

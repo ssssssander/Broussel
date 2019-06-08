@@ -5,6 +5,7 @@
 @import 'normalize';
 @import 'forms';
 @import 'buttons';
+@import 'ant-override';
 
 // Preloading images
 body::after{
@@ -51,7 +52,7 @@ li {
     padding: 0 1.6em;
 }
 .bg-svg {
-    background: url("~@/images/hero-bg.svg") no-repeat 0 -200px;
+    background: url("~@/images/hero-bg.svg") no-repeat 0 -150px;
     background-size: cover;
 }
 .bg-gradient {
