@@ -1,8 +1,6 @@
 <template>
     <div class="buddy-detail">
-        <div class="box">
-            ABC
-        </div>
+        <h1>Detail</h1>
     </div>
 </template>
 

@@ -1,9 +1,7 @@
 <template>
     <div class="calendar">
-        <div class="box">
-            <h1>Kalender</h1>
-            <a-calendar @panelChange="onPanelChange" @select="onSelect" />
-        </div>
+        <h1>Kalender</h1>
+        <a-calendar @panelChange="onPanelChange" @select="onSelect" />
     </div>
 </template>
 

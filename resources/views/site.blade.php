@@ -18,6 +18,6 @@
     <title>{{ config('app.name', 'Broussel') }}</title>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="site"></div>
 </body>
 </html>

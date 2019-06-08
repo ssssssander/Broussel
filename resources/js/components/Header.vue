@@ -5,7 +5,9 @@
             <nav>
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'register-buddy' }">Voor wandelbuddies</router-link>
+                        <router-link :to="{ name: 'faq' }">FAQ</router-link>
+                    </li><li>
+                        <router-link :to="{ name: 'register-buddy' }">Word wandelbuddy</router-link>
                     </li><li>
                         <router-link :to="{ name: 'contact' }">Contact</router-link>
                     </li>

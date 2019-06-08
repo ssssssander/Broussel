@@ -26,13 +26,13 @@ files.keys().map((key: any) => Vue.component(key.split('/').pop().split('.')[0],
 
 import router from './router';
 import store from './store';
-import App from './layouts/App';
+import Site from './layouts/Site';
 import Vue from 'vue';
 
-const app = new Vue({
-    el: '#app',
-    components: { App },
+const site = new Vue({
+    el: '#site',
+    components: { Site },
     router,
     store,
-    render: app => app(App),
+    render: app => app(Site),
 });

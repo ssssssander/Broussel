@@ -1,32 +1,30 @@
 <template>
     <div class="dashboard">
-        <div class="box">
-            <a-skeleton active :title="false" :paragraph="{ rows: 2, width: [250, 250] }" :loading="!Object.keys(user).length">
-                <div>
-                    <p>{{ user.name }}</p>
-                    <p>{{ user.email }}</p>
-                </div>
-            </a-skeleton>
-            <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
-            <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
-            <div class="dashboard-inner">
-                <div class="card" @click="toBuddy">
-                    <span>+</span>
-                    <p>Nieuwe afspraak</p>
-                </div>
-                <div class="chats">
-                    <h3>Chats</h3>
-                </div>
+        <a-skeleton active :title="false" :paragraph="{ rows: 2, width: [250, 250] }" :loading="!Object.keys(user).length">
+            <div>
+                <p>{{ user.name }}</p>
+                <p>{{ user.email }}</p>
             </div>
-            <!--            <div class="chats">-->
-            <!--                <div class="chat-block">-->
-            <!--                    <span class="avatar"></span>-->
-            <!--                    <p class="name">Bart</p>-->
-            <!--                    <p class="last-message">Hoi</p>-->
-            <!--                    <time datetime="2008-02-14 11:54">11:54</time>-->
-            <!--                </div>-->
-            <!--            </div>-->
+        </a-skeleton>
+        <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
+        <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
+        <div class="dashboard-inner">
+            <div class="card" @click="toBuddy">
+                <span>+</span>
+                <p>Nieuwe afspraak</p>
+            </div>
+            <div class="chats">
+                <h3>Chats</h3>
+            </div>
         </div>
+        <!--            <div class="chats">-->
+        <!--                <div class="chat-block">-->
+        <!--                    <span class="avatar"></span>-->
+        <!--                    <p class="name">Bart</p>-->
+        <!--                    <p class="last-message">Hoi</p>-->
+        <!--                    <time datetime="2008-02-14 11:54">11:54</time>-->
+        <!--                </div>-->
+        <!--            </div>-->
     </div>
 </template>
 

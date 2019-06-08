@@ -16,6 +16,15 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/faq',
+            name: 'faq',
+            component: () => import(/* webpackChunkName: "js/chunks/faq" */ '@/js/pages/FAQ'),
+            meta: {
+                title: 'FAQ',
+                auth: undefined,
+            },
+        },
+        {
             path: '/contact',
             name: 'contact',
             component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact'),
@@ -53,39 +62,45 @@ const router = new VueRouter({
         },
         {
             path: '/app',
-            name: 'dashboard',
-            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
-            meta: {
-                title: 'App',
-                auth: true,
-            }
-        },
-        {
-            path: '/app/find',
-            name: 'find-buddies',
-            component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
-            meta: {
-                title: 'Vind een wandelbuddy',
-                auth: true,
-            }
-        },
-        {
-            path: '/app/calendar',
-            name: 'calendar',
-            component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
-            meta: {
-                title: 'Kalender',
-                auth: true,
-            }
-        },
-        {
-            path: '/app/buddy/:id',
-            name: 'buddy-detail',
-            component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/app/BuddyDetail'),
-            meta: {
-                title: 'Wandelbuddy',
-                auth: true,
-            }
+            component: () => import(/* webpackChunkName: "js/chunks/app" */ '@/js/layouts/App'),
+            children: [
+                {
+                    path: '',
+                    name: 'dashboard',
+                    component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
+                    meta: {
+                        title: 'Dashboard',
+                        auth: true,
+                    }
+                },
+                {
+                    path: 'find',
+                    name: 'find-buddies',
+                    component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
+                    meta: {
+                        title: 'Vind een wandelbuddy',
+                        auth: true,
+                    }
+                },
+                {
+                    path: 'calendar',
+                    name: 'calendar',
+                    component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
+                    meta: {
+                        title: 'Kalender',
+                        auth: true,
+                    }
+                },
+                {
+                    path: 'buddy/:id',
+                    name: 'buddy-detail',
+                    component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/app/BuddyDetail'),
+                    meta: {
+                        title: 'Wandelbuddy',
+                        auth: true,
+                    }
+                },
+            ]
         },
         {
             path: '*',
@@ -132,7 +147,7 @@ router.afterEach((to: any, from: any) => {
 
     document.getElementsByTagName('header')[0].className = '';
     document.body.className = '';
-    let whiteBackgroundPages = ['contact'];
+    let whiteBackgroundPages = ['contact', 'faq'];
 
     if (to.name == 'home') {
         document.body.className = 'bg-svg';

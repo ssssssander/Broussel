@@ -38,3 +38,21 @@ declare module 'ant-design-vue/lib/calendar' {
     const calendar: Calendar;
     export default calendar;
 }
+
+declare module 'ant-design-vue/lib/locale-provider' {
+    import { LocaleProvider } from 'ant-design-vue/types/locale-provider';
+    const localeProvider: LocaleProvider;
+    export default localeProvider;
+}
+
+declare module 'ant-design-vue/lib/skeleton' {
+    import { Skeleton } from 'ant-design-vue/types/skeleton';
+    const skeleton: Skeleton;
+    export default skeleton;
+}
+
+declare module 'ant-design-vue/lib/divider' {
+    import { Divider } from 'ant-design-vue/types/divider';
+    const divider: Divider;
+    export default divider;
+}

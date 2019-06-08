@@ -1,6 +1,6 @@
 <template>
-    <div class="app box">
-        <router-view></router-view>
+    <div class="faq">
+        <h1>FAQ</h1>
     </div>
 </template>
 
@@ -8,8 +8,8 @@
     import { Component, Vue } from 'vue-property-decorator';
     
     @Component
-    export default class App extends Vue {
-        name: string = 'App';
+    export default class FAQ extends Vue {
+        name: string = 'FAQ';
     }
 </script>
 

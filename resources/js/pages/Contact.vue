@@ -1,5 +1,6 @@
 <template>
     <div class="contact">
+        <h1>Contact</h1>
         <h1>h1 Heading</h1>
         <h2>h2 Heading</h2>
         <h3>h3 Heading</h3>

@@ -1,94 +1,93 @@
 <template>
     <div class="find-buddies">
-        <div class="box">
-            <Message
-                v-if="!success"
-                message-type="error"
-                :messages="errors"
-                :extra-str="errorType"
+        <h1>Vind wandelbuddies</h1>
+        <Message
+            v-if="!success"
+            message-type="error"
+            :messages="errors"
+            :extra-str="errorType"
+        />
+        <form @submit.prevent="findBuddies" action="post">
+            <a-date-picker
+                @change="onChangeDate"
+                size="large"
+                :disabledDate="disabledDate"
+                format="DD/MM/YYYY"
+                :showToday="false"
+                :allowClear="false"
             />
-            <form @submit.prevent="findBuddies" action="post">
-                <a-date-picker
-                    @change="onChangeDate"
-                    size="large"
-                    :disabledDate="disabledDate"
-                    format="DD/MM/YYYY"
-                    :showToday="false"
-                    :allowClear="false"
-                />
-                <a-time-picker
-                    @change="onChangeFromTime"
-                    :open.sync="isFromTimePickerOpen"
-                    size="large"
-                    format="HH:mm"
-                    :allowEmpty="false"
-                    inputReadOnly
-                    :defaultOpenValue="$moment().add(2, 'hours').startOf('hour')"
-                    :disabledHours="disabledHours"
-                    :disabledMinutes="disabledMinutes"
-                    :minuteStep="5"
-                    placeholder="Van"
-                    :disabled="isFromTimePickerDisabled"
-                >
-                    <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
-                </a-time-picker>
-                <a-time-picker
-                    @change="onChangeToTime"
-                    :open.sync="isToTimePickerOpen"
-                    size="large"
-                    format="HH:mm"
-                    :allowEmpty="false"
-                    inputReadOnly
-                    :defaultOpenValue="moment($store.state.selectedFromTime, 'HH:mm').add(2, 'hours').startOf('hour')"
-                    :disabledHours="disabledHours"
-                    :disabledMinutes="disabledMinutes"
-                    :minuteStep="5"
-                    placeholder="Tot"
-                    :disabled="isToTimePickerDisabled"
-                >
-                    <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
-                </a-time-picker>
-                <input type="submit" value="Zoek" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
-            </form>
-            <div v-if="success" class="buddies">
-                <div class="side">
-                    <input type="search" v-model="search" placeholder="Zoeken op naam">
-                    <a-skeleton active :title="false" :paragraph="{ rows: 5, width: [250, 250] }" :loading="loading">
-                        <ul>
-                            <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)">
-                                {{ buddy.name }}
-                            </li>
-                        </ul>
-                    </a-skeleton>
-                </div>
-                <div class="detail">
-                    <div v-if="Object.keys(selectedBuddy).length">
-                        <h2>{{ selectedBuddy.name }}</h2>
-                        <a-divider />
-                        <p>{{ selectedBuddy.info }}</p>
-                        <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-                            <p>{{ buddyInfo.day }}</p>
-                            <p>{{ buddyInfo.from }}</p>
-                            <p>{{ buddyInfo.to }}</p>
-                        </div>
-                        <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
-                        <PayPal
-                            :amount="selectedBuddy.price.toString()"
-                            currency="EUR"
-                            :client="payPalCredentials"
-                            env="sandbox"
-                            locale="nl_BE"
-                            :button-style="payPalButtonStyle"
-                        />
-                        <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
-                        <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
-                        <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
-                    </div>
-                    <div v-else>Klik op namen om meer info te zien</div>
-                </div>
+            <a-time-picker
+                @change="onChangeFromTime"
+                :open.sync="isFromTimePickerOpen"
+                size="large"
+                format="HH:mm"
+                :allowEmpty="false"
+                inputReadOnly
+                :defaultOpenValue="$moment().add(2, 'hours').startOf('hour')"
+                :disabledHours="disabledHours"
+                :disabledMinutes="disabledMinutes"
+                :minuteStep="5"
+                placeholder="Van"
+                :disabled="isFromTimePickerDisabled"
+            >
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
+            </a-time-picker>
+            <a-time-picker
+                @change="onChangeToTime"
+                :open.sync="isToTimePickerOpen"
+                size="large"
+                format="HH:mm"
+                :allowEmpty="false"
+                inputReadOnly
+                :defaultOpenValue="moment($store.state.selectedFromTime, 'HH:mm').add(2, 'hours').startOf('hour')"
+                :disabledHours="disabledHours"
+                :disabledMinutes="disabledMinutes"
+                :minuteStep="5"
+                placeholder="Tot"
+                :disabled="isToTimePickerDisabled"
+            >
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
+            </a-time-picker>
+            <input type="submit" value="Zoek" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+        </form>
+        <div v-if="success" class="buddies">
+            <div class="side">
+                <input type="search" v-model="search" placeholder="Zoeken op naam">
+                <a-skeleton active :title="false" :paragraph="{ rows: 5, width: [250, 250] }" :loading="loading">
+                    <ul>
+                        <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)">
+                            {{ buddy.name }}
+                        </li>
+                    </ul>
+                </a-skeleton>
             </div>
-            <div v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</div>
+            <div class="detail">
+                <div v-if="Object.keys(selectedBuddy).length">
+                    <h2>{{ selectedBuddy.name }}</h2>
+                    <a-divider />
+                    <p>{{ selectedBuddy.info }}</p>
+                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
+                        <p>{{ buddyInfo.day }}</p>
+                        <p>{{ buddyInfo.from }}</p>
+                        <p>{{ buddyInfo.to }}</p>
+                    </div>
+                    <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
+                    <PayPal
+                        :amount="selectedBuddy.price.toString()"
+                        currency="EUR"
+                        :client="payPalCredentials"
+                        env="sandbox"
+                        locale="nl_BE"
+                        :button-style="payPalButtonStyle"
+                    />
+                    <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
+                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
+                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
+                </div>
+                <div v-else>Klik op namen om meer info te zien</div>
+            </div>
         </div>
+        <div v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</div>
     </div>
 </template>
 
