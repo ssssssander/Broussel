@@ -13,6 +13,7 @@ yarn-error.log
 /public/css
 /public/images
 /public/js
+/public/vendors~js
 /public/mix-manifest.json
 /database/seeds
 /resources/js/payment-credentials.ts
