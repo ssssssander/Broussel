@@ -34,6 +34,7 @@
         "popper.js": "^1.12",
         "vue": "^2.5.17",
         "vue-axios": "^2.1.4",
+        "vue-burger-menu": "^2.0.1",
         "vue-class-component": "^7.1.0",
         "vue-paypal-checkout": "^3.2.0",
         "vue-property-decorator": "^8.1.1",

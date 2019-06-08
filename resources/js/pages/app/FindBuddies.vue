@@ -76,7 +76,6 @@
                         :amount="selectedBuddy.price.toString()"
                         currency="EUR"
                         :client="payPalCredentials"
-                        env="sandbox"
                         locale="nl_BE"
                         :button-style="payPalButtonStyle"
                     />
@@ -264,17 +263,13 @@
                     minutesToBeDisabled.push(i);
                 }
             }
-            // else {
-            //     for (let i = 0; i < 60; i++) {
-            //         minutesToBeDisabled.push(i);
-            //     }
-            // }
 
             return minutesToBeDisabled;
         }
 
         findBuddies() {
             this.loading = true;
+            this.success = true;
             this.selectedBuddy = {};
 
             // Debug
@@ -292,7 +287,6 @@
                 }
             })
             .then((response: any) => {
-                this.success = true;
                 this.loading = false;
                 this.firstTime = false;
                 this.availableBuddies = response.data.available_buddies_data;
@@ -320,7 +314,7 @@
                     this.errorType = error.response.status + ' ' + error.response.statusText;
                 }
 
-                // document.getElementsByClassName('fullscreen-form')[0].scrollIntoView();
+                document.getElementsByTagName('h1')[0].scrollIntoView();
             });
         }
 

@@ -41,13 +41,14 @@
         toBuddy() {
             this.$router.push({ name: 'find-buddies' });
         }
-
-        mounted() {
-            let skeletonBlock: any = document.querySelector('.ant-skeleton-paragraph li');
-            if (skeletonBlock) skeletonBlock.style.display = 'block';
-        }
     }
 </script>
+
+<style lang="scss">
+    .ant-skeleton-paragraph li {
+        display: block;
+    }
+</style>
 
 <style lang="scss" scoped>
     .dashboard-inner {

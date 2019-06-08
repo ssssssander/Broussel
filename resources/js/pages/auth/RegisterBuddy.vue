@@ -234,7 +234,7 @@
                     this.errorType = error.response.status + ' ' + error.response.statusText;
                 }
 
-                document.getElementsByClassName('fullscreen-form')[0].scrollIntoView();
+                document.getElementsByTagName('h1')[0].scrollIntoView();
             });
         }
     }
