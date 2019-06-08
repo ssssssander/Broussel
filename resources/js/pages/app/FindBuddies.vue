@@ -50,17 +50,19 @@
                 </a-time-picker>
                 <input type="submit" value="Zoek" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
             </form>
-            <div v-if="showBuddies"class="buddies">
-                <ul v-if="availableBuddies.length && !loading">
-                    <li v-for="buddy in availableBuddies" @click="selectBuddy(buddy)">
-                        <div>{{ buddy.name }}</div>
-                    </li>
-                </ul>
-                <ul v-if="loading">
-                    <li>Loading...</li>
-                </ul>
+            <div v-if="success" class="buddies">
+                <div class="side">
+                    <input type="search" v-model="search" placeholder="Zoeken op naam">
+                    <a-skeleton active :title="false" :paragraph="{ rows: 5, width: [250, 250] }" :loading="loading">
+                        <ul>
+                            <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)">
+                                {{ buddy.name }}
+                            </li>
+                        </ul>
+                    </a-skeleton>
+                </div>
                 <div class="detail">
-                    <template v-if="Object.keys(selectedBuddy).length">
+                    <div v-if="Object.keys(selectedBuddy).length">
                         <h2>{{ selectedBuddy.name }}</h2>
                         <a-divider />
                         <p>{{ selectedBuddy.info }}</p>
@@ -71,17 +73,11 @@
                         </div>
                         <button class="btn">Wandelen met deze buddy!</button>
                         <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
-                    </template>
-                    <template v-else-if="availableBuddies.length && !loading">
-                        <div>Klik op namen om meer info te zien</div>
-                    </template>
-                    <template v-else-if="!loading">
-                        <div>
-                            <span>Helaas is er niemand beschikbaar op deze dag en tijdstip.</span>
-                        </div>
-                    </template>
+                    </div>
+                    <div v-else>Klik op namen om meer info te zien</div>
                 </div>
             </div>
+            <div v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</div>
         </div>
     </div>
 </template>
@@ -100,11 +96,18 @@
         errors: any = {};
         errorType: string = '';
         loading: boolean = false;
-        showBuddies: boolean = false;
         success: boolean = false;
         availableBuddies: any[] = [];
         selectedBuddy: any = {};
         minutesAfterNowActive: number = 20;
+        firstTime: boolean = true;
+        search: string = '';
+
+        get filteredBuddies() {
+            return this.availableBuddies.filter(availableBuddy => {
+                return availableBuddy.name.toLowerCase().includes(this.search.toLowerCase());
+            });
+        }
 
         onChangeDate(date: any, dateString: string) {
             this.isFromTimePickerDisabled = false;
@@ -178,6 +181,7 @@
 
         findBuddies() {
             this.loading = true;
+            this.selectedBuddy = {};
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -189,14 +193,14 @@
                 }
             })
             .then((response: any) => {
-                this.selectedBuddy = {};
-                this.showBuddies = true;
                 this.success = true;
                 this.loading = false;
+                this.firstTime = false;
                 this.availableBuddies = response.data.available_buddies_data;
 
                 if (this.availableBuddies.length == 0) {
                     this.$message.info('Niemand gevonden');
+                    this.success = false;
                 }
                 else {
                     this.$message.success('Er zijn wandelbuddies gevonden!');
@@ -204,6 +208,7 @@
             }, (error: any) => {
                 this.success = false;
                 this.loading = false;
+                this.firstTime = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 
                 if (error.response.status == 422) {
@@ -224,7 +229,7 @@
 </script>
 
 <style lang="scss" scoped>
-    ul {
+    .side {
         display: inline-block;
         width: 33%;
 
