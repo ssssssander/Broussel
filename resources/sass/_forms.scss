@@ -6,7 +6,7 @@
     font-size: 0.6em;
     color: $dark-color-side;
 }
-input[type="text"], input[type="email"], input[type="password"], textarea {
+input[type="text"], input[type="email"], input[type="password"], input[type="search"], textarea {
     padding: 10px;
     border: $light-border;
     border-radius: $default-border-radius;
@@ -54,7 +54,7 @@ input[type="checkbox"] {
         display: block;
     }
 
-    input[type="text"], input[type="email"], input[type="password"], textarea {
+    input[type="text"], input[type="email"], input[type="password"], input[type="search"], textarea {
         margin: 5px 0;
         width: 100%;
     }

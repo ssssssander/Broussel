@@ -71,7 +71,8 @@
                             <p>{{ buddyInfo.from }}</p>
                             <p>{{ buddyInfo.to }}</p>
                         </div>
-                        <button class="btn">Wandelen met deze buddy!</button>
+                        <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
+                        <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
                         <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
                     </div>
                     <div v-else>Klik op namen om meer info te zien</div>
@@ -102,6 +103,9 @@
         minutesAfterNowActive: number = 20;
         firstTime: boolean = true;
         search: string = '';
+        finalDate: string = '';
+        finalFromTime: string = '';
+        finalToTime: string = '';
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
@@ -197,6 +201,9 @@
                 this.loading = false;
                 this.firstTime = false;
                 this.availableBuddies = response.data.available_buddies_data;
+                this.finalDate = this.$store.state.selectedDate;
+                this.finalFromTime = this.$store.state.selectedFromTime;
+                this.finalToTime = this.$store.state.selectedToTime;
 
                 if (this.availableBuddies.length == 0) {
                     this.$message.info('Niemand gevonden');

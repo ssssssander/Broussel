@@ -20,12 +20,6 @@ class UserController extends Controller
             'to'  => 'required|date_format:H:i|after:from|divisible_by:5',
         ]);
 
-//        $requestValidator->after(function ($validator) {
-//            if (intval(ltrim(explode(':', $this->from)[1], '0')) % 5 !== 0 || intval(ltrim(explode(':', $this->to)[1])) % 5 !== 0) {
-//                $validator->errors()->add('e', 'Something is wrong with this field!');
-//            }
-//        });
-
         if($requestValidator->fails()) {
             return response()->json([
                 'status' => 'error',
@@ -58,6 +52,10 @@ class UserController extends Controller
                                 Carbon::createFromTime($explodedAvailableFrom[0], $explodedAvailableFrom[1]),
                                 Carbon::createFromTime($explodedAvailableTo[0], $explodedAvailableTo[1]))
                     ) {
+                        $diffInMinutes = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
+                            ->diffInMinutes(Carbon::createFromTime($explodedTo[0], $explodedTo[1]));
+                        $priceInEur = $diffInMinutes / 5;
+                        $buddy['price'] = $priceInEur;
                         $availableBuddies[] = $buddy;
                     }
                 }
