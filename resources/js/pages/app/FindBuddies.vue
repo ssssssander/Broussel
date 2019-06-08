@@ -72,6 +72,15 @@
                             <p>{{ buddyInfo.to }}</p>
                         </div>
                         <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
+                        <PayPal
+                            :amount="selectedBuddy.price.toString()"
+                            currency="EUR"
+                            :client="payPalCredentials"
+                            env="sandbox"
+                            locale="nl_BE"
+                            :button-style="payPalButtonStyle"
+                        />
+                        <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
                         <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
                         <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
                     </div>
@@ -85,8 +94,14 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    
-    @Component
+    import PayPal from 'vue-paypal-checkout';
+    import { PaymentCredentials } from '@/js/payment-credentials';
+
+    @Component({
+        components: {
+            PayPal,
+        }
+    })
     export default class FindBuddies extends Vue {
         name: string = 'FindBuddies';
         moment: any = (this as any).$moment;
@@ -106,10 +121,86 @@
         finalDate: string = '';
         finalFromTime: string = '';
         finalToTime: string = '';
+        payPalCredentials: any = PaymentCredentials.PAYPAL;
+        payPalButtonStyle: any = {
+            label: 'checkout',
+            size:  'responsive',
+            shape: 'rect',
+            color: 'blue',
+        };
+        stripe: any = Stripe(PaymentCredentials.STRIPE);
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
                 return availableBuddy.name.toLowerCase().includes(this.search.toLowerCase());
+            });
+        }
+
+        created() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sourceId = urlParams.get('source');
+            const clientSecret = urlParams.get('client_secret');
+            const amount = urlParams.get('amount');
+
+            if (clientSecret && sourceId) {
+                this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
+            }
+        }
+
+        bancontactPoll(sourceId: string, clientSecret: string, amount: number) {
+            const MAX_POLL_COUNT = 10;
+            let pollCount = 0;
+
+            const pollForSourceStatus = () => {
+                this.stripe.retrieveSource({id: sourceId, client_secret: clientSecret}).then(({source}: any) => {
+                    if (source.status === 'chargeable') {
+                        this.$http({
+                            url: `auth/charge-request`,
+                            method: 'post',
+                            data: {
+                                amount: amount,
+                                source: sourceId,
+                            }
+                        })
+                        .then((response: any) => {
+                            console.log(response);
+                            this.$message.success('Betaling geslaagd');
+                        }, (error: any) => {
+                            console.log(error.response);
+                            this.$message.error('Betaling mislukt');
+                        });
+                    } else if (source.status === 'pending' && pollCount < MAX_POLL_COUNT) {
+                        console.log(source);
+                        // Try again in a second, if the Source is still `pending`:
+                        pollCount += 1;
+                        setTimeout(pollForSourceStatus, 1000);
+                    } else {
+                        // Depending on the Source status, show your customer the relevant message.
+                        console.log(source);
+                    }
+                });
+            };
+            pollForSourceStatus();
+        }
+
+        bancontactPay(amount: number) {
+            this.stripe.createSource({
+                type: 'bancontact',
+                amount: amount,
+                bancontact: {
+                    preferred_language: 'nl',
+                },
+                currency: 'eur',
+                owner: {
+                    name: 'Jenny Rosen',
+                },
+                redirect: {
+                    return_url: 'http://localhost:3000/app/find?amount=' + amount,
+                },
+            }).then((result: any) => {
+                // handle result.error or result.source
+                console.log(result);
+                window.location.replace(result.source.redirect.url);
             });
         }
 
@@ -186,6 +277,11 @@
         findBuddies() {
             this.loading = true;
             this.selectedBuddy = {};
+
+            // Debug
+            this.$store.state.selectedDate = '17/06/2019';
+            this.$store.state.selectedFromTime = '09:00';
+            this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,

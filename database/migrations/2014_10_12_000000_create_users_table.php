@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('profile_picture_path')->default('default_path');
             $table->boolean('is_buddy')->default(false);
-            $table->string('status')->nullable();
+            $table->enum('status', ['undecided', 'declined', 'accepted'])->nullable();
             $table->text('info')->nullable();
             $table->text('available_times')->nullable();
             $table->ipAddress('ip_address')->nullable();

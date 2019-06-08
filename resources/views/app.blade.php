@@ -13,6 +13,7 @@
 
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
 
     <title>{{ config('app.name', 'Broussel') }}</title>
 </head>
