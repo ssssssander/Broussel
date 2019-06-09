@@ -135,12 +135,11 @@
         }
 
         created() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const sourceId = urlParams.get('source');
-            const clientSecret = urlParams.get('client_secret');
-            const amount = urlParams.get('amount');
+            const sourceId: any = this.$route.query.source;
+            const clientSecret: any = this.$route.query.client_secret;
+            const amount: any = this.$route.query.amount;
 
-            if (clientSecret && sourceId) {
+            if (sourceId && clientSecret) {
                 this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
             }
         }

@@ -150,9 +150,27 @@
         justify-content: space-between;
         align-items: center;
 
-        a:hover:not(.btn) {
+        a:not(.btn) {
             padding-bottom: 5px;
-            border-bottom: 3px solid #ffffff;
+            position: relative;
+
+            &::after {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: $light-color;
+                content: '';
+                opacity: 0;
+                transition: height 0.3s, opacity 0.3s, transform 0.3s;
+                transform: translateY(-10px);
+            }
+            &:hover::after, &:focus::after {
+                height: 5px;
+                opacity: 1;
+                transform: translateY(0px);
+            }
         }
         li {
             margin: 0 10px;

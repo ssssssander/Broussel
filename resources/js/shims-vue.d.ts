@@ -56,3 +56,9 @@ declare module 'ant-design-vue/lib/divider' {
     const divider: Divider;
     export default divider;
 }
+
+declare module 'ant-design-vue/lib/collapse' {
+    import { Collapse } from 'ant-design-vue/types/collapse/collapse';
+    const collapse: Collapse;
+    export default collapse;
+}

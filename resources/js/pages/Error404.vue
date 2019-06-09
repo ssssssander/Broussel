@@ -2,6 +2,7 @@
     <div class="error-404">
         <div class="box">
             <h1>Oeps, deze pagina bestaat niet.</h1>
+            <a-divider></a-divider>
             <img src="@/images/404.png" alt="Error 404">
             <a href="https://icons8.com/ouch/illustration/page-not-found-2" target="_blank" class="link">Illustratie door Icons8</a>
         </div>

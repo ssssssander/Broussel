@@ -48,6 +48,10 @@ class AuthController extends Controller
     public function registerBuddy(Request $request) {
         $availableTimes = json_decode($request->available_times, true);
 
+        Validator::extend('divisible_by', function ($attribute, $value, $parameters, $validator) {
+            return intval(explode(':', $value)[1]) % $parameters[0] === 0;
+        });
+
         $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -57,8 +61,8 @@ class AuthController extends Controller
 
         $availableTimesValidator = Validator::make($availableTimes, [
             '*.available' => 'required|boolean',
-            '*.from' => 'required|date_format:H:i|',
-            '*.to' => 'required|date_format:H:i|after:*.from',
+            '*.from' => 'required|date_format:H:i|divisible_by:5',
+            '*.to' => 'required|date_format:H:i|after:*.from|divisible_by:5',
         ]);
 
         $availableTimesValidator->after(function ($validator) use($availableTimes) {

@@ -3,6 +3,7 @@
         <Hero></Hero>
         <div class="content">
             <h2>Hoe het werkt</h2>
+            <a-divider></a-divider>
             <div class="steps">
                 <div class="step">
                     <h3>Kies je tijdstip</h3>
@@ -45,16 +46,22 @@
         .steps {
             display: flex;
             flex-flow: row wrap;
-            justify-content: space-between;
+            justify-content: center;
             margin-top: 50px;
 
             .step {
+                margin: 10px;
                 text-align: center;
+                min-width: 260px;
                 width: 30%;
-                border: 1px solid $gray-color;
+                border: $light-border;
                 padding: 30px;
                 border-radius: $default-border-radius;
                 box-shadow: $box-shadow;
+
+                h3 {
+                    margin-bottom: 10px;
+                }
             }
         }
     }
