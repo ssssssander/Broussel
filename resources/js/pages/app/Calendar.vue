@@ -1,6 +1,5 @@
 <template>
     <div class="calendar">
-        <h1>Kalender</h1>
         <a-calendar @panelChange="onPanelChange" @select="onSelect" />
     </div>
 </template>

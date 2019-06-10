@@ -92,6 +92,15 @@ const router = new VueRouter({
                     }
                 },
                 {
+                    path: 'settings',
+                    name: 'settings',
+                    component: () => import(/* webpackChunkName: "js/chunks/settings" */ '@/js/pages/app/Settings'),
+                    meta: {
+                        title: 'Instellingen',
+                        auth: true,
+                    }
+                },
+                {
                     path: 'buddy/:id',
                     name: 'buddy-detail',
                     component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/app/BuddyDetail'),

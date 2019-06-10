@@ -52,9 +52,6 @@
                 <div class="form-block">
                     <input type="submit" value="Inschrijven als wandelbuddy" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
                 </div>
-                <div class="form-block text-center">
-                    <router-link :to="{ name: 'login' }" class="link">Ben je al een wandelbuddy? Log hier in.</router-link>
-                </div>
             </form>
             <Message
                 v-show="success"

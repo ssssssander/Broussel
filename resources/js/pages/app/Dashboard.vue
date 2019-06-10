@@ -1,22 +1,19 @@
 <template>
     <div class="dashboard">
-        <a-skeleton active :title="false" :paragraph="{ rows: 2, width: [250, 250] }" :loading="!Object.keys(user).length">
-            <div>
-                <p>{{ user.name }}</p>
-                <p>{{ user.email }}</p>
-            </div>
-        </a-skeleton>
-        <router-link :to="{ name: 'calendar' }" class="link">Kalender</router-link>
         <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
-        <div class="dashboard-inner">
             <div class="card" @click="toBuddy">
                 <span>+</span>
-                <p>Nieuwe afspraak</p>
+                <p>Nieuwe wandeling</p>
             </div>
-            <div class="chats">
-                <h3>Chats</h3>
-            </div>
-        </div>
+<!--        <div class="dashboard-inner">-->
+<!--            <div class="card" @click="toBuddy">-->
+<!--                <span>+</span>-->
+<!--                <p>Nieuwe afspraak</p>-->
+<!--            </div>-->
+<!--            <div class="chats">-->
+<!--                <h3>Chats</h3>-->
+<!--            </div>-->
+<!--        </div>-->
         <!--            <div class="chats">-->
         <!--                <div class="chat-block">-->
         <!--                    <span class="avatar"></span>-->
@@ -30,12 +27,9 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { State } from 'vuex-class';
 
     @Component
     export default class Dashboard extends Vue {
-        @State('userData') user: any;
-
         name: string = 'Dashboard';
 
         toBuddy() {
@@ -44,32 +38,23 @@
     }
 </script>
 
-<style lang="scss">
-    .ant-skeleton-paragraph li {
-        display: block;
-    }
-</style>
-
 <style lang="scss" scoped>
-    .dashboard-inner {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-    }
     .card {
-        width: 55%;
+        width: 100%;
         min-width: 240px;
-        height: 250px;
         background-color: $primary-accent-color;
         padding: 10px;
         border-radius: $default-border-radius;
         cursor: pointer;
-        display: inline-flex;
+        display: flex;
         justify-content: center;
         align-items: center;
         flex-flow: column nowrap;
         box-shadow: $box-shadow;
-        margin-top: 20px;
+
+        span, p {
+            color: $light-color;
+        }
 
         span {
             display: flex;
@@ -80,12 +65,20 @@
             height: 150px;
             border-radius: 50%;
             background-color: $light-primary-accent-color;
-            color: $light-color;
         }
+
         p {
-            color: $light-color;
             font-size: 1.3em;
         }
+    }
+
+    // ?
+    /*
+    .dashboard-inner {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+    }
     }
     .chats {
         width: 43%;
@@ -100,4 +93,5 @@
             border-bottom: $light-border;
         }
     }
+    */
 </style>

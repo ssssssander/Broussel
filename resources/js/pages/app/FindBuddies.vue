@@ -1,6 +1,5 @@
 <template>
     <div class="find-buddies">
-        <h1>Vind wandelbuddies</h1>
         <Message
             v-if="!success"
             message-type="error"
@@ -48,29 +47,33 @@
             >
                 <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
             </a-time-picker>
-            <input type="submit" value="Zoek" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+            <input type="submit" value="Zoek naar wandelbuddies" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
         </form>
         <div v-if="success" class="buddies">
             <div class="side">
                 <input type="search" v-model="search" placeholder="Zoeken op naam">
-                <a-skeleton active :title="false" :paragraph="{ rows: 5, width: [250, 250] }" :loading="loading">
-                    <ul>
-                        <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)">
-                            {{ buddy.name }}
-                        </li>
-                    </ul>
-                </a-skeleton>
+                <ul>
+                    <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
+                        <a-skeleton active avatar :title="false" :paragraph="{ rows: 1, width: [250, 250] }" :loading="loading">
+                            <div>
+                                <img src="@/images/checkbox-unchecked.png" alt="Alt">
+                                <span class="name">{{ buddy.name }}</span>
+                                <span class="icon"><a-icon type="right" /></span>
+                            </div>
+                        </a-skeleton>
+                    </li>
+                </ul>
             </div>
             <div class="detail">
                 <div v-if="Object.keys(selectedBuddy).length">
+                    <img src="@/images/checkbox-checked.png" alt="Alt">
                     <h2>{{ selectedBuddy.name }}</h2>
-                    <a-divider />
                     <p>{{ selectedBuddy.info }}</p>
-                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-                        <p>{{ buddyInfo.day }}</p>
-                        <p>{{ buddyInfo.from }}</p>
-                        <p>{{ buddyInfo.to }}</p>
-                    </div>
+<!--                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">-->
+<!--                        <p>{{ buddyInfo.day }}</p>-->
+<!--                        <p>{{ buddyInfo.from }}</p>-->
+<!--                        <p>{{ buddyInfo.to }}</p>-->
+<!--                    </div>-->
                     <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
                     <PayPal
                         :amount="selectedBuddy.price.toString()"
@@ -81,12 +84,13 @@
                     />
                     <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
                     <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
-                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken</p>
+                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
+                    <p>Er worden nog geen kosten in rekening gebracht.</p>
                 </div>
-                <div v-else>Klik op namen om meer info te zien</div>
+                <h2 v-else>Klik op namen om meer info te zien</h2>
             </div>
         </div>
-        <div v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</div>
+        <h2 v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</h2>
     </div>
 </template>
 
@@ -262,11 +266,11 @@
                     minutesToBeDisabled.push(i);
                 }
             }
-            else {
-                for (let i = 0; i < 60; i++) {
-                    minutesToBeDisabled.push(i);
-                }
-            }
+            // else {
+            //     for (let i = 0; i < 60; i++) {
+            //         minutesToBeDisabled.push(i);
+            //     }
+            // }
 
             return minutesToBeDisabled;
         }
@@ -328,21 +332,76 @@
     }
 </script>
 
-<style lang="scss" scoped>
-    .side {
-        display: inline-block;
-        width: 33%;
+<style lang="scss">
+    .ant-calendar-picker, .ant-time-picker {
+        display: block;
+        width: 50%;
+        margin-top: 15px;
+    }
+</style>
 
-        li {
-            display: block;
-            cursor: pointer;
-            border: 1px solid black;
-            margin: 5px 0;
+
+<style lang="scss" scoped>
+    form {
+        margin-bottom: 30px;
+
+        .btn {
+            width: 50%;
+            margin-top: 15px;
         }
     }
-    .detail {
-        display: inline-block;
-        vertical-align: top;
-        width: 66%;
+    img {
+        border-radius: 50%;
+        background-color: $dark-color;
+    }
+    .buddies {
+        padding: 15px;
+        border: $light-border;
+
+        .side {
+            display: inline-block;
+            width: 33%;
+
+            input[type="search"] {
+                width: 100%;
+            }
+            ul {
+                margin-top: 20px;
+
+                li {
+                    display: block;
+                    cursor: pointer;
+                    padding: 10px;
+                    border-bottom: $light-border;
+                    margin: 10px 0;
+
+                    &:hover, &.active {
+                        color: $dark-primary-accent-color;
+                    }
+                    img {
+                        width: 20px;
+                        height: 20px;
+                    }
+                    .name {
+                        margin-left: 5px;
+                    }
+                    .icon {
+                        float: right;
+                    }
+                }
+            }
+
+        }
+        .detail {
+            display: inline-block;
+            vertical-align: top;
+            width: 66%;
+            padding: 30px;
+
+            img {
+                width: 100px;
+                height: 100px;
+            }
+        }
     }
 </style>

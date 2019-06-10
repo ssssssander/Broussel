@@ -1,6 +1,7 @@
 <template>
-    <div class="buddy-detail">
-
+    <div class="settings">
+        <p>Change data</p>
+        <p>Profile pic</p>
     </div>
 </template>
 
@@ -8,8 +9,8 @@
     import { Component, Vue } from 'vue-property-decorator';
     
     @Component
-    export default class BuddyDetail extends Vue {
-        name: string = 'BuddyDetail';
+    export default class Settings extends Vue {
+        name: string = 'Settings';
     }
 </script>
 

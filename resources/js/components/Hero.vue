@@ -4,7 +4,7 @@
             <h1>Ontdek het groen in Brussel</h1>
             <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
             <div class="buttons">
-                <router-link :to="{ name: $auth.check() ? 'dashboard' : 'register' }" class="btn btn-start">Begin nu</router-link>
+                <router-link :to="{ name: $auth.check() ? 'dashboard' : 'register' }" class="btn">Begin nu</router-link>
                 <router-link :to="{ name: 'register-buddy' }" class="link">Of word een wandelbuddy →</router-link>
             </div>
         </div>
@@ -27,14 +27,18 @@
     .link {
         color: $light-color;
     }
+
     .buttons {
-        margin-top: 40px;
+        margin-top: 30px;
         display: flex;
         align-items: center;
 
-        .btn-start {
+        .btn {
             width: 50%;
             margin-right: 20px;
+        }
+        .btn, .link {
+            min-width: 100px;
         }
     }
     .wrapper {
@@ -64,6 +68,20 @@
         p {
             font-size: 1.2em;
             line-height: 1.2;
+        }
+    }
+    @media screen and (max-width: 900px) {
+        .hero-text {
+            h1 {
+                font-size: 3em;
+            }
+        }
+    }
+    @media screen and (max-width: 1180px) {
+        .hero-text {
+            h1 {
+                font-size: 3.5em;
+            }
         }
     }
 </style>

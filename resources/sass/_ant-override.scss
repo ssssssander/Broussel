@@ -1,6 +1,3 @@
-.ant-time-picker-input:hover:enabled {
-    border-color: $primary-accent-color !important;
-}
-.ant-input:hover:enabled {
+.ant-time-picker-input:hover:enabled, .ant-input:hover:enabled, .ant-calendar-picker-input:hover:enabled {
     border-color: $primary-accent-color !important;
 }

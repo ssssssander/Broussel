@@ -154,7 +154,7 @@
             padding-bottom: 5px;
             position: relative;
 
-            &::after {
+            &:not(.router-link-active)::after {
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -166,10 +166,13 @@
                 transition: height 0.3s, opacity 0.3s, transform 0.3s;
                 transform: translateY(-10px);
             }
-            &:hover::after, &:focus::after {
+            &:not(.router-link-active):hover::after, &:not(.router-link-active):focus::after {
                 height: 5px;
                 opacity: 1;
                 transform: translateY(0px);
+            }
+            &.router-link-active {
+                border-bottom: 5px solid $light-color;
             }
         }
         li {

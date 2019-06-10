@@ -54,14 +54,24 @@ li {
     padding: 0 1.6em;
 }
 .bg-svg {
-    background: url("~@/images/hero-bg.svg") no-repeat 0 -150px;
+    background: url("~@/images/hero-bg.svg") no-repeat;
+    background-position: 0 -150px;
     background-size: cover;
+}
+@media screen and (max-width: 1400px) {
+    .bg-svg {
+        background-position: 0 -50px;
+    }
+}
+@media screen and (max-width: 1200px) {
+    .bg-svg {
+        background-position: 0 -1px;
+    }
 }
 .bg-gradient {
     background: $gradient fixed;
 }
 .box {
-    padding: 30px;
     border-radius: $default-border-radius;
     background-color: $light-color;
     box-shadow: $box-shadow;
@@ -82,12 +92,12 @@ p {
 .header-border {
     border-bottom: 3px solid $primary-accent-color;
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1032px) {
     body {
         font-size: 1rem;
     }
 }
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 526px) {
     body {
         font-size: 0.75rem;
     }
