@@ -23,5 +23,6 @@ Route::prefix('auth')->group(function () {
         Route::post('logout', 'AuthController@logout');
         Route::post('find-buddies', 'UserController@findBuddies');
         Route::post('charge-request', 'PaymentController@chargeRequest');
+        Route::post('make-appointment', 'AppointmentController@makeAppointment');
     });
 });

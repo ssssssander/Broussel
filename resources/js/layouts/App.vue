@@ -7,9 +7,9 @@
                 </li><li>
                     <router-link :to="{ name: 'find-buddies' }">Nieuwe wandeling</router-link>
                 </li><li>
-                    <router-link :to="{ name: 'register' }">Mijn wandelingen</router-link>
+                    <router-link :to="{ name: 'walks' }">Mijn wandelingen</router-link>
                 </li><li>
-                    <router-link :to="{ name: 'register' }">Chats</router-link>
+                    <router-link :to="{ name: 'chats' }">Chats</router-link>
                 </li><li>
                     <router-link :to="{ name: 'calendar' }">Kalender</router-link>
                 </li><li>

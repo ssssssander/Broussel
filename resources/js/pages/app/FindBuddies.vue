@@ -65,7 +65,7 @@
                 </ul>
             </div>
             <div class="detail">
-                <div v-if="Object.keys(selectedBuddy).length">
+                <template v-if="Object.keys(selectedBuddy).length">
                     <img src="@/images/checkbox-checked.png" alt="Alt">
                     <h2>{{ selectedBuddy.name }}</h2>
                     <p>{{ selectedBuddy.info }}</p>
@@ -74,23 +74,34 @@
 <!--                        <p>{{ buddyInfo.from }}</p>-->
 <!--                        <p>{{ buddyInfo.to }}</p>-->
 <!--                    </div>-->
-                    <button class="btn">Wandelen met deze buddy! (€ {{ selectedBuddy.price }})</button>
+                    <button class="btn" @click="">Wandelen maar! (€ {{ selectedBuddy.price }})</button>
                     <PayPal
                         :amount="selectedBuddy.price.toString()"
                         currency="EUR"
                         :client="payPalCredentials"
                         locale="nl_BE"
                         :button-style="payPalButtonStyle"
+                        env="sandbox"
+                        @payment-authorized="paymentAuthorized"
+                        @payment-completed="paymentCompleted"
+                        @payment-cancelled="paymentCancelled"
                     />
-                    <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
-                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
-                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
                     <p>Er worden nog geen kosten in rekening gebracht.</p>
-                </div>
+                </template>
                 <h2 v-else>Klik op namen om meer info te zien</h2>
             </div>
         </div>
         <h2 v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</h2>
+        <div class="overlay" v-show="showPaymentModal"></div>
+        <div class="payment-modal" v-show="showPaymentModal">
+            <div class="box">
+                <h3>Wandelen met {{ selectedBuddy.name }}</h3>
+                <a-divider />
+                <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
+                <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
+                <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -132,10 +143,45 @@
         };
         stripe: any = Stripe(PaymentCredentials.STRIPE);
 
+        showPaymentModal: boolean = false;
+
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
                 return availableBuddy.name.toLowerCase().includes(this.search.toLowerCase());
             });
+        }
+
+        paymentAuthorized() {
+            console.log('authorized');
+        }
+
+        paymentCompleted() {
+            console.log('completed');
+
+            this.$http({
+                url: `auth/make-appointment`,
+                method: 'post',
+                data: {
+                    user_id: this.$store.state.userData.id,
+                    buddy_id: this.selectedBuddy.id,
+                    day: this.moment(this.finalDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
+                    time_from: this.finalFromTime,
+                    time_to: this.finalToTime,
+                }
+            })
+            .then((response: any) => {
+                console.log(response);
+                this.$message.success('Geslaagd');
+            }, (error: any) => {
+                console.log(error.response);
+                this.success = false;
+                this.$message.error('Er is iets misgegaan');
+            });
+        }
+
+        paymentCancelled() {
+            console.log('cancelled');
+            this.$message.error('Betaling mislukt');
         }
 
         created() {
@@ -277,13 +323,12 @@
 
         findBuddies() {
             this.loading = true;
-            this.success = true;
             this.selectedBuddy = {};
 
             // Debug
-            this.$store.state.selectedDate = '17/06/2019';
-            this.$store.state.selectedFromTime = '09:00';
-            this.$store.state.selectedToTime = '15:00';
+            // this.$store.state.selectedDate = '17/06/2019';
+            // this.$store.state.selectedFromTime = '09:00';
+            // this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -295,6 +340,7 @@
                 }
             })
             .then((response: any) => {
+                this.success = true;
                 this.loading = false;
                 this.firstTime = false;
                 this.availableBuddies = response.data.available_buddies_data;
@@ -378,6 +424,9 @@
                     &:hover, &.active {
                         color: $dark-primary-accent-color;
                     }
+                    img, .name, .icon {
+                        vertical-align: middle;
+                    }
                     img {
                         width: 20px;
                         height: 20px;
@@ -393,14 +442,18 @@
 
         }
         .detail {
-            display: inline-block;
+            display: inline-flex;
             vertical-align: top;
+            flex-flow: column wrap;
             width: 66%;
             padding: 30px;
 
             img {
-                width: 100px;
-                height: 100px;
+                width: 200px;
+                height: 200px;
+            }
+            h2 {
+                display: inline-block;
             }
         }
     }

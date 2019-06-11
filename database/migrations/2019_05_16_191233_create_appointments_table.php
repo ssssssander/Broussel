@@ -16,14 +16,14 @@ class CreateAppointmentsTable extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('guide_id')->unsigned();
+            $table->bigInteger('buddy_id')->unsigned();
             $table->date('day');
             $table->time('time_from');
             $table->time('time_to');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('guide_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('buddy_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
