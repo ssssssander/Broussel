@@ -156,19 +156,19 @@ const router = new VueRouter({
 // });
 
 router.afterEach((to: any, from: any) => {
-    if (to.meta.auth) {
-        if (!Object.keys(store.state.userData).length) {
-            (Vue.prototype as any).$http({
-                url: `auth/user`,
-                method: 'get'
-            })
-            .then((response: any) => {
-                store.commit('setUserData', response.data.user_data);
-            }, (error: any) => {
-                Vue.prototype.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
-            });
-        }
-    }
+    // if (to.meta.auth) {
+    //     if (!Object.keys(store.state.userData).length) {
+    //         (Vue.prototype as any).$http({
+    //             url: `auth/user`,
+    //             method: 'get'
+    //         })
+    //         .then((response: any) => {
+    //             store.commit('setUserData', response.data.user_data);
+    //         }, (error: any) => {
+    //             Vue.prototype.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
+    //         });
+    //     }
+    // }
 
     document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
 

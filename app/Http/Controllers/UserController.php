@@ -67,4 +67,14 @@ class UserController extends Controller
             'available_buddies_data' => $availableBuddies,
         ]);
     }
+
+    public function getUser(Request $request, $id) {
+        $user = User::find($id);
+
+        return response()->json(
+            [
+                'status' => 'success',
+                'user_data' => $user->toArray()
+            ], 200);
+    }
 }

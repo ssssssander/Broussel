@@ -1,42 +1,64 @@
 <template>
     <div class="chats">
-        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px"><i>Loading chat...</i></div>
+        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px"><i>Chat laden...</i></div>
     </div>
 </template>
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
+    import Talk from 'talkjs';
     
     @Component
     export default class Chats extends Vue {
         name: string = 'Chats';
+        buddy: any = {};
+
+        created() {
+            this.$http({
+                url: `auth/get-user/2`,
+                method: 'get',
+            })
+            .then((response: any) => {
+                console.log(response);
+                this.buddy = response.data.user_data;
+                this.makeTalkSession();
+            }, (error: any) => {
+                console.log(error.response);
+                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+            });
+        }
 
         mounted() {
-            Talk.ready.then(function() {
-                var me = new Talk.User({
-                    id: "123456",
-                    name: "Alice",
-                    email: "alice@example.com",
-                    photoUrl: "https://demo.talkjs.com/img/alice.jpg",
-                    welcomeMessage: "Hey there! How are you? :-)"
+
+        }
+
+        makeTalkSession() {
+            Talk.ready.then(() => {
+                let me = new Talk.User({
+                    id: (this as any).$auth.user().id,
+                    name: (this as any).$auth.user().name,
+                    email: (this as any).$auth.user().email,
+                    photoUrl: (this as any).$auth.user().profile_picture_path,
+                    role: 'buyer',
                 });
-                window.talkSession = new Talk.Session({
-                    appId: "tXjVxKb4",
-                    me: me
+                (window as any).talkSession = new Talk.Session({
+                    appId: 'tXjVxKb4',
+                    me: me,
                 });
-                var other = new Talk.User({
-                    id: "654321",
-                    name: "Sebastian",
-                    email: "Sebastian@example.com",
-                    photoUrl: "https://demo.talkjs.com/img/sebastian.jpg",
-                    welcomeMessage: "Hey, how can I help?"
+                let other = new Talk.User({
+                    id: this.buddy.id,
+                    name: this.buddy.name,
+                    email: this.buddy.email,
+                    photoUrl: this.buddy.profile_picture_path,
+                    welcomeMessage: 'Wandelen maar!',
+                    role: 'seller',
                 });
 
-                var conversation = talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other))
+                let conversation = (window as any).talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other));
                 conversation.setParticipant(me);
                 conversation.setParticipant(other);
-                var inbox = talkSession.createInbox({selected: conversation});
-                inbox.mount(document.getElementById("talkjs-container"));
+                let inbox = (window as any).talkSession.createInbox({selected: conversation});
+                inbox.mount(document.getElementById('talkjs-container'));
             });
         }
     }

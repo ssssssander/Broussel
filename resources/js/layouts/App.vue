@@ -20,9 +20,9 @@
         <div class="app-content">
             <div class="title">
                 <h1>{{ $route.meta.title }}</h1>
-                <div v-if="Object.keys(user).length" class="user-data">
-                    <p>Ingelogd als {{ user.name }}</p>
-                    <p>{{ user.email }}</p>
+                <div class="user-data">
+                    <p>Ingelogd als {{ $auth.user().name }}</p>
+                    <p>{{ $auth.user().email }}</p>
                 </div>
             </div>
             <router-view></router-view>
@@ -32,11 +32,11 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { State } from 'vuex-class';
+    // import { State } from 'vuex-class';
     
     @Component
     export default class App extends Vue {
-        @State('userData') user: any;
+        // @State('userData') user: any;
 
         name: string = 'App';
     }

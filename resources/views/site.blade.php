@@ -21,12 +21,6 @@
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
     <script src="https://js.stripe.com/v3/" defer></script>
-    <script defer>
-        (function(t,a,l,k,j,s){
-            s=a.createElement('script');s.async=1;s.src="https://cdn.talkjs.com/talk.js";a.head.appendChild(s)
-            ;k=t.Promise;t.Talk={v:1,ready:{then:function(f){if(k)return new k(function(r,e){l.push([f,r,e])});l
-                        .push([f])},catch:function(){return k&&new k()},c:l}};})(window,document,[]);
-    </script>
 
     <title>{{ config('app.name', 'Broussel') }}</title>
 </head>

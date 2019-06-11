@@ -26,6 +26,16 @@
     }
 </script>
 
+<style lang="scss">
+    .message .anticon {
+        margin-right: 10px;
+
+        svg {
+            vertical-align: middle;
+        }
+    }
+</style>
+
 <style lang="scss" scoped>
     .message {
         margin: 20px 0;

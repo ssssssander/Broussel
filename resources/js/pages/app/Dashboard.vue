@@ -1,6 +1,5 @@
 <template>
     <div class="dashboard">
-        <router-link :to="{ name: 'buddy-detail', params: { id: 1 } }" class="link">Buddy detail</router-link>
             <div class="card" @click="toBuddy">
                 <span>+</span>
                 <p>Nieuwe wandeling</p>

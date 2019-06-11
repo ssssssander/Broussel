@@ -8,7 +8,7 @@ const config: any = {
     router: router,
     tokenDefaultName: 'broussel',
     tokenStore: ['localStorage', 'cookie'],
-    rolesVar: 'is_guide',
+    rolesVar: 'is_buddy',
     authRedirect: { path: '/login' },
     forbiddenRedirect: { path: '/' },
     notFoundRedirect: {path: '/'},

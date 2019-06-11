@@ -20,9 +20,11 @@ Route::prefix('auth')->group(function () {
     Route::get('refresh', 'AuthController@refresh');
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('user', 'AuthController@user');
+        Route::get('get-user/{id}', 'UserController@getUser');
         Route::post('logout', 'AuthController@logout');
         Route::post('find-buddies', 'UserController@findBuddies');
         Route::post('charge-request', 'PaymentController@chargeRequest');
         Route::post('make-appointment', 'AppointmentController@makeAppointment');
+        Route::get('get-appointments', 'AppointmentController@getAppointments');
     });
 });

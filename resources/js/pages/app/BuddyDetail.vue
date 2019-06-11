@@ -1,6 +1,10 @@
 <template>
     <div class="buddy-detail">
-
+        <div v-show="Object.keys(buddy).length">
+            <img src="@/images/checkbox-checked.png" alt="Alt">
+            <h1>{{ buddy.name }}</h1>
+            <p>{{ buddy.info }}</p>
+        </div>
     </div>
 </template>
 
@@ -10,6 +14,26 @@
     @Component
     export default class BuddyDetail extends Vue {
         name: string = 'BuddyDetail';
+        buddy: any = {};
+
+        created() {
+            this.getBuddy();
+        }
+
+        getBuddy() {
+            this.$http({
+                url: `auth/get-user/${this.$route.params.id}`,
+                method: 'get',
+            })
+            .then((response: any) => {
+                console.log(response);
+                this.buddy = response.data.user_data;
+                document.title = this.buddy.name;
+            }, (error: any) => {
+                console.log(error.response);
+                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+            });
+        }
     }
 </script>
 

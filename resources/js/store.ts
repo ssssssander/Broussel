@@ -5,15 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        userData: {},
+        // userData: {},
         selectedDate: '',
         selectedFromTime: '',
         selectedToTime: '',
     },
     mutations: {
-        setUserData(state: any, data: any) {
-            state.userData = data;
-        },
+        // setUserData(state: any, data: any) {
+        //     state.userData = data;
+        // },
         setSelectedDate(state: any, data: any) {
             state.selectedDate = data;
         },

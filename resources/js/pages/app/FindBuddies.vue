@@ -66,14 +66,15 @@
             </div>
             <div class="detail">
                 <template v-if="Object.keys(selectedBuddy).length">
-                    <img src="@/images/checkbox-checked.png" alt="Alt">
-                    <h2>{{ selectedBuddy.name }}</h2>
+                    <div class="head">
+                        <img src="@/images/checkbox-checked.png" alt="Alt">
+                        <h2>{{ selectedBuddy.name }}</h2>
+                    </div>
+                    <a-divider />
                     <p>{{ selectedBuddy.info }}</p>
-<!--                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">-->
-<!--                        <p>{{ buddyInfo.day }}</p>-->
-<!--                        <p>{{ buddyInfo.from }}</p>-->
-<!--                        <p>{{ buddyInfo.to }}</p>-->
-<!--                    </div>-->
+                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
+                        <p>{{ buddyInfo.day }}: {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
+                    </div>
                     <button class="btn" @click="">Wandelen maar! (€ {{ selectedBuddy.price }})</button>
                     <PayPal
                         :amount="selectedBuddy.price.toString()"
@@ -96,7 +97,6 @@
         <div class="payment-modal" v-show="showPaymentModal">
             <div class="box">
                 <h3>Wandelen met {{ selectedBuddy.name }}</h3>
-                <a-divider />
                 <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
                 <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
                 <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
@@ -162,7 +162,7 @@
                 url: `auth/make-appointment`,
                 method: 'post',
                 data: {
-                    user_id: this.$store.state.userData.id,
+                    user_id: (this as any).$auth.user().id,
                     buddy_id: this.selectedBuddy.id,
                     day: this.moment(this.finalDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
                     time_from: this.finalFromTime,
@@ -326,9 +326,9 @@
             this.selectedBuddy = {};
 
             // Debug
-            // this.$store.state.selectedDate = '17/06/2019';
-            // this.$store.state.selectedFromTime = '09:00';
-            // this.$store.state.selectedToTime = '15:00';
+            this.$store.state.selectedDate = '17/06/2019';
+            this.$store.state.selectedFromTime = '09:00';
+            this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -379,13 +379,12 @@
 </script>
 
 <style lang="scss">
-    .ant-calendar-picker, .ant-time-picker {
+    .find-buddies .ant-calendar-picker, .find-buddies .ant-time-picker {
         display: block;
         width: 50%;
         margin-top: 15px;
     }
 </style>
-
 
 <style lang="scss" scoped>
     form {
@@ -417,7 +416,7 @@
                 li {
                     display: block;
                     cursor: pointer;
-                    padding: 10px;
+                    padding: 0 10px;
                     border-bottom: $light-border;
                     margin: 10px 0;
 
@@ -448,13 +447,24 @@
             width: 66%;
             padding: 30px;
 
+            .head {
+                display: flex;
+                flex-flow: row wrap;
+                align-items: center;
+
+                h2 {
+                    margin-left: 30px;
+                }
+            }
             img {
                 width: 200px;
                 height: 200px;
             }
-            h2 {
-                display: inline-block;
-            }
+        }
+    }
+    @media screen and (max-width: 900px) {
+        .find-buddies .ant-calendar-picker, .find-buddies .ant-time-picker, form .btn {
+            width: 100%;
         }
     }
 </style>

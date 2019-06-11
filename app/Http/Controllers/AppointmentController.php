@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Appointment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
@@ -37,5 +39,20 @@ class AppointmentController extends Controller
         $buddy->save();
 
         return response()->json(['status' => 'success'], 200);
+    }
+
+    public function getAppointments(Request $request) {
+        $appointments = Auth::user()->appointments->toArray();
+        $appointmentsWithBuddyName = [];
+
+        foreach ($appointments as $appointment) {
+            $appointment['buddy_name'] = User::find($appointment['buddy_id'])->name;
+            $appointmentsWithBuddyName[] = $appointment;
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'appointments_data' => $appointmentsWithBuddyName,
+        ]);
     }
 }
