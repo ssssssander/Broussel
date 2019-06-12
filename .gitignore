@@ -15,6 +15,5 @@ yarn-error.log
 /public/js
 /public/vendors~js
 /public/mix-manifest.json
-/database/seeds
 /resources/js/payment-credentials.ts
 /app/PaymentCredentials.php
