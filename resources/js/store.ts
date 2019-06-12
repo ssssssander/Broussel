@@ -9,6 +9,7 @@ export default new Vuex.Store({
         selectedDate: '',
         selectedFromTime: '',
         selectedToTime: '',
+        latestChat: 0,
     },
     mutations: {
         // setUserData(state: any, data: any) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         },
         setSelectedToTime(state: any, data: any) {
             state.selectedToTime = data;
+        },
+        setLatestChat(state: any, data: any) {
+            state.latestChat = data;
         },
     },
     actions: {

@@ -169,6 +169,7 @@
             })
             .then((response: any) => {
                 this.$message.success('Betaling geslaagd');
+                this.$router.push({ path: 'chats' })
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan');
             });

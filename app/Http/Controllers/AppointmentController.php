@@ -55,4 +55,26 @@ class AppointmentController extends Controller
             'appointments_data' => $appointmentsWithBuddyName,
         ]);
     }
+
+    public function getChattableBuddies(Request $request) {
+        $latestAppointment = Auth::user()->appointments->last();
+        $latest = [];
+
+        if ($latestAppointment) {
+            $latest = User::find($latestAppointment->buddy_id);
+        }
+
+//        $chattableBuddiesIds = [];
+//
+//        foreach ($appointments as $appointment) {
+//            $chattableBuddiesIds[] = $appointment->buddy_id;
+//        }
+//        $chattableBuddiesIds = array_unique($chattableBuddiesIds);
+//        $chattableBuddies = User::find($chattableBuddiesIds);
+
+        return response()->json([
+            'status' => 'success',
+            'chattable_buddies_data' => $latest,
+        ]);
+    }
 }

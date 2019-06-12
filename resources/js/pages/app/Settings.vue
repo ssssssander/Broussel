@@ -88,7 +88,6 @@
                 (this as any).$auth.fetch();
                 this.$message.success('Profielfoto geüpload!');
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan');
                 this.setErrors(error);
             })

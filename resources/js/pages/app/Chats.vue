@@ -1,6 +1,6 @@
 <template>
     <div class="chats">
-        <div id="talkjs-container"><i>Chat laden...</i></div>
+        <div id="talkjs-container"><i v-if="!success">Chats laden...</i><i v-else>Je hebt nog geen chats</i></div>
     </div>
 </template>
 
@@ -12,22 +12,39 @@
     export default class Chats extends Vue {
         name: string = 'Chats';
         buddy: any = {};
+        latestChat: number = this.$store.state.latestChat;
+        success: boolean = false;
 
         created() {
+            this.getChattableBuddies();
+        }
+
+        // getBuddy() {
+        //     let id = this.$route.query.id ? this.$route.query.id : this.latestChat;
+        //     this.$http({
+        //         url: `auth/get-user/${id}`,
+        //         method: 'get',
+        //     })
+        //     .then((response: any) => {
+        //         this.buddy = response.data.user_data;
+        //         this.makeTalkSession();
+        //     }, (error: any) => {
+        //         this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+        //     });
+        // }
+
+        getChattableBuddies() {
             this.$http({
-                url: `auth/get-user/2`,
+                url: `auth/get-chattable-buddies`,
                 method: 'get',
             })
             .then((response: any) => {
-                this.buddy = response.data.user_data;
+                this.success = true;
+                this.buddy = response.data.chattable_buddies_data;
                 this.makeTalkSession();
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
-        }
-
-        mounted() {
-
         }
 
         makeTalkSession() {
@@ -59,6 +76,7 @@
                 conversation.setParticipant(other);
                 let inbox = (window as any).talkSession.createInbox({selected: conversation});
                 inbox.mount(document.getElementById('talkjs-container'));
+                this.$store.commit('setLatestChat', this.buddy.id);
             });
         }
     }

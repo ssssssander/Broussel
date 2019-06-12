@@ -29,5 +29,6 @@ Route::prefix('auth')->group(function () {
         Route::post('upload-avatar', 'UserController@uploadAvatar');
         Route::post('change-info', 'UserController@changeInfo');
         Route::post('change-password', 'UserController@changePassword');
+        Route::get('get-chattable-buddies', 'AppointmentController@getChattableBuddies');
     });
 });
