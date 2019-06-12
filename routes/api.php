@@ -27,5 +27,7 @@ Route::prefix('auth')->group(function () {
         Route::post('make-appointment', 'AppointmentController@makeAppointment');
         Route::get('get-appointments', 'AppointmentController@getAppointments');
         Route::post('upload-avatar', 'UserController@uploadAvatar');
+        Route::post('change-info', 'UserController@changeInfo');
+        Route::post('change-password', 'UserController@changePassword');
     });
 });

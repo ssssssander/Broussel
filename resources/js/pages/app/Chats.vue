@@ -38,6 +38,7 @@
                     email: (this as any).$auth.user().email,
                     photoUrl: (this as any).$auth.user().avatar_path,
                     role: 'buyer',
+                    locale: 'nl-NL',
                 });
                 (window as any).talkSession = new Talk.Session({
                     appId: 'tXjVxKb4',
@@ -50,6 +51,7 @@
                     photoUrl: this.buddy.avatar_path,
                     welcomeMessage: 'Wandelen maar!',
                     role: 'seller',
+                    locale: 'nl-NL',
                 });
 
                 let conversation = (window as any).talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other));

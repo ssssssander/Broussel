@@ -21,8 +21,11 @@
             <div class="title">
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="user-data">
-                    <p>Ingelogd als {{ $auth.user().name }}</p>
-                    <p>{{ $auth.user().email }}</p>
+                    <div>
+                        <p>Ingelogd als {{ $auth.user().name }}</p>
+                        <p>{{ $auth.user().email }}</p>
+                    </div>
+                    <img class="avatar avatar-medium" :src="$auth.user().avatar_path" :alt="$auth.user().name">
                 </div>
             </div>
             <router-view></router-view>
@@ -53,8 +56,13 @@
 
             .user-data {
                 text-align: right;
+                display: flex;
+                align-items: center;
             }
         }
+    }
+    .avatar {
+        margin-left: 15px;
     }
     .user-links {
         border-top-left-radius: $default-border-radius;
@@ -87,7 +95,7 @@
         }
     }
     @media screen and (max-width: 900px) {
-        .user-data {
+        .app-content .title .user-data {
             display: none;
         }
     }

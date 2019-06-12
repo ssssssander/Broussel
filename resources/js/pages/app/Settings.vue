@@ -1,6 +1,11 @@
 <template>
     <div class="settings">
         <h2>Stel je profielfoto in</h2>
+        <Message
+            message-type="error"
+            :messages="errors"
+            :extra-str="errorType"
+        />
         <form enctype="multipart/form-data" @submit.prevent="uploadAvatar" method="post">
             <input type="file" id="file" ref="file" @change="handleFileUpload">
             <LoadingButton value="Uploaden" :loading="uploadAvatarLoading" />
@@ -54,10 +59,8 @@
         formPasswordConfirmation: string = '';
 
         mounted() {
-            let nameInputElem: any = document.getElementById('name');
-            let emailInputElem: any = document.getElementById('email');
-            nameInputElem.value = (this as any).$auth.user().name;
-            emailInputElem.value = (this as any).$auth.user().email;
+            this.formName = (this as any).$auth.user().name;
+            this.formEmail = (this as any).$auth.user().email;
         }
 
         uploadAvatar() {
@@ -86,11 +89,46 @@
         }
 
         changeInfo() {
+            this.changeInfoLoading = true;
 
+            this.$http({
+                url: `auth/change-info`,
+                method: 'post',
+                data: {
+                    name: this.formName,
+                    email: this.formEmail
+                },
+            })
+            .then((response: any) => {
+                this.$message.success('Succes!');
+                (this as any).$auth.fetch();
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan');
+            })
+            .then(() => {
+                this.changeInfoLoading = false;
+            });
         }
 
         changePassword() {
+            this.changePasswordLoading = true;
 
+            this.$http({
+                url: `auth/change-password`,
+                method: 'post',
+                data: {
+                    password: this.formPassword,
+                    password_confirmation: this.formPasswordConfirmation
+                },
+            })
+            .then((response: any) => {
+                this.$message.success('Succes!');
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan');
+            })
+            .then(() => {
+                this.changePasswordLoading = false;
+            });
         }
     }
 </script>

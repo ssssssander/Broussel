@@ -1,7 +1,7 @@
 <template>
     <div class="buddy-detail">
         <div v-show="Object.keys(buddy).length">
-            <img :src="buddy.avatar_path" :alt="buddy.name">
+            <img class="avatar avatar-large" :src="buddy.avatar_path" :alt="buddy.name">
             <h1>{{ buddy.name }}</h1>
             <p>{{ buddy.info }}</p>
         </div>

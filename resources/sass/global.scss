@@ -68,6 +68,25 @@ li {
         background-position: 0 -1px;
     }
 }
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+    max-width: 300px;
+    max-height: 300px;
+
+    &-small {
+        width: 20px;
+        height: 20px;
+    }
+    &-medium {
+        width: 60px;
+        height: 60px;
+    }
+    &-large {
+        width: 200px;
+        height: 200px;
+    }
+}
 .bg-gradient {
     background: $gradient fixed;
 }

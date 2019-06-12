@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Image;
 
@@ -104,5 +106,50 @@ class UserController extends Controller
             [
                 'status' => 'success',
             ], 200);
+    }
+
+    public function changeInfo(Request $request) {
+        $user = Auth::user();
+
+        $v = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => [
+                'required', 'string', 'email', 'max:255',
+                Rule::unique('users')->ignore($user),
+            ],
+        ]);
+
+        if ($v->fails())  {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $v->errors(),
+            ], 422);
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+
+        return response()->json(['status' => 'success'], 200);
+    }
+
+    public function changePassword(Request $request) {
+        $user = Auth::user();
+
+        $v = Validator::make($request->all(), [
+            'password'  => 'required|string|min:8|max:255|confirmed',
+        ]);
+
+        if ($v->fails())  {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $v->errors(),
+            ], 422);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return response()->json(['status' => 'success'], 200);
     }
 }

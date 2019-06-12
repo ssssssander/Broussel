@@ -56,7 +56,7 @@
                     <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
                         <a-skeleton active avatar :title="false" :paragraph="{ rows: 1, width: [250, 250] }" :loading="loading">
                             <div>
-                                <img :src="buddy.avatar_path" :alt="buddy.name">
+                                <img class="avatar avatar-small" :src="buddy.avatar_path" :alt="buddy.name">
                                 <span class="name">{{ buddy.name }}</span>
                                 <span class="icon"><a-icon type="right" /></span>
                             </div>
@@ -67,7 +67,7 @@
             <div class="detail">
                 <template v-if="Object.keys(selectedBuddy).length">
                     <div class="head">
-                        <img :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
+                        <img class="avatar avatar-large" :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
                         <h2>{{ selectedBuddy.name }}</h2>
                     </div>
                     <a-divider />
@@ -384,10 +384,6 @@
             margin-top: 15px;
         }
     }
-    img {
-        border-radius: 50%;
-        background-color: $dark-color;
-    }
     .buddies {
         padding: 15px;
         border: $light-border;
@@ -415,10 +411,6 @@
                     img, .name, .icon {
                         vertical-align: middle;
                     }
-                    img {
-                        width: 20px;
-                        height: 20px;
-                    }
                     .name {
                         margin-left: 5px;
                     }
@@ -427,7 +419,6 @@
                     }
                 }
             }
-
         }
         .detail {
             display: inline-flex;
@@ -444,10 +435,6 @@
                 h2 {
                     margin-left: 30px;
                 }
-            }
-            img {
-                width: 200px;
-                height: 200px;
             }
         }
     }
