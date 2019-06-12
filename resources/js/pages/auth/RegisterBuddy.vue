@@ -50,7 +50,7 @@
                     <textarea v-model="formInfo" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Inschrijven als wandelbuddy" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+                    <LoadingButton value="Inschrijven als wandelbuddy" :loading="loading" />
                 </div>
             </form>
             <Message

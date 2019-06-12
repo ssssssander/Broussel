@@ -21,7 +21,7 @@
                     <label for="remember-me"><span class="checkbox"></span>Hou me ingelogd</label>
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Inloggen" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+                    <LoadingButton value="Inloggen" :loading="loading" />
                 </div>
             </form>
         </div>

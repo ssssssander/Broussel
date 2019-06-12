@@ -6,7 +6,7 @@
             :messages="errors"
             :extra-str="errorType"
         />
-        <form @submit.prevent="findBuddies" action="post">
+        <form @submit.prevent="findBuddies" method="post">
             <a-date-picker
                 @change="onChangeDate"
                 size="large"
@@ -47,7 +47,7 @@
             >
                 <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
             </a-time-picker>
-            <input type="submit" value="Zoek naar wandelbuddies" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+            <LoadingButton value="Zoek naar wandelbuddies" :loading="loading" />
         </form>
         <div v-if="success" class="buddies">
             <div class="side">
@@ -56,7 +56,7 @@
                     <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
                         <a-skeleton active avatar :title="false" :paragraph="{ rows: 1, width: [250, 250] }" :loading="loading">
                             <div>
-                                <img src="@/images/checkbox-unchecked.png" alt="Alt">
+                                <img :src="buddy.avatar_path" :alt="buddy.name">
                                 <span class="name">{{ buddy.name }}</span>
                                 <span class="icon"><a-icon type="right" /></span>
                             </div>
@@ -67,7 +67,7 @@
             <div class="detail">
                 <template v-if="Object.keys(selectedBuddy).length">
                     <div class="head">
-                        <img src="@/images/checkbox-checked.png" alt="Alt">
+                        <img :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
                         <h2>{{ selectedBuddy.name }}</h2>
                     </div>
                     <a-divider />
@@ -152,12 +152,10 @@
         }
 
         paymentAuthorized() {
-            console.log('authorized');
+
         }
 
         paymentCompleted() {
-            console.log('completed');
-
             this.$http({
                 url: `auth/make-appointment`,
                 method: 'post',
@@ -170,18 +168,14 @@
                 }
             })
             .then((response: any) => {
-                console.log(response);
-                this.$message.success('Geslaagd');
+                this.$message.success('Betaling geslaagd');
             }, (error: any) => {
-                console.log(error.response);
-                this.success = false;
                 this.$message.error('Er is iets misgegaan');
             });
         }
 
         paymentCancelled() {
-            console.log('cancelled');
-            this.$message.error('Betaling mislukt');
+            this.$message.warning('Betaling stopgezet');
         }
 
         created() {
@@ -245,7 +239,7 @@
                     return_url: 'http://localhost:3000/app/find?amount=' + amount,
                 },
             }).then((result: any) => {
-                // handle result.error or result.source
+                // Handle result.error or result.source
                 console.log(result);
                 window.location.replace(result.source.redirect.url);
             });
@@ -312,11 +306,6 @@
                     minutesToBeDisabled.push(i);
                 }
             }
-            // else {
-            //     for (let i = 0; i < 60; i++) {
-            //         minutesToBeDisabled.push(i);
-            //     }
-            // }
 
             return minutesToBeDisabled;
         }
@@ -341,8 +330,6 @@
             })
             .then((response: any) => {
                 this.success = true;
-                this.loading = false;
-                this.firstTime = false;
                 this.availableBuddies = response.data.available_buddies_data;
                 this.finalDate = this.$store.state.selectedDate;
                 this.finalFromTime = this.$store.state.selectedFromTime;
@@ -357,8 +344,6 @@
                 }
             }, (error: any) => {
                 this.success = false;
-                this.loading = false;
-                this.firstTime = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 
                 if (error.response.status == 422) {
@@ -369,6 +354,10 @@
                 }
 
                 document.getElementsByTagName('h1')[0].scrollIntoView();
+            })
+            .then(() => {
+                this.loading = false;
+                this.firstTime = false;
             });
         }
 

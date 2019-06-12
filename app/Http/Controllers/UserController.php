@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Image;
 
 class UserController extends Controller
 {
@@ -75,6 +77,32 @@ class UserController extends Controller
             [
                 'status' => 'success',
                 'user_data' => $user->toArray()
+            ], 200);
+    }
+
+    public function uploadAvatar(Request $request) {
+        $user = Auth::user();
+        $imageQuality = 60;
+
+        if($request->file->isValid()) {
+            $avatarPath = 'storage/uploads/avatars/' . $request->file->hashName();
+
+            Image::make($request->file)->save($avatarPath, $imageQuality);
+        }
+        else {
+            return response()->json(
+                [
+                    'status' => 'error',
+                    'errors' => 'Bestand kon niet worden geüpload.'
+                ], 400);
+        }
+
+        $user->avatar_path = '/' . $avatarPath;
+        $user->save();
+
+        return response()->json(
+            [
+                'status' => 'success',
             ], 200);
     }
 }

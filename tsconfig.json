@@ -6,7 +6,8 @@
         "strictNullChecks": false,
         "noImplicitThis": false,
         "moduleResolution": "node",
-        "experimentalDecorators": true
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true
     },
     "include": [
         "resources/js/**/*"

@@ -1,7 +1,7 @@
 <template>
     <div class="buddy-detail">
         <div v-show="Object.keys(buddy).length">
-            <img src="@/images/checkbox-checked.png" alt="Alt">
+            <img :src="buddy.avatar_path" :alt="buddy.name">
             <h1>{{ buddy.name }}</h1>
             <p>{{ buddy.info }}</p>
         </div>
@@ -26,11 +26,9 @@
                 method: 'get',
             })
             .then((response: any) => {
-                console.log(response);
                 this.buddy = response.data.user_data;
                 document.title = this.buddy.name;
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
         }

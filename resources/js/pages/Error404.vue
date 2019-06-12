@@ -19,6 +19,9 @@
 </script>
 
 <style lang="scss" scoped>
+    .box {
+        padding: 30px 30px 60px 30px;
+    }
     h1, a {
         text-align: center;
         display: block;

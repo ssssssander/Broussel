@@ -1,6 +1,6 @@
 <template>
     <div class="chats">
-        <div id="talkjs-container" style="width: 90%; margin: 30px; height: 500px"><i>Chat laden...</i></div>
+        <div id="talkjs-container"><i>Chat laden...</i></div>
     </div>
 </template>
 
@@ -19,11 +19,9 @@
                 method: 'get',
             })
             .then((response: any) => {
-                console.log(response);
                 this.buddy = response.data.user_data;
                 this.makeTalkSession();
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
         }
@@ -38,7 +36,7 @@
                     id: (this as any).$auth.user().id,
                     name: (this as any).$auth.user().name,
                     email: (this as any).$auth.user().email,
-                    photoUrl: (this as any).$auth.user().profile_picture_path,
+                    photoUrl: (this as any).$auth.user().avatar_path,
                     role: 'buyer',
                 });
                 (window as any).talkSession = new Talk.Session({
@@ -49,7 +47,7 @@
                     id: this.buddy.id,
                     name: this.buddy.name,
                     email: this.buddy.email,
-                    photoUrl: this.buddy.profile_picture_path,
+                    photoUrl: this.buddy.avatar_path,
                     welcomeMessage: 'Wandelen maar!',
                     role: 'seller',
                 });
@@ -65,5 +63,7 @@
 </script>
 
 <style lang="scss" scoped>
-    
+    #talkjs-container {
+        height: 500px;
+    }
 </style>

@@ -25,7 +25,7 @@
                     <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
                 </div>
                 <div class="form-block">
-                    <input type="submit" value="Registreren" :class="[{ 'btn-loading': loading }, 'btn']" :disabled="loading">
+                    <LoadingButton value="Registreren" :loading="loading" />
                 </div>
                 <div class="form-block text-center">
                     <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
@@ -77,13 +77,12 @@
                 },
                 success: (response: any) => {
                     (this as any).$auth.login({
-                        params: {
+                        data: {
                             email: this.formEmail,
                             password: this.formPassword,
                         },
                         success: (response: any) => {
                             this.$message.success('Je bent met succes geregistreerd!');
-                            this.loading = false;
                         },
                         error: (error: any) => {
                             this.$router.push({ name: 'login' });

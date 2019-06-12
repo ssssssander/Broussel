@@ -27,10 +27,8 @@
                 method: 'get',
             })
             .then((response: any) => {
-                console.log(response);
                 this.appointments = response.data.appointments_data;
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
         }
