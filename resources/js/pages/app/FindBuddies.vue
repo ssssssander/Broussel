@@ -88,6 +88,10 @@
                         @payment-cancelled="paymentCancelled"
                     />
                     <p>Er worden nog geen kosten in rekening gebracht.</p>
+                    <h3>Wandelen met {{ selectedBuddy.name }}</h3>
+                    <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
+                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
+                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>s
                 </template>
                 <p class="text-center" v-else>Klik op namen om meer info te zien</p>
             </div>
@@ -316,9 +320,9 @@
             this.selectedBuddy = {};
 
             // Debug
-            this.$store.state.selectedDate = '17/06/2019';
-            this.$store.state.selectedFromTime = '09:00';
-            this.$store.state.selectedToTime = '15:00';
+            // this.$store.state.selectedDate = '17/06/2019';
+            // this.$store.state.selectedFromTime = '09:00';
+            // this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
