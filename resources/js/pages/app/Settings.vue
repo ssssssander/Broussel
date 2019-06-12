@@ -1,17 +1,19 @@
 <template>
     <div class="settings">
-        <h2>Stel je profielfoto in</h2>
+        <h3>Stel je profielfoto in</h3>
         <Message
             message-type="error"
             :messages="errors"
             :extra-str="errorType"
         />
         <form enctype="multipart/form-data" @submit.prevent="uploadAvatar" method="post">
-            <input type="file" id="file" ref="file" @change="handleFileUpload">
-            <LoadingButton value="Uploaden" :loading="uploadAvatarLoading" />
+            <div class="form-block">
+                <input type="file" id="file" ref="file" name="file" @change="handleFileUpload">
+                <LoadingButton value="Uploaden" :loading="uploadAvatarLoading" />
+            </div>
         </form>
         <a-divider />
-        <h2>Verander je informatie</h2>
+        <h3>Verander je informatie</h3>
         <form @submit.prevent="changeInfo" method="post">
             <div class="form-block">
                 <label for="name">Naam</label>
@@ -26,14 +28,18 @@
             </div>
         </form>
         <a-divider />
-        <h2>Verander je wachtwoord</h2>
+        <h3>Verander je wachtwoord</h3>
         <form @submit.prevent="changePassword" method="post">
             <div class="form-block">
-                <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                <label for="old_password">Huidig wachtwoord</label>
+                <input v-model="formOldPassword" type="password" id="old_password" name="old_password" required autocomplete="current-password" maxlength="255">
+            </div>
+            <div class="form-block">
+                <label for="password">Nieuw wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
                 <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
+                <label for="password_confirmation">Typ je nieuw wachtwoord opnieuw</label>
                 <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
@@ -55,8 +61,12 @@
         changePasswordLoading: boolean = false;
         formName: string = '';
         formEmail: string = '';
+        formOldPassword: string = '';
         formPassword: string = '';
         formPasswordConfirmation: string = '';
+        errors: any = {};
+        errorType: string = '';
+        was422: boolean = false;
 
         mounted() {
             this.formName = (this as any).$auth.user().name;
@@ -65,6 +75,7 @@
 
         uploadAvatar() {
             this.uploadAvatarLoading = true;
+            this.removeErrors();
             let formData = new FormData();
             formData.append('file', this.file);
 
@@ -74,9 +85,12 @@
                 data: formData,
             })
             .then((response: any) => {
+                (this as any).$auth.fetch();
                 this.$message.success('Profielfoto geüpload!');
             }, (error: any) => {
+                console.log(error.response);
                 this.$message.error('Er is iets misgegaan');
+                this.setErrors(error);
             })
             .then(() => {
                 this.uploadAvatarLoading = false;
@@ -88,22 +102,51 @@
             this.file = file.files[0];
         }
 
+        removeErrors() {
+            if (this.was422) {
+                for (let key of Object.keys(this.errors)) {
+                    document.getElementsByName(key)[0].className = '';
+                    if (key == 'password') document.getElementsByName('password_confirmation')[0].className = '';
+                }
+            }
+
+            this.errors = {};
+            this.errorType = '';
+        }
+
+        setErrors(error: any) {
+            if (error.response.status == 422) {
+                this.errors = error.response.data.errors;
+                this.was422 = true;
+                for (let key of Object.keys(this.errors)) {
+                    document.getElementsByName(key)[0].className = 'input-error';
+                    if (key == 'password') document.getElementsByName('password_confirmation')[0].className = 'input-error';
+                }
+            }
+            else {
+                this.errorType = error.response.status + ' ' + error.response.statusText;
+            }
+            document.getElementsByTagName('h1')[0].scrollIntoView();
+        }
+
         changeInfo() {
             this.changeInfoLoading = true;
+            this.removeErrors();
 
             this.$http({
                 url: `auth/change-info`,
                 method: 'post',
                 data: {
                     name: this.formName,
-                    email: this.formEmail
+                    email: this.formEmail,
                 },
             })
             .then((response: any) => {
-                this.$message.success('Succes!');
                 (this as any).$auth.fetch();
+                this.$message.success('Succes!');
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan');
+                this.setErrors(error);
             })
             .then(() => {
                 this.changeInfoLoading = false;
@@ -112,19 +155,25 @@
 
         changePassword() {
             this.changePasswordLoading = true;
+            this.removeErrors();
 
             this.$http({
                 url: `auth/change-password`,
                 method: 'post',
                 data: {
+                    old_password: this.formOldPassword,
                     password: this.formPassword,
-                    password_confirmation: this.formPasswordConfirmation
+                    password_confirmation: this.formPasswordConfirmation,
                 },
             })
             .then((response: any) => {
+                this.formOldPassword = '';
+                this.formPassword = '';
+                this.formPasswordConfirmation = '';
                 this.$message.success('Succes!');
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan');
+                this.setErrors(error);
             })
             .then(() => {
                 this.changePasswordLoading = false;
@@ -134,5 +183,13 @@
 </script>
 
 <style lang="scss" scoped>
-    
+    .form-block {
+        width: 50%;
+    }
+    label, input {
+        width: 100%;
+    }
+    label {
+        display: block;
+    }
 </style>

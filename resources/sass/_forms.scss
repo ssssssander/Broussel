@@ -11,10 +11,14 @@ input[type="text"], input[type="email"], input[type="password"], input[type="sea
     border: $light-border;
     border-radius: $default-border-radius;
     color: $dark-color;
+    margin: 5px 0;
 
     &:focus {
         border: 2px solid $primary-accent-color;
     }
+}
+input[type="file"] {
+    margin: 20px 0;
 }
 form .input-error {
     border: 2px solid $error-color;
@@ -55,7 +59,6 @@ input[type="checkbox"] {
     }
 
     input[type="text"], input[type="email"], input[type="password"], input[type="search"], textarea {
-        margin: 5px 0;
         width: 100%;
     }
 

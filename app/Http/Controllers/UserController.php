@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Image;
@@ -90,13 +91,17 @@ class UserController extends Controller
             $avatarPath = 'storage/uploads/avatars/' . $request->file->hashName();
 
             Image::make($request->file)->save($avatarPath, $imageQuality);
+
+            if ($user->avatar_path != '/storage/uploads/avatars/default.png') {
+                File::delete(public_path() . $user->avatar_path);
+            }
         }
         else {
             return response()->json(
                 [
                     'status' => 'error',
-                    'errors' => 'Bestand kon niet worden geüpload.'
-                ], 400);
+                    'errors' => ['file' => ['Bestand kon niet worden geüpload.']],
+                ], 422);
         }
 
         $user->avatar_path = '/' . $avatarPath;
@@ -136,7 +141,12 @@ class UserController extends Controller
     public function changePassword(Request $request) {
         $user = Auth::user();
 
+        Validator::extend('equal_hash', function ($attribute, $value, $parameters, $validator) use ($request, $user) {
+            return Hash::check($request->old_password, $user->password);
+        });
+
         $v = Validator::make($request->all(), [
+            'old_password'  => 'required|string|max:255|equal_hash',
             'password'  => 'required|string|min:8|max:255|confirmed',
         ]);
 

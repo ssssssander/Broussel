@@ -89,10 +89,10 @@
                     />
                     <p>Er worden nog geen kosten in rekening gebracht.</p>
                 </template>
-                <h2 v-else>Klik op namen om meer info te zien</h2>
+                <p class="text-center" v-else>Klik op namen om meer info te zien</p>
             </div>
         </div>
-        <h2 v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</h2>
+        <p class="text-center" v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</p>
         <div class="overlay" v-show="showPaymentModal"></div>
         <div class="payment-modal" v-show="showPaymentModal">
             <div class="box">
