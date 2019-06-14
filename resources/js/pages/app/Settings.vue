@@ -71,7 +71,7 @@
         errorType: string = '';
         was422: boolean = false;
 
-        mounted() {
+        created() {
             this.formName = (this as any).$auth.user().name;
             this.formEmail = (this as any).$auth.user().email;
         }

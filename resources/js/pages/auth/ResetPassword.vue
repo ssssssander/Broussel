@@ -4,10 +4,6 @@
             <h1>Wachtwoord resetten</h1>
             <form @submit.prevent="resetPassword" method="post">
                 <div class="form-block">
-                    <label for="email">E-mailadres</label>
-                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
-                </div>
-                <div class="form-block">
                     <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
                     <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
                 </div>
@@ -35,8 +31,11 @@
         loading: boolean = false;
 
         created() {
-            if (!this.$route.query.token) {
+            if (!this.$route.query.token || !this.$route.query.email) {
                 this.$router.replace({ name: 'error404' });
+            }
+            else {
+                this.formEmail = this.$route.query.email.toString();
             }
         }
 
@@ -48,7 +47,7 @@
                 method: 'post',
                 data: {
                     token: this.$route.query.token,
-                    email: this.formEmail,
+                    email: this.$route.query.email,
                     password: this.formPassword,
                     password_confirmation: this.formPasswordConfirmation,
                 },

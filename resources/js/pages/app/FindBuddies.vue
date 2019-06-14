@@ -1,7 +1,6 @@
 <template>
     <div class="find-buddies">
         <Message
-            v-if="!success"
             message-type="error"
             :messages="errors"
             :extra-str="errorType"
