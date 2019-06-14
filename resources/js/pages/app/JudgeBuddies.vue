@@ -61,7 +61,6 @@
                 this.$message.success(`${buddy.name} is ${status}.`);
                 this.getBuddiesToBeJudged();
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan.');
             });
         }

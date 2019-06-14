@@ -27,7 +27,7 @@ class AdminController extends Controller
         $buddy->password = Hash::make($password);
         $buddy->save();
 
-        Mail::to($buddy)->send(new BuddyJudged($buddy->name, $buddy->status, $buddy->password));
+        Mail::to($buddy)->send(new BuddyJudged($buddy->name, $buddy->status, $password));
 
         return response()->json(['status' => 'success'], 200);
     }
