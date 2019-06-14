@@ -1,11 +1,10 @@
 <template>
-    <div class="buddy-detail">
-        <i v-if="!Object.keys(buddy).length">Profiel laden...</i>
-        <div v-if="Object.keys(buddy).length">
-            <img class="avatar avatar-large" :src="buddy.avatar_path" :alt="buddy.name">
-            <h1>{{ buddy.name }}</h1>
-            <p>{{ buddy.info }}</p>
-        </div>
+    <div class="buddy-profile">
+        <a-skeleton active avatar :loading="!Object.keys(buddy).length">
+            <BuddyDetail
+                :selected-buddy="buddy"
+            />
+        </a-skeleton>
     </div>
 </template>
 
@@ -13,8 +12,8 @@
     import { Component, Vue } from 'vue-property-decorator';
     
     @Component
-    export default class BuddyDetail extends Vue {
-        name: string = 'BuddyDetail';
+    export default class BuddyProfile extends Vue {
+        name: string = 'BuddyProfile';
         buddy: any = {};
 
         created() {

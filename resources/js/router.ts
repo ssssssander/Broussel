@@ -120,8 +120,8 @@ const router = new VueRouter({
                 },
                 {
                     path: 'buddy/:id',
-                    name: 'buddy-detail',
-                    component: () => import(/* webpackChunkName: "js/chunks/buddy-detail" */ '@/js/pages/app/BuddyDetail'),
+                    name: 'buddy-profile',
+                    component: () => import(/* webpackChunkName: "js/chunks/buddy-profile" */ '@/js/pages/app/BuddyProfile'),
                     meta: {
                         title: 'Wandelbuddy',
                         auth: true,

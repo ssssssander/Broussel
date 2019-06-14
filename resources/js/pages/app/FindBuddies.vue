@@ -64,40 +64,15 @@
                     </li>
                 </ul>
             </div>
-            <div class="detail">
-                <template v-if="Object.keys(selectedBuddy).length">
-                    <div class="head">
-                        <img class="avatar avatar-large" :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
-                        <h2>{{ selectedBuddy.name }}</h2>
-                    </div>
-                    <a-divider />
-                    <p>{{ selectedBuddy.info }}</p>
-                    <a-divider />
-                    <h3>Wandelen met {{ selectedBuddy.name }}</h3>
-                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }} voor <strong>€ {{ selectedBuddy.price }}</strong>.</p>
-                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
-                    <div class="payment-buttons">
-                        <PayPal
-                            :amount="selectedBuddy.price.toString()"
-                            currency="EUR"
-                            :client="payPalCredentials"
-                            locale="nl_BE"
-                            :button-style="payPalButtonStyle"
-                            env="sandbox"
-                            @payment-completed="paymentCompleted"
-                            @payment-cancelled="paymentCancelled"
-                            class="paypal"
-                        />
-                        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price)">
-                    </div>
-                    <a-divider />
-                    <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
-                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-                        <p>{{ buddyInfo.day }}: van {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
-                    </div>
-                </template>
-                <i class="text-center" v-else>Klik op namen om meer info te zien</i>
-            </div>
+            <BuddyDetail
+                v-if="Object.keys(selectedBuddy).length"
+                payment
+                :selected-buddy="selectedBuddy"
+                :final-date="finalDate"
+                :final-from-time="finalFromTime"
+                :final-to-time="finalToTime"
+            />
+            <i v-else>Klik op namen om meer info te zien</i>
         </div>
         <i class="text-center no-results" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
     </div>
@@ -105,14 +80,8 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import PayPal from 'vue-paypal-checkout';
-    import { PaymentCredentials } from '@/js/payment-credentials';
 
-    @Component({
-        components: {
-            PayPal,
-        }
-    })
+    @Component
     export default class FindBuddies extends Vue {
         name: string = 'FindBuddies';
         moment: any = (this as any).$moment;
@@ -133,113 +102,10 @@
         finalDate: string = '';
         finalFromTime: string = '';
         finalToTime: string = '';
-        payPalCredentials: any = PaymentCredentials.PAYPAL;
-        payPalButtonStyle: any = {
-            label: 'checkout',
-            size:  'responsive',
-            shape: 'rect',
-            color: 'blue',
-        };
-        stripe: any = Stripe(PaymentCredentials.STRIPE);
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
                 return availableBuddy.name.toLowerCase().includes(this.search.toLowerCase());
-            });
-        }
-
-        paymentAuthorized() {
-
-        }
-
-        paymentCompleted() {
-            this.$http({
-                url: `auth/make-appointment`,
-                method: 'post',
-                data: {
-                    user_id: (this as any).$auth.user().id,
-                    buddy_id: this.selectedBuddy.id,
-                    day: this.moment(this.finalDate, 'DD/MM/YYYY').format('YYYY-MM-DD'),
-                    time_from: this.finalFromTime,
-                    time_to: this.finalToTime,
-                }
-            })
-            .then((response: any) => {
-                this.$message.success('Betaling geslaagd');
-                this.$router.push({ path: 'chats' })
-            }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
-            });
-        }
-
-        paymentCancelled() {
-            this.$message.warning('Betaling stopgezet');
-        }
-
-        created() {
-            const sourceId: any = this.$route.query.source;
-            const clientSecret: any = this.$route.query.client_secret;
-            const amount: any = this.$route.query.amount;
-
-            if (sourceId && clientSecret) {
-                this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
-            }
-        }
-
-        bancontactPoll(sourceId: string, clientSecret: string, amount: number) {
-            const MAX_POLL_COUNT = 10;
-            let pollCount = 0;
-
-            const pollForSourceStatus = () => {
-                this.stripe.retrieveSource({id: sourceId, client_secret: clientSecret}).then(({source}: any) => {
-                    if (source.status === 'chargeable') {
-                        this.$http({
-                            url: `auth/charge-request`,
-                            method: 'post',
-                            data: {
-                                amount: amount,
-                                source: sourceId,
-                            }
-                        })
-                        .then((response: any) => {
-                            console.log(response);
-                            this.$message.success('Betaling geslaagd');
-                        }, (error: any) => {
-                            console.log(error.response);
-                            this.$message.error('Betaling mislukt');
-                        });
-                    } else if (source.status === 'pending' && pollCount < MAX_POLL_COUNT) {
-                        console.log(source);
-                        // Try again in a second, if the Source is still `pending`:
-                        pollCount += 1;
-                        setTimeout(pollForSourceStatus, 1000);
-                    } else {
-                        // Depending on the Source status, show your customer the relevant message.
-                        console.log(source);
-                    }
-                });
-            };
-            pollForSourceStatus();
-        }
-
-        bancontactPay(amount: number) {
-            this.stripe.createSource({
-                type: 'bancontact',
-                amount: amount,
-                bancontact: {
-                    preferred_language: 'nl',
-                },
-                currency: 'eur',
-                owner: {
-                    name: 'Jenny Rosen',
-                },
-                redirect: {
-                    return_url: 'http://localhost:3000/app/find?amount=' + amount,
-                },
-            }).then((result: any) => {
-                // Handle result.error or result.source
-                console.log(result);
-                window.location.replace(result.source.redirect.url);
             });
         }
 
@@ -314,9 +180,9 @@
             this.selectedBuddy = {};
 
             // Debug
-            // this.$store.state.selectedDate = '17/06/2019';
-            // this.$store.state.selectedFromTime = '09:00';
-            // this.$store.state.selectedToTime = '15:00';
+            this.$store.state.selectedDate = '17/06/2019';
+            this.$store.state.selectedFromTime = '09:00';
+            this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -380,20 +246,6 @@
     .no-results {
         display: block;
     }
-    .payment-buttons {
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        margin-top: 24px;
-
-        .bancontact, .paypal {
-            width: 45%;
-        }
-        .bancontact {
-            align-self: center;
-            cursor: pointer;
-        }
-    }
     form {
         margin-bottom: 30px;
 
@@ -435,26 +287,6 @@
                     .icon {
                         float: right;
                     }
-                }
-            }
-        }
-        .detail {
-            display: inline-flex;
-            vertical-align: top;
-            flex-flow: column wrap;
-            width: 66%;
-            padding: 30px;
-
-            h3 {
-                margin-bottom: 24px;
-            }
-            .head {
-                display: flex;
-                flex-flow: row wrap;
-                align-items: center;
-
-                h2 {
-                    margin-left: 30px;
                 }
             }
         }

@@ -2,8 +2,12 @@
     <div class="calendar">
         <a-calendar>
             <ul class="events" slot="dateCellRender" slot-scope="value">
-                <li v-for="appointment in getAppointmentsByValue(value)" :key="appointment.id">
-                    <span @click="goToProfile(appointment.person_role, appointment.person_id)" class="appointment"><span class="dot"></span>Van {{ appointment.time_from }} tot {{ appointment.time_to }}: {{ appointment.person_name }}</span>
+                <li v-for="appointment in getAppointmentsByValue(value)"
+                    :key="appointment.id"
+                    @click="goToProfile(appointment.person_role, appointment.person_id)"
+                    class="appointment"
+                >
+                    <span><span class="dot"></span>Van {{ appointment.time_from }} tot {{ appointment.time_to }}: {{ appointment.person_name }}</span>
                 </li>
             </ul>
         </a-calendar>
@@ -38,27 +42,17 @@
             let filteredAppointments = [];
 
             for (let appointment of this.appointments) {
-                console.log(appointment.day,value.format('YYYY-MM-DD'));
                 if (appointment.day == value.format('YYYY-MM-DD')) {
                     filteredAppointments.push(appointment);
-                    console.log(filteredAppointments);
                 }
             }
 
             return filteredAppointments;
         }
 
-        onPanelChange(value: any, mode: any) {
-            console.log(value, mode);
-        }
-
-        onSelect(value: any) {
-            console.log(value);
-        }
-
         goToProfile(role: number, id: string) {
             if (role == 1) {
-                this.$router.push({ name: 'buddy-detail', params: { id: id } })
+                this.$router.push({ name: 'buddy-profile', params: { id: id } })
             }
         }
     }
@@ -67,6 +61,14 @@
 <style lang="scss" scoped>
     .appointment {
         font-weight: bold;
+        margin-top: 5px;
+        transition: background-color 0.3s;
+        border-radius: $default-border-radius;
+
+        &:hover {
+            background-color: $primary-accent-color;
+            transition: background-color 0.3s;
+        }
     }
     .dot {
         width: 6px;
