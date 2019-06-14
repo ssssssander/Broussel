@@ -8,7 +8,7 @@
                     <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
                 </div>
                 <div class="form-block">
-                    <LoadingButton value="Versturen" :loading="loading" />
+                    <LoadingButton value="Mail versturen" :loading="loading" />
                 </div>
             </form>
         </div>
@@ -35,9 +35,9 @@
                 },
             })
             .then((response: any) => {
-                console.log(response);
+                this.$message.success('Mail verstuurd!');
+                this.$router.replace({ name: 'home' });
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan');
             })
             .then(() => {

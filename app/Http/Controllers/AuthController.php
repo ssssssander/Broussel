@@ -15,10 +15,8 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class AuthController extends Controller
 {
-    use SendsPasswordResetEmails, ResetsPasswords {
-        SendsPasswordResetEmails::broker insteadof ResetsPasswords;
-        ResetsPasswords::credentials insteadof SendsPasswordResetEmails;
-    }
+    use SendsPasswordResetEmails;
+    use ResetsPasswords;
 
     /**
      * Create a new controller instance.
@@ -174,7 +172,7 @@ class AuthController extends Controller
         return $this->sendResetLinkEmail($request);
     }
 
-    public function resetPassword(Request $request) {
+    public function doReset(Request $request) {
         return $this->reset($request);
     }
 

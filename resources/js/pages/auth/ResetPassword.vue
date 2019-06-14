@@ -28,6 +28,8 @@
         formEmail: string = '';
         formPassword: string = '';
         formPasswordConfirmation: string = '';
+        queryToken: string = '';
+        queryEmail: string = '';
         loading: boolean = false;
 
         created() {
@@ -35,7 +37,9 @@
                 this.$router.replace({ name: 'error404' });
             }
             else {
-                this.formEmail = this.$route.query.email.toString();
+                this.queryToken = this.$route.query.token.toString();
+                this.queryEmail = this.$route.query.email.toString();
+                this.formEmail = this.queryEmail;
             }
         }
 
@@ -46,16 +50,29 @@
                 url: `auth/reset-password`,
                 method: 'post',
                 data: {
-                    token: this.$route.query.token,
-                    email: this.$route.query.email,
                     password: this.formPassword,
                     password_confirmation: this.formPasswordConfirmation,
+                    email: this.queryEmail,
+                    token: this.queryToken,
                 },
             })
             .then((response: any) => {
-                console.log(response);
+                (this as any).$auth.login({
+                    data: {
+                        email: this.queryEmail,
+                        password: this.formPassword,
+                    },
+                    success: (response: any) => {
+                        this.$message.success('Je wachtwoord is aangepast!');
+                        this.$router.replace({ name: 'home' });
+                    },
+                    error: (error: any) => {
+                        this.$router.replace({ name: 'login' });
+                    },
+                    rememberMe: false,
+                    fetchUser: true
+                });
             }, (error: any) => {
-                console.log(error.response);
                 this.$message.error('Er is iets misgegaan');
             })
             .then(() => {

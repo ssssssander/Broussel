@@ -65,7 +65,7 @@ const router = new VueRouter({
             name: 'forgot-password',
             component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
             meta: {
-                title: 'Wachtwoord vergeten',
+                title: 'Wachtwoord vergeten?',
                 auth: false,
             }
         },

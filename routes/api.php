@@ -19,7 +19,7 @@ Route::prefix('auth')->group(function () {
     Route::post('login', 'AuthController@login');
     Route::get('refresh', 'AuthController@refresh');
     Route::post('forgot-password', 'AuthController@forgotPassword');
-    Route::post('reset-password', 'AuthController@resetPassword');
+    Route::post('reset-password', 'AuthController@doReset');
     Route::group(['middleware' => 'auth:api'], function() {
         Route::get('user', 'AuthController@user');
         Route::get('get-user/{id}', 'UserController@getUser');

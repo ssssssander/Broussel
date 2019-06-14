@@ -23,6 +23,9 @@
                 <div class="form-block">
                     <LoadingButton value="Inloggen" :loading="loading" />
                 </div>
+                <div class="form-block text-center">
+                    <router-link :to="{ name: 'forgot-password' }" class="link">Wachtwoord vergeten?</router-link>
+                </div>
             </form>
         </div>
     </div>
