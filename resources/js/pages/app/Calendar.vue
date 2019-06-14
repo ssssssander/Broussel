@@ -1,6 +1,7 @@
 <template>
     <div class="calendar">
-        <a-calendar>
+        <i v-if="!appointments.length">Kalender laden...</i>
+        <a-calendar v-if="appointments.length">
             <ul class="events" slot="dateCellRender" slot-scope="value">
                 <li v-for="appointment in getAppointmentsByValue(value)"
                     :key="appointment.id"

@@ -4,10 +4,8 @@
             <ul>
                 <li>
                     <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
-                </li><li>
+                </li><li v-if="$auth.check(0)">
                     <router-link :to="{ name: 'find-buddies' }">Nieuwe wandeling</router-link>
-                </li><li>
-                    <router-link :to="{ name: 'walks' }">Mijn wandelingen</router-link>
                 </li><li>
                     <router-link :to="{ name: 'chats' }">Chats</router-link>
                 </li><li>
@@ -35,12 +33,9 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    // import { State } from 'vuex-class';
     
     @Component
     export default class App extends Vue {
-        // @State('userData') user: any;
-
         name: string = 'App';
     }
 </script>
@@ -77,8 +72,8 @@
         }
         li {
             text-align: center;
-            width: 16.6%;
             min-width: 140px;
+            flex: 1;
 
             a {
                 width: 100%;

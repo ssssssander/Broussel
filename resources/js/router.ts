@@ -92,15 +92,6 @@ const router = new VueRouter({
                     }
                 },
                 {
-                    path: 'walks',
-                    name: 'walks',
-                    component: () => import(/* webpackChunkName: "js/chunks/walks" */ '@/js/pages/app/Walks'),
-                    meta: {
-                        title: 'Mijn wandelingen',
-                        auth: true,
-                    }
-                },
-                {
                     path: 'chats',
                     name: 'chats',
                     component: () => import(/* webpackChunkName: "js/chunks/chats" */ '@/js/pages/app/Chats'),
