@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Mail\BuddyJudged;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -17,9 +21,13 @@ class AdminController extends Controller
     }
 
     public function setStatus(Request $request) {
-        $buddy = User::find($request->id);
+        $password = Str::random(8);
+        $buddy = User::find($request->buddy_id);
         $buddy->status = $request->status;
+        $buddy->password = Hash::make($password);
         $buddy->save();
+
+        Mail::to($buddy)->send(new BuddyJudged($buddy->name, $buddy->status, $buddy->password));
 
         return response()->json(['status' => 'success'], 200);
     }

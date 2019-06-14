@@ -53,7 +53,7 @@
                 url: `auth/set-status`,
                 method: 'post',
                 data: {
-                    id: buddy.id,
+                    buddy_id: buddy.id,
                     status: status,
                 },
             })
@@ -61,6 +61,7 @@
                 this.$message.success(`${buddy.name} is ${status}.`);
                 this.getBuddiesToBeJudged();
             }, (error: any) => {
+                console.log(error.response);
                 this.$message.error('Er is iets misgegaan.');
             });
         }
