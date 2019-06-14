@@ -141,32 +141,6 @@ const router = new VueRouter({
     ],
 });
 
-router.beforeEach((to: any, from: any, next: any) => {
-    if (to.name == 'judge-buddies') {
-        if (Vue.prototype.$auth.check(3)) {
-            next();
-        }
-        else {
-            next({ name: 'home' });
-        }
-    }
-    else {
-        next();
-    }
-
-    if (to.name == 'find-buddies') {
-        if (Vue.prototype.$auth.check(1)) {
-            next();
-        }
-        else {
-            next({ name: 'home' });
-        }
-    }
-    else {
-        next();
-    }
-});
-
 router.afterEach((to: any, from: any) => {
     document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
 

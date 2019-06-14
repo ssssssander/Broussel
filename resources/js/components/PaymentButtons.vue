@@ -11,7 +11,7 @@
             @payment-cancelled="paymentCancelled"
             class="paypal"
         />
-        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price)">
+        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price * 100)">
     </div>
 </template>
 
@@ -54,12 +54,12 @@
                     time_to: this.finalToTime,
                 }
             })
-                .then((response: any) => {
-                    this.$message.success('Betaling geslaagd');
-                    this.$router.push({ path: 'chats' })
-                }, (error: any) => {
-                    this.$message.error('Er is iets misgegaan');
-                });
+            .then((response: any) => {
+                this.$message.success('Betaling geslaagd');
+                this.$router.push({ path: 'chats' })
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan');
+            });
         }
 
         paymentCancelled() {
@@ -91,13 +91,13 @@
                                 source: sourceId,
                             }
                         })
-                            .then((response: any) => {
-                                console.log(response);
-                                this.$message.success('Betaling geslaagd');
-                            }, (error: any) => {
-                                console.log(error.response);
-                                this.$message.error('Betaling mislukt');
-                            });
+                        .then((response: any) => {
+                            console.log(response);
+                            this.paymentCompleted();
+                        }, (error: any) => {
+                            console.log(error.response);
+                            this.$message.error('Betaling mislukt');
+                        });
                     } else if (source.status === 'pending' && pollCount < MAX_POLL_COUNT) {
                         console.log(source);
                         // Try again in a second, if the Source is still `pending`:

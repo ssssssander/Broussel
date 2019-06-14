@@ -60,7 +60,7 @@
             this.loading = true;
 
             (this as any).$auth.login({
-                params: {
+                data: {
                     email: this.formEmail,
                     password: this.formPassword,
                 },

@@ -8,7 +8,7 @@
                     @click="goToProfile(appointment.person_role, appointment.person_id)"
                     class="appointment"
                 >
-                    <span><span class="dot"></span>Van {{ appointment.time_from }} tot {{ appointment.time_to }} met {{ appointment.person_name }}</span>
+                    <span><span class="dot"></span>Van {{ moment(appointment.time_from, 'HH:mm').format('HH:mm') }} tot {{ moment(appointment.time_to, 'HH:mm').format('HH:mm') }} met {{ appointment.person_name }}</span>
                 </li>
             </ul>
             <template slot="monthCellRender" slot-scope="value">

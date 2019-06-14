@@ -72,7 +72,7 @@
                 :final-from-time="finalFromTime"
                 :final-to-time="finalToTime"
             />
-            <i v-else>Klik op namen om meer info te zien</i>
+            <i class="text-center hint" v-else>Klik op namen om meer info te zien</i>
         </div>
         <i class="text-center no-results" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
     </div>
@@ -180,9 +180,9 @@
             this.selectedBuddy = {};
 
             // Debug
-            this.$store.state.selectedDate = '17/06/2019';
-            this.$store.state.selectedFromTime = '09:00';
-            this.$store.state.selectedToTime = '15:00';
+            this.$store.state.selectedDate = '05/08/2019';
+            this.$store.state.selectedFromTime = '10:00';
+            this.$store.state.selectedToTime = '12:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -258,6 +258,10 @@
         padding: 15px;
         border: $light-border;
 
+        .hint {
+            width: 66%;
+            display: inline-block;
+        }
         .side {
             display: inline-block;
             width: 33%;
@@ -271,9 +275,8 @@
                 li {
                     display: block;
                     cursor: pointer;
-                    padding: 0 10px;
+                    padding: 20px 10px;
                     border-bottom: $light-border;
-                    margin: 10px 0;
 
                     &:hover, &.active {
                         color: $dark-primary-accent-color;
