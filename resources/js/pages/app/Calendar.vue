@@ -71,8 +71,8 @@
             return filteredAppointments.length;
         }
 
-        goToProfile(role: number, id: string) {
-            if (role == 2) {
+        goToProfile(role: string, id: string) {
+            if (role == 'buddy') {
                 this.$router.push({ name: 'buddy-profile', params: { id: id } })
             }
         }

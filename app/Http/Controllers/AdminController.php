@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AdminController extends Controller
 {
     public function getBuddiesToBeJudged(Request $request) {
-        $buddiesToBeJudged = User::where([['role', 2], ['status', 'undecided']])->get();
+        $buddiesToBeJudged = User::where([['role', 'buddy'], ['status', 'undecided']])->get();
 
         return response()->json([
             'status' => 'success',

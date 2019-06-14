@@ -70,7 +70,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
                     meta: {
                         title: 'Dashboard',
-                        auth: true,
+                        auth: ['user', 'buddy'],
                     }
                 },
                 {
@@ -79,7 +79,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
                     meta: {
                         title: 'Vind een wandelbuddy',
-                        auth: true,
+                        auth: ['user'],
                     }
                 },
                 {
@@ -88,7 +88,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
                     meta: {
                         title: 'Kalender',
-                        auth: true,
+                        auth: ['user', 'buddy'],
                     }
                 },
                 {
@@ -97,7 +97,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/chats" */ '@/js/pages/app/Chats'),
                     meta: {
                         title: 'Chats',
-                        auth: true,
+                        auth: ['user', 'buddy'],
                     }
                 },
                 {
@@ -115,7 +115,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/buddy-profile" */ '@/js/pages/app/BuddyProfile'),
                     meta: {
                         title: 'Wandelbuddy',
-                        auth: true,
+                        auth: ['user'],
                     }
                 },
                 {
@@ -124,7 +124,7 @@ const router = new VueRouter({
                     component: () => import(/* webpackChunkName: "js/chunks/judge-buddies" */ '@/js/pages/app/JudgeBuddies'),
                     meta: {
                         title: 'Beoordelen',
-                        auth: true,
+                        auth: ['admin'],
                     }
                 },
             ]

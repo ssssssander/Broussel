@@ -33,7 +33,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $buddies = User::where([['role', 2], ['status', 'accepted']])->get()->toArray();
+        $buddies = User::where([['role', 'buddy'], ['status', 'accepted']])->get()->toArray();
         $availableBuddies = [];
 
         foreach ($buddies as $buddy) {

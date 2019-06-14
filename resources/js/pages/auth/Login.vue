@@ -66,7 +66,7 @@
                 },
                 success: (response: any) => {
                     this.$message.success('Je bent met succes ingelogd!');
-                    if ((this as any).$auth.user().role == 3) {
+                    if ((this as any).$auth.user().role == 'admin') {
                         this.$router.push({ name: 'judge-buddies' });
                     }
                     else {

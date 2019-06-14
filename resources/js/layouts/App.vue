@@ -1,10 +1,10 @@
 <template>
     <div class="app box">
         <div class="user-links">
-            <ul v-if="$auth.check(1) || $auth.check(2)">
+            <ul v-if="$auth.check('user') || $auth.check('buddy')">
                 <li>
                     <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
-                </li><li v-if="$auth.check(1)">
+                </li><li v-if="$auth.check('user')">
                     <router-link :to="{ name: 'find-buddies' }">Nieuwe wandeling</router-link>
                 </li><li>
                     <router-link :to="{ name: 'chats' }">Chats</router-link>
@@ -14,7 +14,7 @@
                     <router-link :to="{ name: 'settings' }">Instellingen</router-link>
                 </li>
             </ul>
-            <ul v-if="$auth.check(3)">
+            <ul v-if="$auth.check('admin')">
                 <li>
                     <router-link :to="{ name: 'judge-buddies' }">Beoordelen</router-link>
                 </li><li>
@@ -27,7 +27,7 @@
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="user-data">
                     <div>
-                        <p>Ingelogd als {{ $auth.user().name }} <span v-if="$auth.check(2)" class="badge">Wandelbuddy</span></p>
+                        <p>Ingelogd als {{ $auth.user().name }} <span v-if="$auth.check('buddy')" class="badge">Wandelbuddy</span></p>
                         <p>{{ $auth.user().email }}</p>
                     </div>
                     <img class="avatar avatar-medium" :src="$auth.user().avatar_path" :alt="$auth.user().name">

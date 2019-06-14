@@ -40,7 +40,7 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->ip_address = $request->ip();
-        $user->role = 1;
+        $user->role = 'user';
         $user->save();
 
         return response()->json(['status' => 'success'], 200);
@@ -91,7 +91,7 @@ class AuthController extends Controller
         $buddy->ip_address = $request->ip();
         $buddy->info = $request->info;
         $buddy->available_times = $request->available_times;
-        $buddy->role = 2;
+        $buddy->role = 'buddy';
         $buddy->status = 'accepted'; // Temp, actual value: 'undecided'
         $buddy->save();
 

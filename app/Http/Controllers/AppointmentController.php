@@ -46,11 +46,11 @@ class AppointmentController extends Controller
         $appointments = [];
         $appointmentsWithExtra = [];
 
-        if (Auth::user()->role == 1) {
+        if (Auth::user()->role == 'user') {
             $appointments = Auth::user()->appointments->toArray();
             $idColumnToFind = 'buddy_id';
         }
-        if (Auth::user()->role == 2) {
+        if (Auth::user()->role == 'buddy') {
             $appointments = Appointment::where('buddy_id', Auth::id())->get()->toArray();
             $idColumnToFind = 'user_id';
         }
@@ -72,14 +72,14 @@ class AppointmentController extends Controller
     public function getChattableBuddy(Request $request) {
         $latest = [];
 
-        if (Auth::user()->role == 1) {
+        if (Auth::user()->role == 'user') {
             $latestAppointment = Auth::user()->appointments->last();
 
             if ($latestAppointment) {
                 $latest = User::find($latestAppointment->buddy_id);
             }
         }
-        if (Auth::user()->role == 2) {
+        if (Auth::user()->role == 'buddy') {
             $latestAppointment = Appointment::where('buddy_id', Auth::id())->get()->last();
 
             if ($latestAppointment) {
