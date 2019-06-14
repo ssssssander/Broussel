@@ -72,40 +72,34 @@
                     </div>
                     <a-divider />
                     <p>{{ selectedBuddy.info }}</p>
-                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-                        <p>{{ buddyInfo.day }}: {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
-                    </div>
-                    <button class="btn" @click="">Wandelen maar! (€ {{ selectedBuddy.price }})</button>
-                    <PayPal
-                        :amount="selectedBuddy.price.toString()"
-                        currency="EUR"
-                        :client="payPalCredentials"
-                        locale="nl_BE"
-                        :button-style="payPalButtonStyle"
-                        env="sandbox"
-                        @payment-authorized="paymentAuthorized"
-                        @payment-completed="paymentCompleted"
-                        @payment-cancelled="paymentCancelled"
-                    />
-                    <p>Er worden nog geen kosten in rekening gebracht.</p>
+                    <a-divider />
                     <h3>Wandelen met {{ selectedBuddy.name }}</h3>
-                    <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
-                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
-                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>s
+                    <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }} voor <strong>€ {{ selectedBuddy.price }}</strong>.</p>
+                    <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
+                    <div class="payment-buttons">
+                        <PayPal
+                            :amount="selectedBuddy.price.toString()"
+                            currency="EUR"
+                            :client="payPalCredentials"
+                            locale="nl_BE"
+                            :button-style="payPalButtonStyle"
+                            env="sandbox"
+                            @payment-completed="paymentCompleted"
+                            @payment-cancelled="paymentCancelled"
+                            class="paypal"
+                        />
+                        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price)">
+                    </div>
+                    <a-divider />
+                    <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
+                    <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
+                        <p>{{ buddyInfo.day }}: van {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
+                    </div>
                 </template>
-                <p class="text-center" v-else>Klik op namen om meer info te zien</p>
+                <i class="text-center" v-else>Klik op namen om meer info te zien</i>
             </div>
         </div>
-        <p class="text-center" v-if="!success & !firstTime">Helaas is er niemand beschikbaar op deze dag en tijdstip.</p>
-        <div class="overlay" v-show="showPaymentModal"></div>
-        <div class="payment-modal" v-show="showPaymentModal">
-            <div class="box">
-                <h3>Wandelen met {{ selectedBuddy.name }}</h3>
-                <a class="btn" @click="bancontactPay(selectedBuddy.price)">Bancontact</a>
-                <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }}.</p>
-                <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
-            </div>
-        </div>
+        <i class="text-center" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
     </div>
 </template>
 
@@ -146,8 +140,6 @@
             color: 'blue',
         };
         stripe: any = Stripe(PaymentCredentials.STRIPE);
-
-        showPaymentModal: boolean = false;
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
@@ -320,9 +312,9 @@
             this.selectedBuddy = {};
 
             // Debug
-            // this.$store.state.selectedDate = '17/06/2019';
-            // this.$store.state.selectedFromTime = '09:00';
-            // this.$store.state.selectedToTime = '15:00';
+            this.$store.state.selectedDate = '17/06/2019';
+            this.$store.state.selectedFromTime = '09:00';
+            this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -381,6 +373,20 @@
 </style>
 
 <style lang="scss" scoped>
+    .payment-buttons {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        margin-top: 24px;
+
+        .bancontact, .paypal {
+            width: 45%;
+        }
+        .bancontact {
+            align-self: center;
+            cursor: pointer;
+        }
+    }
     form {
         margin-bottom: 30px;
 
@@ -432,6 +438,9 @@
             width: 66%;
             padding: 30px;
 
+            h3 {
+                margin-bottom: 24px;
+            }
             .head {
                 display: flex;
                 flex-flow: row wrap;

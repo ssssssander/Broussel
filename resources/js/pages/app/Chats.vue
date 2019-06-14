@@ -1,6 +1,6 @@
 <template>
     <div class="chats">
-        <div id="talkjs-container"><i v-if="!success">Chats laden...</i><i v-else>Je hebt nog geen chats</i></div>
+        <div id="talkjs-container"><i v-if="!success">Chats laden...</i><i v-if="success && !Object.keys(buddy).length">Je hebt nog geen chats</i></div>
     </div>
 </template>
 
@@ -41,8 +41,10 @@
             .then((response: any) => {
                 this.success = true;
                 this.buddy = response.data.chattable_buddies_data;
+                console.log(response);
                 this.makeTalkSession();
             }, (error: any) => {
+                console.log(error.response);
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
         }

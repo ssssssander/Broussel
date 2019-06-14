@@ -8,7 +8,10 @@
         />
         <form enctype="multipart/form-data" @submit.prevent="uploadAvatar" method="post">
             <div class="form-block">
-                <input type="file" id="file" ref="file" name="file" @change="handleFileUpload">
+                <div class="file-area">
+                    <input type="file" id="file" ref="file" name="file" @change="handleFileUpload">
+                    <label for="file" class="btn"><a-icon type="upload" />Kies een profielfoto</label>
+                </div>
                 <LoadingButton value="Uploaden" :loading="uploadAvatarLoading" />
             </div>
         </form>
@@ -74,6 +77,10 @@
         }
 
         uploadAvatar() {
+            if (this.file == '') {
+                return;
+            }
+
             this.uploadAvatarLoading = true;
             this.removeErrors();
             let formData = new FormData();
@@ -90,6 +97,9 @@
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan');
                 this.setErrors(error);
+                if (this.errorType) {
+                    this.errorType = 'Bestand kon niet worden geüpload.';
+                }
             })
             .then(() => {
                 this.uploadAvatarLoading = false;
@@ -98,7 +108,12 @@
 
         handleFileUpload() {
             let file: any = this.$refs.file;
-            this.file = file.files[0];
+
+            if (file.files[0]) {
+                this.file = file.files[0];
+                let fileLabelElem: any = document.querySelector('label[for="file"]');
+                fileLabelElem.innerText = this.file.name;
+            }
         }
 
         removeErrors() {
@@ -181,7 +196,41 @@
     }
 </script>
 
+<style lang="scss">
+    .settings .anticon {
+        margin-right: 10px;
+
+        svg {
+            vertical-align: middle;
+        }
+    }
+</style>
+
 <style lang="scss" scoped>
+    .file-area {
+        background-color: $light-primary-accent-color;
+        display: flex;
+        padding: 60px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 12px;
+        border-radius: $default-border-radius;
+
+        #file {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+
+            & + label {
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+        }
+    }
     .form-block {
         width: 50%;
     }

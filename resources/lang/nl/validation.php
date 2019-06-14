@@ -129,6 +129,9 @@ return [
         'available_times' => [
             'at_least_one' => 'Je bent vergeten je beschikbare dagen aan te duiden.',
         ],
+        'old_password' => [
+            'equal_hash' => 'Je huidige wachtwoord is niet correct.',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------

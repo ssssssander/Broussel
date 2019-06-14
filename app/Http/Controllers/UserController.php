@@ -96,13 +96,6 @@ class UserController extends Controller
                 File::delete(public_path() . $user->avatar_path);
             }
         }
-        else {
-            return response()->json(
-                [
-                    'status' => 'error',
-                    'errors' => ['file' => ['Bestand kon niet worden geüpload.']],
-                ], 422);
-        }
 
         $user->avatar_path = '/' . $avatarPath;
         $user->save();

@@ -129,6 +129,9 @@ return [
         'available_times' => [
             'at_least_one' => "Vous avez oublié d'indiquer vos jours disponibles.",
         ],
+        'old_password' => [
+            'equal_hash' => 'Votre mot de passe actuel est incorrect.',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------
