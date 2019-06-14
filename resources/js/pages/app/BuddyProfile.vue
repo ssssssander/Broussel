@@ -26,8 +26,13 @@
                 method: 'get',
             })
             .then((response: any) => {
-                this.buddy = response.data.user_data;
-                document.title = this.buddy.name;
+                if (response.data.user_data.role == 'buddy' && response.data.user_data.status == 'accepted') {
+                    this.buddy = response.data.user_data;
+                    document.title = this.buddy.name;
+                }
+                else {
+                    this.$router.replace({ name: 'error404' });
+                }
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });

@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Faker\Generator as Faker;
 
 class UsersTableSeeder extends Seeder
 {
@@ -12,6 +11,8 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
+        factory(App\User::class, 100)->create();
+
         DB::table('users')->insert([
         [
             'name' => 'Thee Kop',
@@ -26,8 +27,8 @@ class UsersTableSeeder extends Seeder
             'available_times' => null,
         ],
         [
-            'name' => 'SSS',
-            'email' => 'sander.borret@hotmail.com',
+            'name' => 'Sander',
+            'email' => 's.b@hotmail.com',
             'password' => null,
             'role' => 'buddy',
             'status' => 'undecided',
@@ -42,7 +43,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'bert.bollen@hotmail.com',
             'password' => bcrypt('bertbollen123'),
             'role' => 'buddy',
-            'status' => 'undecided',
+            'status' => 'accepted',
             'nl' => true,
             'fr' => false,
             'en' => false,
@@ -54,7 +55,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'a.b@c.com',
             'password' => null,
             'role' => 'buddy',
-            'status' => 'undecided',
+            'status' => 'accepted',
             'nl' => true,
             'fr' => true,
             'en' => false,

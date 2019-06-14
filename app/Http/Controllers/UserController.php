@@ -44,7 +44,7 @@ class UserController extends Controller
 
             foreach ($availableTimes as $availableTime) {
                 // Check for day
-                if (strtolower($date->englishDayOfWeek) == $availableTime['day']) {
+                if ($availableTime['available'] && strtolower($date->englishDayOfWeek) == $availableTime['day']) {
                     // Check for times
                     $delimiter = ':';
                     $explodedFrom = explode($delimiter, $request->from);
