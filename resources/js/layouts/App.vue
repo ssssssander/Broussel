@@ -22,7 +22,7 @@
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="user-data">
                     <div>
-                        <p>Ingelogd als {{ $auth.user().name }}</p>
+                        <p>Ingelogd als {{ $auth.user().name }} <span v-if="$auth.check(1)" class="badge">Wandelbuddy</span></p>
                         <p>{{ $auth.user().email }}</p>
                     </div>
                     <img class="avatar avatar-medium" :src="$auth.user().avatar_path" :alt="$auth.user().name">

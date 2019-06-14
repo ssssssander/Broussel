@@ -49,12 +49,12 @@
             </a-time-picker>
             <LoadingButton value="Zoek naar wandelbuddies" :loading="loading" />
         </form>
-        <div v-if="success" class="buddies">
+        <div v-if="success && pressedButton" class="buddies">
             <div class="side">
                 <input type="search" v-model="search" placeholder="Zoeken op naam">
                 <ul>
                     <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
-                        <a-skeleton active avatar :title="false" :paragraph="{ rows: 1, width: [250, 250] }" :loading="loading">
+                        <a-skeleton active avatar :title="false" :paragraph="{ rows: 3, width: [250, 250] }" :loading="loading">
                             <div>
                                 <img class="avatar avatar-small" :src="buddy.avatar_path" :alt="buddy.name">
                                 <span class="name">{{ buddy.name }}</span>
@@ -99,7 +99,7 @@
                 <i class="text-center" v-else>Klik op namen om meer info te zien</i>
             </div>
         </div>
-        <i class="text-center" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
+        <i class="text-center no-results" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
     </div>
 </template>
 
@@ -123,7 +123,8 @@
         errors: any = {};
         errorType: string = '';
         loading: boolean = false;
-        success: boolean = false;
+        success: boolean = true;
+        pressedButton: boolean = false;
         availableBuddies: any[] = [];
         selectedBuddy: any = {};
         minutesAfterNowActive: number = 20;
@@ -309,12 +310,13 @@
 
         findBuddies() {
             this.loading = true;
+            this.pressedButton = true;
             this.selectedBuddy = {};
 
             // Debug
-            this.$store.state.selectedDate = '17/06/2019';
-            this.$store.state.selectedFromTime = '09:00';
-            this.$store.state.selectedToTime = '15:00';
+            // this.$store.state.selectedDate = '17/06/2019';
+            // this.$store.state.selectedFromTime = '09:00';
+            // this.$store.state.selectedToTime = '15:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -327,6 +329,8 @@
             })
             .then((response: any) => {
                 this.success = true;
+                this.errors = {};
+                this.errorType = '';
                 this.availableBuddies = response.data.available_buddies_data;
                 this.finalDate = this.$store.state.selectedDate;
                 this.finalFromTime = this.$store.state.selectedFromTime;
@@ -373,6 +377,9 @@
 </style>
 
 <style lang="scss" scoped>
+    .no-results {
+        display: block;
+    }
     .payment-buttons {
         display: flex;
         flex-flow: row wrap;

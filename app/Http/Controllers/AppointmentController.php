@@ -59,18 +59,18 @@ class AppointmentController extends Controller
     public function getChattableBuddies(Request $request) {
         $latest = [];
 
-        if (Auth::user()->is_buddy) {
-            $latestAppointment = Appointment::where('buddy_id', Auth::id())->get()->last();
-
-            if ($latestAppointment) {
-                $latest = User::find($latestAppointment->id);
-            }
-        }
-        else {
+        if (Auth::user()->role == 0) {
             $latestAppointment = Auth::user()->appointments->last();
 
             if ($latestAppointment) {
                 $latest = User::find($latestAppointment->buddy_id);
+            }
+        }
+        if (Auth::user()->role == 1) {
+            $latestAppointment = Appointment::where('buddy_id', Auth::id())->get()->last();
+
+            if ($latestAppointment) {
+                $latest = User::find($latestAppointment->id);
             }
         }
 

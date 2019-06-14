@@ -37,7 +37,6 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'available_times' => 'array',
-        'is_buddy' => 'boolean',
     ];
 
     public function appointments() {

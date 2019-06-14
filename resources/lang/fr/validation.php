@@ -132,6 +132,9 @@ return [
         'old_password' => [
             'equal_hash' => 'Votre mot de passe actuel est incorrect.',
         ],
+        '*' => [
+            'divisible_by' => 'Les minutes doivent pouvoir être divisés par 5.',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------

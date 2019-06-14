@@ -111,6 +111,15 @@ p {
 .header-border {
     border-bottom: 3px solid $primary-accent-color;
 }
+.badge {
+    background-color: $primary-accent-color;
+    color: $light-color;
+    border-radius: $default-border-radius;
+    padding: 4px;
+    margin-left: 2px;
+    vertical-align: center;
+    font-size: 0.6em;
+}
 @media screen and (max-width: 1032px) {
     body {
         font-size: 1rem;

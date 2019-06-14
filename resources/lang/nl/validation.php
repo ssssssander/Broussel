@@ -132,6 +132,9 @@ return [
         'old_password' => [
             'equal_hash' => 'Je huidige wachtwoord is niet correct.',
         ],
+        '*' => [
+            'divisible_by' => 'Minuten moeten door 5 kunnen gedeeld worden.',
+        ],
     ],
     /*
     |--------------------------------------------------------------------------

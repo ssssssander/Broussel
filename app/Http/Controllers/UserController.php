@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Carbon\Carbon;
+use App\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class UserController extends Controller
         });
 
         $requestValidator = Validator::make($request->all(), [
-            'date' => 'required|date_format:d/m/Y',
+            'date' => 'required|date_format:d/m/Y|after:yesterday',
             'from' => 'required|date_format:H:i|divisible_by:5',
             'to'  => 'required|date_format:H:i|after:from|divisible_by:5',
         ]);
@@ -32,13 +33,16 @@ class UserController extends Controller
             ], 422);
         }
 
-        $buddies = User::where([['is_buddy', true], ['status', 'accepted']])->get()->toArray();
+        $buddies = User::where([['role', 1], ['status', 'accepted']])->get()->toArray();
         $availableBuddies = [];
 
         foreach ($buddies as $buddy) {
             $availableTimes = json_decode($buddy['available_times'], true);
+            $date = Carbon::createFromFormat('d/m/Y', $request->date);
+            $appointments =  Appointment::where('buddy_id', $buddy['id'])->get();
+            $alreadyHasAppointment = false;
+
             foreach ($availableTimes as $availableTime) {
-                $date = Carbon::createFromFormat('d/m/Y', $request->date);
                 // Check for day
                 if (strtolower($date->englishDayOfWeek) == $availableTime['day']) {
                     // Check for times
@@ -47,21 +51,37 @@ class UserController extends Controller
                     $explodedTo = explode($delimiter, $request->to);
                     $explodedAvailableFrom = explode($delimiter, $availableTime['from']);
                     $explodedAvailableTo = explode($delimiter, $availableTime['to']);
+                    $timeFrom = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1]);
+                    $timeTo = Carbon::createFromTime($explodedTo[0], $explodedTo[1]);
+                    $timeAvailableFrom = Carbon::createFromTime($explodedAvailableFrom[0], $explodedAvailableFrom[1]);
+                    $timeAvailableTo = Carbon::createFromTime($explodedAvailableTo[0], $explodedAvailableTo[1]);
 
-                    if (Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
-                            ->between(
-                                Carbon::createFromTime($explodedAvailableFrom[0], $explodedAvailableFrom[1]),
-                                Carbon::createFromTime($explodedAvailableTo[0], $explodedAvailableTo[1]))
-                        && Carbon::createFromTime($explodedTo[0], $explodedTo[1])
-                            ->between(
-                                Carbon::createFromTime($explodedAvailableFrom[0], $explodedAvailableFrom[1]),
-                                Carbon::createFromTime($explodedAvailableTo[0], $explodedAvailableTo[1]))
-                    ) {
-                        $diffInMinutes = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
-                            ->diffInMinutes(Carbon::createFromTime($explodedTo[0], $explodedTo[1]));
-                        $priceInEur = $diffInMinutes / 5;
-                        $buddy['price'] = $priceInEur;
-                        $availableBuddies[] = $buddy;
+                    if ($timeFrom->between($timeAvailableFrom, $timeAvailableTo)
+                        && $timeTo->between($timeAvailableFrom, $timeAvailableTo)) {
+                        // Check if buddy already has appointment on given times
+                        foreach ($appointments as $appointment) {
+                            $appointmentDay = Carbon::createFromFormat('Y-m-d', $appointment->day);
+                            $explodedAppointmentFrom = explode($delimiter, $appointment->time_from);
+                            $explodedAppointmentTo = explode($delimiter, $appointment->time_to);
+                            $timeAppointmentFrom = Carbon::createFromTime($explodedAppointmentFrom[0], $explodedAppointmentFrom[1]);
+                            $timeAppointmentTo = Carbon::createFromTime($explodedAppointmentTo[0], $explodedAppointmentTo[1]);
+
+                            if ($appointmentDay->format('Y-m-d') == $date->format('Y-m-d')) {
+                                if ($timeFrom->between($timeAppointmentFrom, $timeAppointmentTo)
+                                    || $timeTo->between($timeAppointmentFrom, $timeAppointmentTo)) {
+                                    $alreadyHasAppointment = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!$alreadyHasAppointment) {
+                            $diffInMinutes = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
+                                ->diffInMinutes(Carbon::createFromTime($explodedTo[0], $explodedTo[1]));
+                            $priceInEur = $diffInMinutes / 5;
+                            $buddy['price'] = $priceInEur;
+                            $availableBuddies[] = $buddy;
+                        }
                     }
                 }
             }
