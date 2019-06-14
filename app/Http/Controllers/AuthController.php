@@ -9,10 +9,17 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 
 class AuthController extends Controller
 {
+    use SendsPasswordResetEmails, ResetsPasswords {
+        SendsPasswordResetEmails::broker insteadof ResetsPasswords;
+        ResetsPasswords::credentials insteadof SendsPasswordResetEmails;
+    }
+
     /**
      * Create a new controller instance.
      *
@@ -161,6 +168,14 @@ class AuthController extends Controller
         }
 
         return response()->json(['error' => 'refresh_token_error'], 401);
+    }
+
+    public function forgotPassword(Request $request) {
+        return $this->sendResetLinkEmail($request);
+    }
+
+    public function resetPassword(Request $request) {
+        return $this->reset($request);
     }
 
     private function guard() {

@@ -61,6 +61,24 @@ const router = new VueRouter({
             }
         },
         {
+            path: '/forgot',
+            name: 'forgot-password',
+            component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
+            meta: {
+                title: 'Wachtwoord vergeten',
+                auth: false,
+            }
+        },
+        {
+            path: '/reset',
+            name: 'reset-password',
+            component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
+            meta: {
+                title: 'Wachtwoord resetten',
+                auth: false,
+            }
+        },
+        {
             path: '/app',
             component: () => import(/* webpackChunkName: "js/chunks/app" */ '@/js/layouts/App'),
             children: [

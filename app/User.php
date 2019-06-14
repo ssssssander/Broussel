@@ -50,4 +50,8 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims() {
         return [];
     }
+
+    public function setPasswordResetNotification($token) {
+        $this->notify(new App\Notifications\MailResetPasswordNotification($token));
+    }
 }
