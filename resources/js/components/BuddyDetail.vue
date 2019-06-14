@@ -27,9 +27,24 @@
         </template>
         <a-divider />
         <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
-        <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-            <p v-if="buddyInfo.available">{{ buddyInfo.day }}: van {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
-        </div>
+        <table class="available-times-table">
+            <thead>
+                <tr>
+                    <th>Dag</th>
+                    <th>Van</th>
+                    <th>Tot</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
+                    <tr v-if="buddyInfo.available">
+                        <td>{{ buddyInfo.day }}</td>
+                        <td>{{ buddyInfo.from }}</td>
+                        <td>{{ buddyInfo.to }}</td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
     </div>
 </template>
 
@@ -64,6 +79,20 @@
 </script>
 
 <style lang="scss" scoped>
+    .available-times-table {
+        border-collapse: collapse;
+
+        td, th {
+            border: $light-border;
+            border-radius: $default-border-radius;
+            text-align: left;
+            padding: 12px;
+        }
+
+        tr:nth-child(even) {
+            background-color: $gray-color;
+        }
+    }
     .buddy-detail {
         display: inline-flex;
         vertical-align: top;
