@@ -56,7 +56,10 @@ class AuthController extends Controller
         $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'info'  => 'required|string|min:50|max:65000|',
+            'info'  => 'required|string|min:50|max:65000',
+            'nl'  => 'boolean',
+            'fr'  => 'boolean',
+            'en'  => 'boolean',
             'available_times' => 'required|string|max:65000|json',
         ]);
 
@@ -66,12 +69,18 @@ class AuthController extends Controller
             '*.to' => 'required|date_format:H:i|after:*.from|divisible_by:5',
         ]);
 
-        $availableTimesValidator->after(function ($validator) use($availableTimes) {
+        $availableTimesValidator->after(function ($validator) use ($availableTimes) {
             $availableBools = array_column($availableTimes, 'available');
             $atLeastOne = count(array_filter($availableBools, function($var) { return $var; })) >= 1;
 
             if (!$atLeastOne) {
-                $validator->errors()->add('at_least_one_day', trans('validation.custom.available_times.at_least_one'));
+                $validator->errors()->add('at_least_one_day', trans('validation.custom.available_times.at_least_one_day'));
+            }
+        });
+
+        $requestValidator->after(function ($validator) use ($request) {
+            if (!$request->nl && !$request->fr && !$request->en) {
+                $validator->errors()->add('at_least_one_lang', trans('validation.custom.*.at_least_one_lang'));
             }
         });
 
@@ -87,12 +96,15 @@ class AuthController extends Controller
         $buddy = new User;
         $buddy->name = $request->name;
         $buddy->email = $request->email;
-        $buddy->password =  Hash::make(Str::random(8)); // To be used later, when buddy is accepted???
+        $buddy->password =  null;
         $buddy->ip_address = $request->ip();
         $buddy->info = $request->info;
+        $buddy->nl = $request->nl;
+        $buddy->fr = $request->fr;
+        $buddy->en = $request->en;
         $buddy->available_times = $request->available_times;
         $buddy->role = 'buddy';
-        $buddy->status = 'accepted'; // Temp, actual value: 'undecided'
+        $buddy->status = 'undecided';
         $buddy->save();
 
         return response()->json(['status' => 'success'], 200);

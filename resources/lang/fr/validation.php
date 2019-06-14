@@ -127,13 +127,14 @@ return [
     */
     'custom' => [
         'available_times' => [
-            'at_least_one' => "Vous avez oublié d'indiquer vos jours disponibles.",
+            'at_least_one_day' => "Vous avez oublié d'indiquer vos jours disponibles.",
         ],
         'old_password' => [
             'equal_hash' => 'Votre mot de passe actuel est incorrect.',
         ],
         '*' => [
             'divisible_by' => 'Les minutes doivent pouvoir être divisés par 5.',
+            'at_least_one_lang' => 'Vous devez sélectionner au moins une langue.',
         ],
     ],
     /*

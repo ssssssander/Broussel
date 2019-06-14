@@ -127,13 +127,14 @@ return [
     */
     'custom' => [
         'available_times' => [
-            'at_least_one' => 'Je bent vergeten je beschikbare dagen aan te duiden.',
+            'at_least_one_day' => 'Je bent vergeten je beschikbare dagen aan te duiden.',
         ],
         'old_password' => [
             'equal_hash' => 'Je huidige wachtwoord is niet correct.',
         ],
         '*' => [
             'divisible_by' => 'Minuten moeten door 5 kunnen gedeeld worden.',
+            'at_least_one_lang' => 'Je moet minstens één taal selecteren.',
         ],
     ],
     /*

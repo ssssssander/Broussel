@@ -30,7 +30,7 @@ class UsersTableSeeder extends Seeder
             'email' => 'bert.bollen@hotmail.com',
             'password' => bcrypt('bertbollen123'),
             'role' => 'buddy',
-            'status' => 'undecided',
+            'status' => 'accepted',
             'nl' => true,
             'fr' => false,
             'en' => false,
@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
         [
             'name' => 'Az Zer',
             'email' => 'a.b@c.com',
-            'password' => bcrypt('11111111'),
+            'password' => null,
             'role' => 'buddy',
             'status' => 'undecided',
             'nl' => true,

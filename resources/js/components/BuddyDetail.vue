@@ -2,7 +2,14 @@
     <div class="buddy-detail">
         <div class="head">
             <img class="avatar avatar-large" :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
-            <h2>{{ selectedBuddy.name }}</h2>
+            <div class="name">
+                <h2>{{ selectedBuddy.name }}</h2>
+                <p>Talen:
+                    <span v-for="(lang, index) in langsWhereKnows">
+                        {{ lang.trans }}<a-divider v-if="index != langsWhereKnows.length - 1" type="vertical" />
+                    </span>
+                </p>
+            </div>
         </div>
         <a-divider />
         <p>{{ selectedBuddy.info }}</p>
@@ -38,6 +45,21 @@
         @Prop(String) finalToTime: string;
 
         name: string = 'BuddyDetail';
+        langs: any = [
+            {
+                knows: this.selectedBuddy.nl,
+                trans: 'Nederlands',
+            },
+            {
+                knows: this.selectedBuddy.fr,
+                trans: 'Frans',
+            },
+            {
+                knows: this.selectedBuddy.en,
+                trans: 'Engels',
+            },
+        ];
+        langsWhereKnows: any = this.langs.filter((lang: any) => lang.knows);
     }
 </script>
 
@@ -57,7 +79,7 @@
             flex-flow: row wrap;
             align-items: center;
 
-            h2 {
+            .name {
                 margin-left: 30px;
             }
         }

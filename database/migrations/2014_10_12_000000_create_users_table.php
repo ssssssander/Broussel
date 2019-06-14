@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->string('avatar_path')->default('/storage/uploads/avatars/default.png');
             $table->enum('role', ['user', 'buddy', 'admin'])->default('user');
             $table->enum('status', ['undecided', 'declined', 'accepted'])->nullable();

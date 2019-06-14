@@ -18,6 +18,15 @@
                     <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
                 </div>
                 <div class="form-block">
+                    <label>Talen</label>
+                    <input type="checkbox" id="nl" v-model="nl">
+                    <label for="nl"><span class="checkbox"></span>Nederlands</label>
+                    <input type="checkbox" id="fr" v-model="fr">
+                    <label for="fr"><span class="checkbox"></span>Frans</label>
+                    <input type="checkbox" id="en" v-model="en">
+                    <label for="en"><span class="checkbox"></span>Engels</label>
+                </div>
+                <div class="form-block">
                     <label>Beschikbare dagen</label>
                     <div v-for="day in Object.keys(timeData.daysOfWeek)" class="time-picker-block">
                         <input type="checkbox" :id="day" v-model="availableTimes[day].available">
@@ -141,6 +150,9 @@
                 'to': 'Tot',
             }
         };
+        nl: boolean = false;
+        fr: boolean = false;
+        en: boolean = false;
 
         mounted() {
             document.getElementById('name').focus();
@@ -208,6 +220,9 @@
                     name: this.formName,
                     email: this.formEmail,
                     info: this.formInfo,
+                    nl: this.nl,
+                    fr: this.fr,
+                    en: this.en,
                     available_times: JSON.stringify(availableTimesOnly),
                 }
             })

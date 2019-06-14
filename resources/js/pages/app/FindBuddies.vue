@@ -66,6 +66,7 @@
             </div>
             <BuddyDetail
                 v-if="Object.keys(selectedBuddy).length"
+                :key="buddyDetailKey"
                 payment
                 :selected-buddy="selectedBuddy"
                 :final-date="finalDate"
@@ -102,6 +103,7 @@
         finalDate: string = '';
         finalFromTime: string = '';
         finalToTime: string = '';
+        buddyDetailKey: number = 0;
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
@@ -230,6 +232,7 @@
 
         selectBuddy(buddy: any) {
             this.selectedBuddy = buddy;
+            this.buddyDetailKey += 1;
         }
     }
 </script>
