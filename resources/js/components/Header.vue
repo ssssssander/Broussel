@@ -14,7 +14,7 @@
                 </ul>
                 <ul v-if="$auth.check()">
                     <li>
-                        <router-link :to="{ name: 'dashboard' }">App</router-link>
+                        <router-link :to="{ name: appLink }">App</router-link>
                     </li><li>
                         <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                     </li>
@@ -47,7 +47,7 @@
                         <a-divider></a-divider>
                         <template v-if="$auth.check()">
                             <li>
-                                <router-link :to="{ name: 'dashboard' }">App</router-link>
+                                <router-link :to="{ name: appLink }">App</router-link>
                             </li><li>
                                 <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                             </li>
@@ -86,6 +86,7 @@
         @State('userData') user: any;
 
         name: string = 'Header';
+        appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
 
         logout() {
             (this as any).$auth.logout({

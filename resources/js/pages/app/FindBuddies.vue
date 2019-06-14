@@ -49,19 +49,22 @@
             </a-time-picker>
             <LoadingButton value="Zoek naar wandelbuddies" :loading="loading" />
         </form>
-        <div v-if="success && pressedButton" class="buddies">
+        <div v-if="showResults && !firstPress" class="buddies">
             <div class="side">
                 <input type="search" v-model="search" placeholder="Zoeken op naam">
                 <ul>
-                    <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
-                        <a-skeleton active avatar :title="false" :paragraph="{ rows: 3, width: [250, 250] }" :loading="loading">
-                            <div>
-                                <img class="avatar avatar-small" :src="buddy.avatar_path" :alt="buddy.name">
-                                <span class="name">{{ buddy.name }}</span>
-                                <span class="icon"><a-icon type="right" /></span>
-                            </div>
-                        </a-skeleton>
-                    </li>
+                    <a-skeleton active avatar :title="false" :paragraph="{ rows: 3, width: [250, 250] }" :loading="loading">
+                        <div>
+                            <li v-for="buddy in filteredBuddies" @click="selectBuddy(buddy)" :class="{ active: buddy == selectedBuddy }">
+                                <div>
+                                    <img class="avatar avatar-small" :src="buddy.avatar_path" :alt="buddy.name">
+                                    <span class="name">{{ buddy.name }}</span>
+                                    <span class="icon"><a-icon type="right" /></span>
+                                </div>
+                            </li>
+                        </div>
+                    </a-skeleton>
+                    <li v-if="!filteredBuddies.length && !loading"><i>Er werd niemand gevonden.</i></li>
                 </ul>
             </div>
             <BuddyDetail
@@ -75,7 +78,7 @@
             />
             <i class="text-center hint" v-else>Klik op namen om meer info te zien</i>
         </div>
-        <i class="text-center no-results" v-if="!success & !firstTime">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
+        <i class="text-center no-results" v-if="!showResults && !firstPress">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
     </div>
 </template>
 
@@ -93,12 +96,11 @@
         errors: any = {};
         errorType: string = '';
         loading: boolean = false;
-        success: boolean = true;
-        pressedButton: boolean = false;
+        showResults: boolean = true;
+        firstPress: boolean = true;
         availableBuddies: any[] = [];
         selectedBuddy: any = {};
         minutesAfterNowActive: number = 20;
-        firstTime: boolean = true;
         search: string = '';
         finalDate: string = '';
         finalFromTime: string = '';
@@ -107,7 +109,7 @@
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
-                return availableBuddy.name.toLowerCase().includes(this.search.toLowerCase());
+                return availableBuddy.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
             });
         }
 
@@ -177,14 +179,15 @@
         }
 
         findBuddies() {
+            this.firstPress = false;
+            this.search = '';
             this.loading = true;
-            this.pressedButton = true;
             this.selectedBuddy = {};
 
             // Debug
-            this.$store.state.selectedDate = '05/08/2019';
-            this.$store.state.selectedFromTime = '10:00';
-            this.$store.state.selectedToTime = '12:00';
+            // this.$store.state.selectedDate = '05/08/2019';
+            // this.$store.state.selectedFromTime = '10:00';
+            // this.$store.state.selectedToTime = '12:00';
 
             this.$http({
                 url: `auth/find-buddies`,
@@ -196,7 +199,7 @@
                 }
             })
             .then((response: any) => {
-                this.success = true;
+                this.showResults = true;
                 this.errors = {};
                 this.errorType = '';
                 this.availableBuddies = response.data.available_buddies_data;
@@ -206,13 +209,13 @@
 
                 if (this.availableBuddies.length == 0) {
                     this.$message.info('Niemand gevonden');
-                    this.success = false;
+                    this.showResults = false;
                 }
                 else {
                     this.$message.success('Er zijn wandelbuddies gevonden!');
                 }
             }, (error: any) => {
-                this.success = false;
+                this.showResults = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 
                 if (error.response.status == 422) {
@@ -226,7 +229,6 @@
             })
             .then(() => {
                 this.loading = false;
-                this.firstTime = false;
             });
         }
 
@@ -264,6 +266,7 @@
         .hint {
             width: 66%;
             display: inline-block;
+            vertical-align: top;
         }
         .side {
             display: inline-block;

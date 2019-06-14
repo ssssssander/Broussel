@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Mail\BuddySubmission;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -105,6 +107,8 @@ class AuthController extends Controller
         $buddy->role = 'buddy';
         $buddy->status = 'undecided';
         $buddy->save();
+
+        Mail::to(config('app.admin_email'))->send(new BuddySubmission($buddy->name, $buddy->id));
 
         return response()->json(['status' => 'success'], 200);
     }

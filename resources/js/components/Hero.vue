@@ -4,7 +4,7 @@
             <h1>Ontdek het groen in Brussel</h1>
             <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
             <div class="buttons">
-                <router-link :to="{ name: $auth.check() ? 'dashboard' : 'register' }" class="btn">Begin nu</router-link>
+                <router-link :to="{ name: beginLink }" class="btn">Begin nu</router-link>
                 <router-link :to="{ name: 'register-buddy' }" class="link">Of word een wandelbuddy →</router-link>
             </div>
         </div>
@@ -16,7 +16,8 @@
 
     @Component
     export default class Hero extends Vue {
-        name: string = 'Hero'
+        name: string = 'Hero';
+        beginLink: string = (this as any).$auth.check() ? (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard' : 'register';
     }
 </script>
 

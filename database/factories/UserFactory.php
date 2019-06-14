@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\Hash;
 */
 
 $factory->define(User::class, function (Faker $faker) {
-
-    $randomRole = $faker->randomElement(['user', 'buddy', 'admin']);
+    $randomRole = $faker->randomElement(['user', 'buddy']);
     $randomStatus = null;
     $randomNl = null;
     $randomFr = null;

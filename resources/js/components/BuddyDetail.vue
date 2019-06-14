@@ -28,7 +28,7 @@
         <a-divider />
         <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
         <div v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-            <p>{{ buddyInfo.day }}: van {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
+            <p v-if="buddyInfo.available">{{ buddyInfo.day }}: van {{ buddyInfo.from }} tot {{ buddyInfo.to }}</p>
         </div>
     </div>
 </template>

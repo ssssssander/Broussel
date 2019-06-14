@@ -51,7 +51,7 @@ class UsersTableSeeder extends Seeder
             'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
         ],
         [
-            'name' => 'Az Zer',
+            'name' => 'Azzie Zerpel',
             'email' => 'a.b@c.com',
             'password' => null,
             'role' => 'buddy',
@@ -63,9 +63,9 @@ class UsersTableSeeder extends Seeder
             'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
         ],
         [
-            'name' => 'Admin',
-            'email' => 'admin@broussel.com',
-            'password' => bcrypt('admin123456'),
+            'name' => config('app.admin_name'),
+            'email' => config('app.admin_email'),
+            'password' => bcrypt( config('app.admin_password')),
             'role' => 'admin',
             'status' => null,
             'nl' => null,
