@@ -66,6 +66,12 @@
                 },
                 success: (response: any) => {
                     this.$message.success('Je bent met succes ingelogd!');
+                    if ((this as any).$auth.user().role == 3) {
+                        this.$router.push({ name: 'judge-buddies' });
+                    }
+                    else {
+                        this.$router.push({ name: 'dashboard' });
+                    }
                 },
                 error: (error: any) => {
                     this.loading = false;

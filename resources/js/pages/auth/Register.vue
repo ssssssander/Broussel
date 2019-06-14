@@ -83,6 +83,7 @@
                         },
                         success: (response: any) => {
                             this.$message.success('Je bent met succes geregistreerd!');
+                            this.$router.push({ name: 'dashboard' });
                         },
                         error: (error: any) => {
                             this.$router.push({ name: 'login' });

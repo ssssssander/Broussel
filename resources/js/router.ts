@@ -118,6 +118,15 @@ const router = new VueRouter({
                         auth: true,
                     }
                 },
+                {
+                    path: 'judge',
+                    name: 'judge-buddies',
+                    component: () => import(/* webpackChunkName: "js/chunks/judge-buddies" */ '@/js/pages/app/JudgeBuddies'),
+                    meta: {
+                        title: 'Beoordelen',
+                        auth: true,
+                    }
+                },
             ]
         },
         {

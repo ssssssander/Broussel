@@ -40,6 +40,7 @@ class AuthController extends Controller
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
         $user->ip_address = $request->ip();
+        $user->role = 1;
         $user->save();
 
         return response()->json(['status' => 'success'], 200);
@@ -90,7 +91,7 @@ class AuthController extends Controller
         $buddy->ip_address = $request->ip();
         $buddy->info = $request->info;
         $buddy->available_times = $request->available_times;
-        $buddy->role = 1;
+        $buddy->role = 2;
         $buddy->status = 'accepted'; // Temp, actual value: 'undecided'
         $buddy->save();
 
@@ -123,9 +124,7 @@ class AuthController extends Controller
     public function logout() {
         $this->guard()->logout();
 
-        return response()->json([
-            'status' => 'success',
-        ], 200);
+        return response()->json(['status' => 'success'], 200);
     }
 
     public function user(Request $request) {

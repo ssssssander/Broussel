@@ -1,7 +1,7 @@
 <template>
     <div class="calendar">
-        <i v-if="!appointments.length">Kalender laden...</i>
-        <a-calendar v-if="appointments.length">
+        <i v-if="!success">Kalender laden...</i>
+        <a-calendar v-if="success">
             <ul class="events" slot="dateCellRender" slot-scope="value">
                 <li v-for="appointment in getAppointmentsByValue(value)"
                     :key="appointment.id"
@@ -28,6 +28,7 @@
         name: string = 'Calendar';
         appointments: any[] = [];
         moment: any = (this as any).$moment;
+        success: boolean = false;
 
         created() {
             this.getAppointments();
@@ -40,6 +41,7 @@
             })
             .then((response: any) => {
                 this.appointments = response.data.appointments_data;
+                this.success = true;
             }, (error: any) => {
                 this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
             });
@@ -70,7 +72,7 @@
         }
 
         goToProfile(role: number, id: string) {
-            if (role == 1) {
+            if (role == 2) {
                 this.$router.push({ name: 'buddy-profile', params: { id: id } })
             }
         }

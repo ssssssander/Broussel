@@ -1,7 +1,7 @@
 .btn {
     background-color: $primary-accent-color;
     padding: 10px;
-    border-radius: 2.5px;
+    border-radius: $button-border-radius;
     color: $light-color;
     border: none;
     text-align: center;
@@ -11,8 +11,15 @@
     transition: background-color 0.3s;
 
     &:hover, &:focus {
-        background-color: darken($primary-accent-color, 5%);
+        background-color: $dark-primary-accent-color;
         transition: background-color 0.3s;
+    }
+}
+.btn-danger {
+    background-color: $error-color;
+
+    &:hover, &:focus {
+        background-color: $dark-error-color;
     }
 }
 .btn-small {

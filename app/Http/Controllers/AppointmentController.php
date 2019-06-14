@@ -46,11 +46,11 @@ class AppointmentController extends Controller
         $appointments = [];
         $appointmentsWithExtra = [];
 
-        if (Auth::user()->role == 0) {
+        if (Auth::user()->role == 1) {
             $appointments = Auth::user()->appointments->toArray();
             $idColumnToFind = 'buddy_id';
         }
-        if (Auth::user()->role == 1) {
+        if (Auth::user()->role == 2) {
             $appointments = Appointment::where('buddy_id', Auth::id())->get()->toArray();
             $idColumnToFind = 'user_id';
         }
@@ -66,20 +66,20 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 'success',
             'appointments_data' => $appointmentsWithExtra,
-        ]);
+        ], 200);
     }
 
     public function getChattableBuddy(Request $request) {
         $latest = [];
 
-        if (Auth::user()->role == 0) {
+        if (Auth::user()->role == 1) {
             $latestAppointment = Auth::user()->appointments->last();
 
             if ($latestAppointment) {
                 $latest = User::find($latestAppointment->buddy_id);
             }
         }
-        if (Auth::user()->role == 1) {
+        if (Auth::user()->role == 2) {
             $latestAppointment = Appointment::where('buddy_id', Auth::id())->get()->last();
 
             if ($latestAppointment) {
@@ -87,17 +87,9 @@ class AppointmentController extends Controller
             }
         }
 
-//        $chattableBuddiesIds = [];
-//
-//        foreach ($appointments as $appointment) {
-//            $chattableBuddiesIds[] = $appointment->buddy_id;
-//        }
-//        $chattableBuddiesIds = array_unique($chattableBuddiesIds);
-//        $chattableBuddies = User::find($chattableBuddiesIds);
-
         return response()->json([
             'status' => 'success',
             'chattable_buddies_data' => $latest,
-        ]);
+        ], 200);
     }
 }

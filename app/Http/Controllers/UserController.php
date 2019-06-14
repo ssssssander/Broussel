@@ -33,7 +33,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        $buddies = User::where([['role', 1], ['status', 'accepted']])->get()->toArray();
+        $buddies = User::where([['role', 2], ['status', 'accepted']])->get()->toArray();
         $availableBuddies = [];
 
         foreach ($buddies as $buddy) {
@@ -90,14 +90,13 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'available_buddies_data' => $availableBuddies,
-        ]);
+        ], 200);
     }
 
     public function getUser(Request $request, $id) {
         $user = User::find($id);
 
-        return response()->json(
-            [
+        return response()->json([
                 'status' => 'success',
                 'user_data' => $user->toArray()
             ], 200);
@@ -120,10 +119,7 @@ class UserController extends Controller
         $user->avatar_path = '/' . $avatarPath;
         $user->save();
 
-        return response()->json(
-            [
-                'status' => 'success',
-            ], 200);
+        return response()->json(['status' => 'success'], 200);
     }
 
     public function changeInfo(Request $request) {

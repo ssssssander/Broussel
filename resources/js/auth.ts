@@ -13,7 +13,7 @@ const config: any = {
     forbiddenRedirect: { path: '/' },
     notFoundRedirect: {path: '/'},
     registerData: {url: 'auth/register', method: 'POST', redirect: undefined},
-    loginData: {url: 'auth/login', method: 'POST', redirect: '/app', fetchUser: true},
+    loginData: {url: 'auth/login', method: 'POST', redirect: undefined, fetchUser: true},
     logoutData: {url: 'auth/logout', method: 'POST', redirect: '/', makeRequest: true},
     fetchData: {url: 'auth/user', method: 'GET', enabled: true},
     refreshData: {url: 'auth/refresh', method: 'GET', enabled: false, interval: 0},

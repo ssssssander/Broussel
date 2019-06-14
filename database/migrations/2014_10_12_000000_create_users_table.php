@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('avatar_path')->default('/storage/uploads/avatars/default.png');
-            $table->integer('role')->default(0); // 0 = user, 1 = buddy, 2 = admin
+            $table->integer('role')->default(1); // 1 = user, 2 = buddy, 3 = admin
             $table->enum('status', ['undecided', 'declined', 'accepted'])->nullable();
             $table->text('info')->nullable();
             $table->text('available_times')->nullable();

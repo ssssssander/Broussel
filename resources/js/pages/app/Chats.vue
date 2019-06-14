@@ -1,6 +1,8 @@
 <template>
     <div class="chats">
-        <div id="talkjs-container"><i v-if="!success">Chats laden...</i><i v-if="success && !Object.keys(buddy).length">Je hebt nog geen chats</i></div>
+        <div id="talkjs-container">
+            <i v-if="!success">Chats laden...</i>
+            <i v-if="success && !Object.keys(buddy).length">Je hebt nog geen chats.</i></div>
     </div>
 </template>
 

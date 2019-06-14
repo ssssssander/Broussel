@@ -1,15 +1,22 @@
 <template>
     <div class="app box">
         <div class="user-links">
-            <ul>
+            <ul v-if="$auth.check(1) || $auth.check(2)">
                 <li>
                     <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
-                </li><li v-if="$auth.check(0)">
+                </li><li v-if="$auth.check(1)">
                     <router-link :to="{ name: 'find-buddies' }">Nieuwe wandeling</router-link>
                 </li><li>
                     <router-link :to="{ name: 'chats' }">Chats</router-link>
                 </li><li>
                     <router-link :to="{ name: 'calendar' }">Kalender</router-link>
+                </li><li>
+                    <router-link :to="{ name: 'settings' }">Instellingen</router-link>
+                </li>
+            </ul>
+            <ul v-if="$auth.check(3)">
+                <li>
+                    <router-link :to="{ name: 'judge-buddies' }">Beoordelen</router-link>
                 </li><li>
                     <router-link :to="{ name: 'settings' }">Instellingen</router-link>
                 </li>
@@ -20,7 +27,7 @@
                 <h1>{{ $route.meta.title }}</h1>
                 <div class="user-data">
                     <div>
-                        <p>Ingelogd als {{ $auth.user().name }} <span v-if="$auth.check(1)" class="badge">Wandelbuddy</span></p>
+                        <p>Ingelogd als {{ $auth.user().name }} <span v-if="$auth.check(2)" class="badge">Wandelbuddy</span></p>
                         <p>{{ $auth.user().email }}</p>
                     </div>
                     <img class="avatar avatar-medium" :src="$auth.user().avatar_path" :alt="$auth.user().name">
