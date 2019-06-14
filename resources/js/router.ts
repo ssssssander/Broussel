@@ -141,35 +141,33 @@ const router = new VueRouter({
     ],
 });
 
-// router.beforeEach((to: any, from: any, next: any) => {
-//     if (to.name == 'choose-buddy') {
-//         if (from.name == 'datetime-select') {
-//             next();
-//         }
-//         else {
-//             next({ name: 'home' });
-//         }
-//     }
-//     else {
-//         next();
-//     }
-// });
+router.beforeEach((to: any, from: any, next: any) => {
+    if (to.name == 'judge-buddies') {
+        if (Vue.prototype.$auth.check(3)) {
+            next();
+        }
+        else {
+            next({ name: 'home' });
+        }
+    }
+    else {
+        next();
+    }
+
+    if (to.name == 'find-buddies') {
+        if (Vue.prototype.$auth.check(1)) {
+            next();
+        }
+        else {
+            next({ name: 'home' });
+        }
+    }
+    else {
+        next();
+    }
+});
 
 router.afterEach((to: any, from: any) => {
-    // if (to.meta.auth) {
-    //     if (!Object.keys(store.state.userData).length) {
-    //         (Vue.prototype as any).$http({
-    //             url: `auth/user`,
-    //             method: 'get'
-    //         })
-    //         .then((response: any) => {
-    //             store.commit('setUserData', response.data.user_data);
-    //         }, (error: any) => {
-    //             Vue.prototype.$message.error('Er is iets misgegaan bij het ophalen van je gegevens');
-    //         });
-    //     }
-    // }
-
     document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
 
     document.getElementsByTagName('header')[0].className = '';
