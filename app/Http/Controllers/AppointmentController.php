@@ -42,21 +42,34 @@ class AppointmentController extends Controller
     }
 
     public function getAppointments(Request $request) {
-        $appointments = Auth::user()->appointments->toArray();
-        $appointmentsWithBuddyName = [];
+        $idColumnToFind = '';
+        $appointments = [];
+        $appointmentsWithExtra = [];
+
+        if (Auth::user()->role == 0) {
+            $appointments = Auth::user()->appointments->toArray();
+            $idColumnToFind = 'buddy_id';
+        }
+        if (Auth::user()->role == 1) {
+            $appointments = Appointment::where('buddy_id', Auth::id())->get()->toArray();
+            $idColumnToFind = 'user_id';
+        }
 
         foreach ($appointments as $appointment) {
-            $appointment['buddy_name'] = User::find($appointment['buddy_id'])->name;
-            $appointmentsWithBuddyName[] = $appointment;
+            $user = User::find($appointment[$idColumnToFind]);
+            $appointment['person_name'] = $user->name;
+            $appointment['person_id'] = $user->id;
+            $appointment['person_role'] = $user->role;
+            $appointmentsWithExtra[] = $appointment;
         }
 
         return response()->json([
             'status' => 'success',
-            'appointments_data' => $appointmentsWithBuddyName,
+            'appointments_data' => $appointmentsWithExtra,
         ]);
     }
 
-    public function getChattableBuddies(Request $request) {
+    public function getChattableBuddy(Request $request) {
         $latest = [];
 
         if (Auth::user()->role == 0) {

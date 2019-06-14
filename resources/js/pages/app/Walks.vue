@@ -1,11 +1,11 @@
 <template>
     <div class="walks">
-        <div v-show="appointments.length">
+        <a-skeleton active :title="false" :paragraph="{ rows: 3, width: [250, 250] }" :loading="!appointments.length">
             <div v-for="appointment in appointments">
                 Op {{ $moment(appointment.day).format('DD/MM/YYYY') }} van {{ $moment(appointment.time_from, 'HH:mm:ss').format('HH:mm') }} tot {{ $moment(appointment.time_to, 'HH:mm:ss').format('HH:mm') }} met
-                <router-link :to="{ name: 'buddy-detail', params: { id: appointment.buddy_id } }" class="link">{{ appointment.buddy_name }}</router-link>.
+                <router-link :to="{ name: 'buddy-detail', params: { id: appointment.buddy_id } }" class="link">{{ appointment.person_name }}</router-link>.
             </div>
-        </div>
+        </a-skeleton>
     </div>
 </template>
 

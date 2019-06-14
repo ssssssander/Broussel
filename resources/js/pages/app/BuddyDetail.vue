@@ -1,6 +1,7 @@
 <template>
     <div class="buddy-detail">
-        <div v-show="Object.keys(buddy).length">
+        <i v-if="!Object.keys(buddy).length">Profiel laden...</i>
+        <div v-if="Object.keys(buddy).length">
             <img class="avatar avatar-large" :src="buddy.avatar_path" :alt="buddy.name">
             <h1>{{ buddy.name }}</h1>
             <p>{{ buddy.info }}</p>

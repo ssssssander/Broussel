@@ -16,7 +16,7 @@
         success: boolean = false;
 
         created() {
-            this.getChattableBuddies();
+            this.getChattableBuddy();
         }
 
         // getBuddy() {
@@ -33,9 +33,9 @@
         //     });
         // }
 
-        getChattableBuddies() {
+        getChattableBuddy() {
             this.$http({
-                url: `auth/get-chattable-buddies`,
+                url: `auth/get-chattable-buddy`,
                 method: 'get',
             })
             .then((response: any) => {
