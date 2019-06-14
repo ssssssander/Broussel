@@ -7,9 +7,14 @@
                     @click="goToProfile(appointment.person_role, appointment.person_id)"
                     class="appointment"
                 >
-                    <span><span class="dot"></span>Van {{ appointment.time_from }} tot {{ appointment.time_to }}: {{ appointment.person_name }}</span>
+                    <span><span class="dot"></span>Van {{ appointment.time_from }} tot {{ appointment.time_to }} met {{ appointment.person_name }}</span>
                 </li>
             </ul>
+            <template slot="monthCellRender" slot-scope="value">
+                <div v-if="getAppointmentsPerMonth(value)" class="month">
+                    <span>{{ getAppointmentsPerMonth(value) }} wandelingen deze maand</span>
+                </div>
+            </template>
         </a-calendar>
     </div>
 </template>
@@ -21,6 +26,7 @@
     export default class Calendar extends Vue {
         name: string = 'Calendar';
         appointments: any[] = [];
+        moment: any = (this as any).$moment;
 
         created() {
             this.getAppointments();
@@ -50,6 +56,18 @@
             return filteredAppointments;
         }
 
+        getAppointmentsPerMonth(value: any) {
+            let filteredAppointments = [];
+
+            for (let appointment of this.appointments) {
+                if (this.moment(appointment.day).format('YYYY-MM') == value.format('YYYY-MM')) {
+                    filteredAppointments.push(appointment);
+                }
+            }
+
+            return filteredAppointments.length;
+        }
+
         goToProfile(role: number, id: string) {
             if (role == 1) {
                 this.$router.push({ name: 'buddy-profile', params: { id: id } })
@@ -69,6 +87,9 @@
             background-color: $primary-accent-color;
             transition: background-color 0.3s;
         }
+    }
+    .month {
+        font-size: 1.6em;
     }
     .dot {
         width: 6px;
