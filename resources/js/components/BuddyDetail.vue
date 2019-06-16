@@ -5,8 +5,8 @@
             <div class="name">
                 <h2>{{ selectedBuddy.name }}</h2>
                 <p>Talen:
-                    <span v-for="(lang, index) in langsWhereKnows">
-                        {{ lang.trans }}<a-divider v-if="index != langsWhereKnows.length - 1" type="vertical" />
+                    <span v-for="lang in langsWhereKnows">
+                        <a-divider type="vertical" />{{ lang.trans }}
                     </span>
                 </p>
             </div>
@@ -27,24 +27,7 @@
         </template>
         <a-divider />
         <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
-        <table class="available-times-table">
-            <thead>
-                <tr>
-                    <th>Dag</th>
-                    <th>Van</th>
-                    <th>Tot</th>
-                </tr>
-            </thead>
-            <tbody>
-                <template v-for="buddyInfo in JSON.parse(selectedBuddy.available_times)">
-                    <tr v-if="buddyInfo.available">
-                        <td>{{ buddyInfo.day }}</td>
-                        <td>{{ buddyInfo.from }}</td>
-                        <td>{{ buddyInfo.to }}</td>
-                    </tr>
-                </template>
-            </tbody>
-        </table>
+        <AvailableTimesTable :available-times="JSON.parse(selectedBuddy.available_times)" />
     </div>
 </template>
 
@@ -79,20 +62,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .available-times-table {
-        border-collapse: collapse;
-
-        td, th {
-            border: $light-border;
-            border-radius: $default-border-radius;
-            text-align: left;
-            padding: 12px;
-        }
-
-        tr:nth-child(even) {
-            background-color: $gray-color;
-        }
-    }
     .buddy-detail {
         display: inline-flex;
         vertical-align: top;

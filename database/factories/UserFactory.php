@@ -2,9 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 use App\User;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 
@@ -19,7 +18,12 @@ use Illuminate\Support\Facades\Hash;
 |
 */
 
+function roundUpToAny($n, $x) {
+    return (ceil($n)%$x === 0) ? ceil($n) : round(($n+$x/2)/$x)*$x;
+}
+
 $factory->define(User::class, function (Faker $faker) {
+    $frenchOrDutch = $faker->boolean ? 'nl_BE' : 'fr_FR' ;
     $randomRole = $faker->randomElement(['user', 'buddy']);
     $randomStatus = null;
     $randomNl = null;
@@ -27,13 +31,15 @@ $factory->define(User::class, function (Faker $faker) {
     $randomEn = null;
     $randomInfo = null;
     $randomAvailableTimes= null;
+    $maleOrFemale = $faker->boolean ? 'male' : 'female' ;
+    $avatarMenOrWomen = $maleOrFemale == 'male' ? 'men' : 'women' ;
 
     if ($randomRole == 'buddy') {
         $randomStatus = $faker->randomElement(['undecided', 'declined', 'accepted']);
-        $randomNl = true;
-        $randomFr = $faker->boolean;
+        $randomNl = $frenchOrDutch == 'nl_BE' ? true : $faker->boolean;
+        $randomFr = $frenchOrDutch == 'fr_FR' ? true : $faker->boolean;
         $randomEn = $faker->boolean;
-        $randomInfo = $faker->realText(1000);
+        $randomInfo = $faker->realText(100);
 
         $randomAvailableTimes = '[';
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
@@ -41,23 +47,37 @@ $factory->define(User::class, function (Faker $faker) {
 
         foreach ($days as $key => $day) {
             $trueOrFalse = $faker->boolean ? 'true' : 'false';
+            $randomFromTimeHour = str_pad($faker->numberBetween(7, 15), 2, '0', STR_PAD_LEFT);
+            $randomToTimeHour = str_pad($faker->numberBetween(16, 23), 2, '0', STR_PAD_LEFT);
+
+            $randomFromTimeMinute = $faker->numberBetween(0, 59);
+            $randomFromTimeMinute = roundUpToAny($randomFromTimeMinute, 5);
+            $randomFromTimeMinute = str_pad($randomFromTimeMinute, 2, '0', STR_PAD_LEFT);
+
+            $randomToTimeMinute = $faker->numberBetween(0, 59);
+            $randomToTimeMinute = roundUpToAny($randomToTimeMinute, 5);
+            $randomToTimeMinute = str_pad($randomToTimeMinute, 2, '0', STR_PAD_LEFT);
+
+            $randomToTime = $randomToTimeHour . ':' . $randomToTimeMinute;
+            $randomFromTime = $randomFromTimeHour . ':' . $randomFromTimeMinute;
+
             if ($key == $daysCount - 1) {
                 $finalComma = '';
             }
             else {
                 $finalComma = ',';
             }
-            $randomAvailableTimes .= '{"day":"' . $day . '","available":' . $trueOrFalse . ',"from":"' . $faker->time('H:i') . '","to":"' . $faker->time('H:i') . '"}' . $finalComma;
+            $randomAvailableTimes .= '{"day":"' . $day . '","available":' . $trueOrFalse . ',"from":"' . $randomFromTime . '","to":"' . $randomToTime . '"}' . $finalComma;
         }
         $randomAvailableTimes .= ']';
     }
 
     return [
-        'name' => $faker->name,
+        'name' => $faker->firstName($maleOrFemale) . ' ' . $faker->lastName,
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => Hash::make(Str::random(8)),
-        'avatar_path' => 'https://picsum.photos/id/' . $faker->numberBetween(0, 1084) . '/640/480',
+        'avatar_path' => 'https://randomuser.me/api/portraits/' . $avatarMenOrWomen . '/' . $faker->numberBetween(1, 99). '.jpg',
         'role' => $randomRole,
         'status' => $randomStatus,
         'nl' => $randomNl,

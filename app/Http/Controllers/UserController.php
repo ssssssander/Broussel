@@ -41,6 +41,7 @@ class UserController extends Controller
             $date = Carbon::createFromFormat('d/m/Y', $request->date);
             $appointments =  Appointment::where('buddy_id', $buddy['id'])->get();
             $alreadyHasAppointment = false;
+            $isAvailable = false;
 
             foreach ($availableTimes as $availableTime) {
                 // Check for day
@@ -58,6 +59,7 @@ class UserController extends Controller
 
                     if ($timeFrom->between($timeAvailableFrom, $timeAvailableTo)
                         && $timeTo->between($timeAvailableFrom, $timeAvailableTo)) {
+                        $isAvailable = true;
                         // Check if buddy already has appointment on given times
                         foreach ($appointments as $appointment) {
                             $appointmentDay = Carbon::createFromFormat('Y-m-d', $appointment->day);
@@ -74,16 +76,15 @@ class UserController extends Controller
                                 }
                             }
                         }
-
-                        if (!$alreadyHasAppointment) {
-                            $diffInMinutes = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
-                                ->diffInMinutes(Carbon::createFromTime($explodedTo[0], $explodedTo[1]));
-                            $priceInEur = $diffInMinutes / 5;
-                            $buddy['price'] = $priceInEur;
-                            $availableBuddies[] = $buddy;
-                        }
                     }
                 }
+            }
+            if ($isAvailable  && !$alreadyHasAppointment) {
+                $diffInMinutes = Carbon::createFromTime($explodedFrom[0], $explodedFrom[1])
+                    ->diffInMinutes(Carbon::createFromTime($explodedTo[0], $explodedTo[1]));
+                $priceInEur = $diffInMinutes / 5;
+                $buddy['price'] = $priceInEur;
+                $availableBuddies[] = $buddy;
             }
         }
 

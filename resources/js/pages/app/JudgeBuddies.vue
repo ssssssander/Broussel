@@ -13,7 +13,10 @@
                             <a-divider type="vertical" />
                             <span>{{ buddy.ip_address }}</span>
                         </div>
-                        <p>{{ buddy.info }}</p>
+                        <div class="description">
+                            <p>{{ buddy.info }}</p>
+                            <AvailableTimesTable :available-times="JSON.parse(buddy.available_times)" />
+                        </div>
                     </div>
                     <div class="buttons">
                         <button class="btn" @click="setStatus(buddy, 'accepted')"><a-icon type="check-circle" />Accepteren</button>
@@ -110,9 +113,12 @@
             .info {
                 display: flex;
                 flex-flow: column wrap;
+                flex: 1;
 
                 p {
-                    flex: 1;
+                    margin-bottom: 15px;
+                }
+                .description {
                     padding: 30px;
                 }
             }
