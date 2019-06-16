@@ -39,7 +39,7 @@ $factory->define(User::class, function (Faker $faker) {
         $randomNl = $frenchOrDutch == 'nl_BE' ? true : $faker->boolean;
         $randomFr = $frenchOrDutch == 'fr_FR' ? true : $faker->boolean;
         $randomEn = $faker->boolean;
-        $randomInfo = $faker->realText(100);
+        $randomInfo = $faker->realText(400);
 
         $randomAvailableTimes = '[';
         $days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
