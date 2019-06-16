@@ -1,13 +1,3 @@
-// try {
-//     window.Popper = require('popper.js').default;
-// } catch (e) {}
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
@@ -18,17 +8,8 @@ import router from './router';
 import * as moment from 'moment';
 moment.locale('nl-be');
 
-// Don't import whole ant-design-vue package?
 import { message, notification, Icon, DatePicker, TimePicker, Calendar, LocaleProvider, Skeleton, Divider, Collapse } from 'ant-design-vue';
 
-// import message from 'ant-design-vue/lib/message';
-// import notification from 'ant-design-vue/lib/notification';
-// import Icon from 'ant-design-vue/lib/icon';
-// import DatePicker from 'ant-design-vue/lib/date-picker';
-// import TimePicker from 'ant-design-vue/lib/time-picker';
-// import Calendar from 'ant-design-vue/lib/calendar';
-
-// ant-design-vue
 message.config({
     duration: 2,
 });

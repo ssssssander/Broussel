@@ -1,69 +1,69 @@
 <template>
-    <header>
+    <header v-if="rrr">
         <div class="wrapper">
-            <router-link :to="{ name: 'home' }" class="logo">Broussel</router-link>
+            <router-link :to="{ name: 'home', params: { locale: $lang.getLocale() } }" class="logo">Broussel</router-link>
             <nav class="desktop">
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'faq' }">FAQ</router-link>
+                        <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">FAQ</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'register-buddy' }">Word wandelbuddy</router-link>
+                        <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">Word wandelbuddy</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'contact' }">Contact</router-link>
+                        <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">Contact</router-link>
                     </li>
                 </ul>
                 <ul v-if="$auth.check()">
                     <li>
-                        <router-link :to="{ name: appLink }">App</router-link>
+                        <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">App</router-link>
                     </li><li>
                         <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                     </li>
                 </ul>
                 <ul v-else>
                     <li>
-                        <router-link :to="{ name: 'login' }">Log in</router-link>
+                        <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">Log in</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
+                        <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">Registreren</router-link>
                     </li>
                 </ul>
             </nav>
             <ul class="langs">
                 <li>
-                    <router-link :to="{ name: 'register' }">Nederlands</router-link>
+                    <a href="#" @click.prevent="setLocale('nl')">Nederlands</a>
                 </li><li>
-                    <router-link :to="{ name: 'register' }">Français</router-link>
+                    <a href="#" @click.prevent="setLocale('fr')">Français</a>
                 </li>
             </ul>
             <Slide right noOverlay>
                 <nav class="mobile">
                     <ul>
                         <li>
-                            <router-link :to="{ name: 'faq' }">FAQ</router-link>
+                            <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">FAQ</router-link>
                         </li><li>
-                            <router-link :to="{ name: 'register-buddy' }">Word wandelbuddy</router-link>
+                            <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">Word wandelbuddy</router-link>
                         </li><li>
-                            <router-link :to="{ name: 'contact' }">Contact</router-link>
+                            <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">Contact</router-link>
                         </li>
                         <a-divider></a-divider>
                         <template v-if="$auth.check()">
                             <li>
-                                <router-link :to="{ name: appLink }">App</router-link>
+                                <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">App</router-link>
                             </li><li>
                                 <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
                             </li>
                         </template>
                         <template v-else>
                             <li>
-                                <router-link :to="{ name: 'login' }">Log in</router-link>
+                                <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">Log in</router-link>
                             </li><li>
-                                <router-link :to="{ name: 'register' }" class="btn">Registreren</router-link>
+                                <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">Registreren</router-link>
                             </li>
                         </template>
                         <a-divider></a-divider>
                         <li>
-                            <router-link :to="{ name: 'register' }">Nederlands</router-link>
+                            <a href="#" @click.prevent="setLocale('nl')">Nederlands</a>
                         </li><li>
-                            <router-link :to="{ name: 'register' }">Français</router-link>
+                            <a href="#" @click.prevent="setLocale('fr')">Français</a>
                         </li>
                     </ul>
                 </nav>
@@ -74,7 +74,6 @@
 
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
-    import { State } from 'vuex-class';
     import { Slide } from 'vue-burger-menu';
 
     @Component({
@@ -83,23 +82,31 @@
         }
     })
     export default class Header extends Vue {
-        @State('userData') user: any;
-
         name: string = 'Header';
         appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
+        rrr: boolean = true;
+        lang = (this as any).$lang;
 
         logout() {
             (this as any).$auth.logout({
                 success: (response: any) => {
-                    // Clear store of user data
-                    for (let data in this.user) delete this.user[data];
-
                     this.$message.success('Je bent met succes uitgelogd!');
                 },
                 error: (error: any) => {
                     this.$message.error('Er is iets misgegaan bij het uitloggen, probeer het opnieuw.');
                 },
             });
+        }
+
+        setLocale(locale: string) {
+            let url = window.location.href;
+
+            if (locale == 'nl') {
+                window.location.href = url.replace('fr', 'nl');
+            }
+            if (locale == 'fr') {
+                window.location.href = url.replace('nl', 'fr');
+            }
         }
     }
 </script>

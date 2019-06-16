@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import store from './store';
+const Lang = require('lang.js');
+const translations = require('./vue-translations.js');
 
 Vue.use(VueRouter);
 
@@ -9,160 +10,201 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: () => import(/* webpackChunkName: "js/chunks/home" */ '@/js/pages/Home'),
-            meta: {
-                auth: undefined,
-            }
+            redirect: { name: 'home', params: { locale: 'nl' }},
         },
         {
-            path: '/faq',
-            name: 'faq',
-            component: () => import(/* webpackChunkName: "js/chunks/faq" */ '@/js/pages/FAQ'),
-            meta: {
-                title: 'FAQ',
-                auth: undefined,
-            },
-        },
-        {
-            path: '/contact',
-            name: 'contact',
-            component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact'),
-            meta: {
-                title: 'Contact',
-                auth: undefined,
-            },
-        },
-        {
-            path: '/',
-            component: () => import(/* webpackChunkName: "js/chunks/auth" */ '@/js/layouts/Auth'),
-            children: [
-                {
-                    path: 'register',
-                    name: 'register',
-                    component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
-                    meta: {
-                        title: 'Registreren',
-                        auth: false,
-                    }
-                },
-                {
-                    path: 'register-buddy',
-                    name: 'register-buddy',
-                    component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
-                    meta: {
-                        title: 'Word wandelbuddy',
-                        auth: undefined,
-                    }
-                },
-                {
-                    path: 'login',
-                    name: 'login',
-                    component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
-                    meta: {
-                        title: 'Log in',
-                        auth: false,
-                    }
-                },
-                {
-                    path: 'forgot',
-                    name: 'forgot-password',
-                    component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
-                    meta: {
-                        title: 'Wachtwoord vergeten?',
-                        auth: false,
-                    }
-                },
-                {
-                    path: 'reset',
-                    name: 'reset-password',
-                    component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
-                    meta: {
-                        title: 'Wachtwoord resetten',
-                        auth: false,
-                    }
-                },
-            ],
-        },
-        {
-            path: '/app',
-            component: () => import(/* webpackChunkName: "js/chunks/app" */ '@/js/layouts/App'),
+            path: '/:locale',
+            component: {render (c) { return c('router-view') } },
             children: [
                 {
                     path: '',
-                    name: 'dashboard',
-                    component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
+                    name: 'home',
+                    component: () => import(/* webpackChunkName: "js/chunks/home" */ '@/js/pages/Home'),
                     meta: {
-                        title: 'Dashboard',
-                        auth: ['user', 'buddy'],
-                    }
+                        auth: undefined,
+                    },
                 },
                 {
-                    path: 'find',
-                    name: 'find-buddies',
-                    component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
+                    path: 'faq',
+                    name: 'faq',
+                    component: () => import(/* webpackChunkName: "js/chunks/faq" */ '@/js/pages/FAQ'),
                     meta: {
-                        title: 'Vind een wandelbuddy',
-                        auth: ['user'],
-                    }
+                        title: 'FAQ',
+                        auth: undefined,
+                    },
                 },
                 {
-                    path: 'calendar',
-                    name: 'calendar',
-                    component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
+                    path: 'contact',
+                    name: 'contact',
+                    component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact'),
                     meta: {
-                        title: 'Kalender',
-                        auth: ['user', 'buddy'],
-                    }
+                        title: 'Contact',
+                        auth: undefined,
+                    },
                 },
                 {
-                    path: 'chats',
-                    name: 'chats',
-                    component: () => import(/* webpackChunkName: "js/chunks/chats" */ '@/js/pages/app/Chats'),
-                    meta: {
-                        title: 'Chats',
-                        auth: ['user', 'buddy'],
-                    }
+                    path: '',
+                    component: () => import(/* webpackChunkName: "js/chunks/auth" */ '@/js/layouts/Auth'),
+                    children: [
+                        {
+                            path: 'register',
+                            name: 'register',
+                            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
+                            meta: {
+                                title: 'Registreren',
+                                auth: false,
+                            },
+                        },
+                        {
+                            path: 'register-buddy',
+                            name: 'register-buddy',
+                            component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
+                            meta: {
+                                title: 'Word wandelbuddy',
+                                auth: undefined,
+                            },
+                        },
+                        {
+                            path: 'login',
+                            name: 'login',
+                            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
+                            meta: {
+                                title: 'Log in',
+                                auth: false,
+                            },
+                        },
+                        {
+                            path: 'forgot',
+                            name: 'forgot-password',
+                            component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
+                            meta: {
+                                title: 'Wachtwoord vergeten?',
+                                auth: false,
+                            },
+                        },
+                        {
+                            path: 'reset',
+                            name: 'reset-password',
+                            component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
+                            meta: {
+                                title: 'Wachtwoord resetten',
+                                auth: false,
+                            },
+                        },
+                    ],
                 },
                 {
-                    path: 'settings',
-                    name: 'settings',
-                    component: () => import(/* webpackChunkName: "js/chunks/settings" */ '@/js/pages/app/Settings'),
-                    meta: {
-                        title: 'Instellingen',
-                        auth: true,
-                    }
+                    path: 'app',
+                    component: () => import(/* webpackChunkName: "js/chunks/app" */ '@/js/layouts/App'),
+                    children: [
+                        {
+                            path: '',
+                            name: 'dashboard',
+                            component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
+                            meta: {
+                                title: 'Dashboard',
+                                auth: ['user', 'buddy'],
+                            },
+                        },
+                        {
+                            path: 'find',
+                            name: 'find-buddies',
+                            component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
+                            meta: {
+                                title: 'Vind een wandelbuddy',
+                                auth: ['user'],
+                            },
+                        },
+                        {
+                            path: 'calendar',
+                            name: 'calendar',
+                            component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
+                            meta: {
+                                title: 'Kalender',
+                                auth: ['user', 'buddy'],
+                            },
+                        },
+                        {
+                            path: 'chats',
+                            name: 'chats',
+                            component: () => import(/* webpackChunkName: "js/chunks/chats" */ '@/js/pages/app/Chats'),
+                            meta: {
+                                title: 'Chats',
+                                auth: ['user', 'buddy'],
+                            },
+                        },
+                        {
+                            path: 'settings',
+                            name: 'settings',
+                            component: () => import(/* webpackChunkName: "js/chunks/settings" */ '@/js/pages/app/Settings'),
+                            meta: {
+                                title: 'Instellingen',
+                                auth: true,
+                            },
+                        },
+                        {
+                            path: 'buddy/:id',
+                            name: 'buddy-profile',
+                            component: () => import(/* webpackChunkName: "js/chunks/buddy-profile" */ '@/js/pages/app/BuddyProfile'),
+                            meta: {
+                                title: 'Wandelbuddy',
+                                auth: ['user'],
+                            },
+                        },
+                        {
+                            path: 'judge',
+                            name: 'judge-buddies',
+                            component: () => import(/* webpackChunkName: "js/chunks/judge-buddies" */ '@/js/pages/app/JudgeBuddies'),
+                            meta: {
+                                title: 'Beoordelen',
+                                auth: ['admin'],
+                            },
+                        },
+                    ],
                 },
                 {
-                    path: 'buddy/:id',
-                    name: 'buddy-profile',
-                    component: () => import(/* webpackChunkName: "js/chunks/buddy-profile" */ '@/js/pages/app/BuddyProfile'),
+                    path: '*',
+                    name: 'error404',
+                    component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
                     meta: {
-                        title: 'Wandelbuddy',
-                        auth: ['user'],
-                    }
+                        title: 'Error 404',
+                        auth: undefined,
+                    },
                 },
-                {
-                    path: 'judge',
-                    name: 'judge-buddies',
-                    component: () => import(/* webpackChunkName: "js/chunks/judge-buddies" */ '@/js/pages/app/JudgeBuddies'),
-                    meta: {
-                        title: 'Beoordelen',
-                        auth: ['admin'],
-                    }
-                },
-            ]
+            ],
         },
-        {
-            path: '*',
-            name: 'error404',
-            component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
-            meta: {
-                title: 'Error 404',
-                auth: undefined,
-            }
-        }
     ],
+});
+
+router.beforeEach((to: any, from: any, next: any) => {
+    let locales = ['nl', 'fr'];
+    let locale = '';
+
+    if (locales.indexOf(to.params.locale) > -1) {
+        locale = to.params.locale;
+    }
+    else {
+        next(false);
+        return;
+    }
+
+    let lang = new Lang();
+    lang.setLocale(locale);
+
+    if (locale == 'nl') {
+        lang.setFallback('fr');
+    }
+    if (locale == 'fr') {
+        lang.setFallback('nl');
+    }
+
+    lang.setMessages(translations);
+    Vue.filter('trans', (...args: any) => {
+        return lang.get(...args);
+    });
+    Vue.prototype.$lang = lang;
+
+    next();
 });
 
 router.afterEach((to: any, from: any) => {

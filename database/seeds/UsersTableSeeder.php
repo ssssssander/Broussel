@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class UsersTableSeeder extends Seeder
 {
@@ -11,13 +12,13 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 200)->create();
+        factory(App\User::class, 20)->create();
 
         DB::table('users')->insert([
         [
-            'name' => 'Thee Kop',
-            'email' => 't.k@hotmail.com',
-            'password' => bcrypt('azerty123'),
+            'name' => 'Louis Desmedt',
+            'email' => 'user@example.com',
+            'password' => bcrypt('user123456'),
             'role' => 'user',
             'status' => null,
             'nl' => null,
@@ -27,45 +28,33 @@ class UsersTableSeeder extends Seeder
             'available_times' => null,
         ],
         [
-            'name' => 'Sander',
-            'email' => 's.b@hotmail.com',
-            'password' => null,
-            'role' => 'buddy',
-            'status' => 'undecided',
-            'nl' => true,
-            'fr' => null,
-            'en' => null,
-            'info' => 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren \'60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.',
-            'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
-        ],
-        [
-            'name' => 'Bert Bollen',
-            'email' => 'bert.bollen@hotmail.com',
-            'password' => bcrypt('bertbollen123'),
+            'name' => 'Lisa Lenaerts',
+            'email' => 'buddy@example.com',
+            'password' => bcrypt('buddy123456'),
             'role' => 'buddy',
             'status' => 'accepted',
             'nl' => true,
             'fr' => false,
             'en' => false,
-            'info' => 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren \'60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.',
+            'info' => 'Uilenspiegel en sprak tot den prins, het geld te ontvangen--die voor een kroezeken water; maar dit.',
             'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
         ],
         [
-            'name' => 'Azzie Zerpel',
-            'email' => 'a.b@c.com',
-            'password' => null,
-            'role' => 'buddy',
-            'status' => 'accepted',
-            'nl' => true,
-            'fr' => true,
-            'en' => false,
-            'info' => 'Lorem Ipsum is slechts een proeftekst uit het drukkerij- en zetterijwezen. Lorem Ipsum is de standaard proeftekst in deze bedrijfstak sinds de 16e eeuw, toen een onbekende drukker een zethaak met letters nam en ze door elkaar husselde om een font-catalogus te maken. Het heeft niet alleen vijf eeuwen overleefd maar is ook, vrijwel onveranderd, overgenomen in elektronische letterzetting. Het is in de jaren \'60 populair geworden met de introductie van Letraset vellen met Lorem Ipsum passages en meer recentelijk door desktop publishing software zoals Aldus PageMaker die versies van Lorem Ipsum bevatten.',
-            'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
+            'name' => env('ADMIN_NAME'),
+            'email' => env('ADMIN_EMAIL'),
+            'password' => bcrypt(env('ADMIN_PASSWORD')),
+            'role' => 'admin',
+            'status' => null,
+            'nl' => null,
+            'fr' => null,
+            'en' => null,
+            'info' => null,
+            'available_times' => null,
         ],
         [
-            'name' => config('app.admin_name'),
-            'email' => config('app.admin_email'),
-            'password' => bcrypt( config('app.admin_password')),
+            'name' => env('EXAMPLE_ADMIN_NAME'),
+            'email' => env('EXAMPLE_ADMIN_EMAIL'),
+            'password' => bcrypt(env('EXAMPLE_ADMIN_PASSWORD')),
             'role' => 'admin',
             'status' => null,
             'nl' => null,

@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const WebpackShellPlugin = require('webpack-shell-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -14,9 +15,12 @@ const mix = require('laravel-mix');
 mix.webpackConfig({
     resolve: {
         alias: {
-            '@': __dirname + '/resources'
+            '@': __dirname + '/resources',
         },
     },
+    plugins: [
+        new WebpackShellPlugin({ onBuildStart: ['php artisan lang:js --quiet --no-lib'], onBuildEnd:[] }),
+    ]
 });
 
 mix.options({

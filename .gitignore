@@ -16,4 +16,5 @@ yarn-error.log
 /public/vendors~js
 /public/mix-manifest.json
 /resources/js/payment-credentials.ts
+/resources/js/vue-translations.js
 /app/PaymentCredentials.php

@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Intervention\Image\ImageServiceProvider::class,
+        Mariuzzo\LaravelJsLocalization\LaravelJsLocalizationServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -230,9 +231,5 @@ return [
         'Image' => Intervention\Image\Facades\Image::class,
 
     ],
-
-    'admin_name' => env('ADMIN_NAME'),
-    'admin_email' => env('ADMIN_EMAIL'),
-    'admin_password' => env('ADMIN_PASSWORD'),
 
 ];

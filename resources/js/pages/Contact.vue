@@ -1,8 +1,8 @@
 <template>
     <div class="contact">
-        <h1>Contacteer ons</h1>
+        <h1>{{ 'vue.contact_us' | trans }}</h1>
         <a-divider></a-divider>
-        <p>Opmerkingen? Vragen? Feedback? Contacteer ons op <a href="mailto:contact@broussel.be" class="link">contact@broussel.be</a></p>
+        <p>{{ 'vue.contact_us_text' | trans }} <a href="mailto:contact@broussel.be" class="link">contact@broussel.be</a></p>
     </div>
 </template>
 
