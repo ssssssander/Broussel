@@ -1,21 +1,18 @@
 <template>
     <div class="forgot-password">
-        <div class="fullscreen-form">
-            <h1>Wachtwoord resetten</h1>
-            <form @submit.prevent="resetPassword" method="post">
-                <div class="form-block">
-                    <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
-                    <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
-                </div>
-                <div class="form-block">
-                    <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
-                    <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
-                </div>
-                <div class="form-block">
-                    <LoadingButton value="Aanpassen" :loading="loading" />
-                </div>
-            </form>
-        </div>
+        <form @submit.prevent="resetPassword" method="post">
+            <div class="form-block">
+                <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
+            </div>
+            <div class="form-block">
+                <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
+                <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
+            </div>
+            <div class="form-block">
+                <LoadingButton value="Aanpassen" :loading="loading" />
+            </div>
+        </form>
     </div>
 </template>
 

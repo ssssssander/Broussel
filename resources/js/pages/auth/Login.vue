@@ -1,33 +1,30 @@
 <template>
     <div class="login">
-        <div class="fullscreen-form">
-            <h1>Log in</h1>
-            <Message
-                message-type="error"
-                :messages="errors"
-                :extra-str="errorType"
-            />
-            <form @submit.prevent="login" method="post">
-                <div class="form-block">
-                    <label for="email">E-mailadres</label>
-                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
-                </div>
-                <div class="form-block">
-                    <label for="password">Wachtwoord</label>
-                    <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password" maxlength="255">
-                </div>
-                <div class="form-block">
-                    <input type="checkbox" id="remember-me" v-model="rememberMe">
-                    <label for="remember-me"><span class="checkbox"></span>Hou me ingelogd</label>
-                </div>
-                <div class="form-block">
-                    <LoadingButton value="Inloggen" :loading="loading" />
-                </div>
-                <div class="form-block text-center">
-                    <router-link :to="{ name: 'forgot-password' }" class="link">Wachtwoord vergeten?</router-link>
-                </div>
-            </form>
-        </div>
+        <Message
+            message-type="error"
+            :messages="errors"
+            :extra-str="errorType"
+        />
+        <form @submit.prevent="login" method="post">
+            <div class="form-block">
+                <label for="email">E-mailadres</label>
+                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
+            </div>
+            <div class="form-block">
+                <label for="password">Wachtwoord</label>
+                <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="current-password" maxlength="255">
+            </div>
+            <div class="form-block">
+                <input type="checkbox" id="remember-me" v-model="rememberMe">
+                <label for="remember-me"><span class="checkbox"></span>Hou me ingelogd</label>
+            </div>
+            <div class="form-block">
+                <LoadingButton value="Inloggen" :loading="loading" />
+            </div>
+            <div class="form-block text-center">
+                <router-link :to="{ name: 'forgot-password' }" class="link">Wachtwoord vergeten?</router-link>
+            </div>
+        </form>
     </div>
 </template>
 

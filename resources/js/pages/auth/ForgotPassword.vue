@@ -1,17 +1,14 @@
 <template>
     <div class="forgot-password">
-        <div class="fullscreen-form">
-            <h1>Wachtwoord vergeten?</h1>
-            <form @submit.prevent="sendResetLink" method="post">
-                <div class="form-block">
-                    <label for="email">E-mailadres</label>
-                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
-                </div>
-                <div class="form-block">
-                    <LoadingButton value="Mail versturen" :loading="loading" />
-                </div>
-            </form>
-        </div>
+        <form @submit.prevent="sendResetLink" method="post">
+            <div class="form-block">
+                <label for="email">E-mailadres</label>
+                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255" autofocus>
+            </div>
+            <div class="form-block">
+                <LoadingButton value="Mail versturen" :loading="loading" />
+            </div>
+        </form>
     </div>
 </template>
 

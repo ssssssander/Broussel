@@ -34,49 +34,55 @@ const router = new VueRouter({
             },
         },
         {
-            path: '/register',
-            name: 'register',
-            component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
-            meta: {
-                title: 'Registreren',
-                auth: false,
-            }
-        },
-        {
-            path: '/register-buddy',
-            name: 'register-buddy',
-            component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
-            meta: {
-                title: 'Word wandelbuddy',
-                auth: undefined,
-            }
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
-            meta: {
-                title: 'Log in',
-                auth: false,
-            }
-        },
-        {
-            path: '/forgot',
-            name: 'forgot-password',
-            component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
-            meta: {
-                title: 'Wachtwoord vergeten?',
-                auth: false,
-            }
-        },
-        {
-            path: '/reset',
-            name: 'reset-password',
-            component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
-            meta: {
-                title: 'Wachtwoord resetten',
-                auth: false,
-            }
+            path: '/',
+            component: () => import(/* webpackChunkName: "js/chunks/auth" */ '@/js/layouts/Auth'),
+            children: [
+                {
+                    path: 'register',
+                    name: 'register',
+                    component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
+                    meta: {
+                        title: 'Registreren',
+                        auth: false,
+                    }
+                },
+                {
+                    path: 'register-buddy',
+                    name: 'register-buddy',
+                    component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
+                    meta: {
+                        title: 'Word wandelbuddy',
+                        auth: undefined,
+                    }
+                },
+                {
+                    path: 'login',
+                    name: 'login',
+                    component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
+                    meta: {
+                        title: 'Log in',
+                        auth: false,
+                    }
+                },
+                {
+                    path: 'forgot',
+                    name: 'forgot-password',
+                    component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
+                    meta: {
+                        title: 'Wachtwoord vergeten?',
+                        auth: false,
+                    }
+                },
+                {
+                    path: 'reset',
+                    name: 'reset-password',
+                    component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
+                    meta: {
+                        title: 'Wachtwoord resetten',
+                        auth: false,
+                    }
+                },
+            ],
         },
         {
             path: '/app',

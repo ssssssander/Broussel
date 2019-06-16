@@ -1,73 +1,70 @@
 <template>
     <div class="register-buddy">
-        <div class="fullscreen-form">
-            <h1>Word wandelbuddy</h1>
-            <Message
-                v-if="!success"
-                message-type="error"
-                :messages="errors"
-                :extra-str="errorType"
-            />
-            <form v-show="!success" @submit.prevent="registerBuddy" method="post">
-                <div class="form-block">
-                    <label for="name">Naam</label>
-                    <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
+        <Message
+            v-if="!success"
+            message-type="error"
+            :messages="errors"
+            :extra-str="errorType"
+        />
+        <form v-show="!success" @submit.prevent="registerBuddy" method="post">
+            <div class="form-block">
+                <label for="name">Naam</label>
+                <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
+            </div>
+            <div class="form-block">
+                <label for="email">E-mailadres</label>
+                <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
+            </div>
+            <div class="form-block">
+                <label>Talen</label>
+                <input type="checkbox" id="nl" v-model="nl">
+                <label for="nl"><span class="checkbox"></span>Nederlands</label>
+                <input type="checkbox" id="fr" v-model="fr">
+                <label for="fr"><span class="checkbox"></span>Frans</label>
+                <input type="checkbox" id="en" v-model="en">
+                <label for="en"><span class="checkbox"></span>Engels</label>
+            </div>
+            <div class="form-block">
+                <label>Beschikbare dagen</label>
+                <div v-for="day in Object.keys(timeData.daysOfWeek)" class="time-picker-block">
+                    <input type="checkbox" :id="day" v-model="availableTimes[day].available">
+                    <label :for="day"><span class="checkbox"></span>{{ timeData.daysOfWeek[day] }}</label>
+                    <span class="time-pickers">
+                        <a-time-picker
+                            v-for="w in Object.keys(timeData.when)"
+                            :key="day + '.' + w"
+                            @click.native="setCurrentTimePicker(day, w)"
+                            @change="onChangeTime"
+                            :open="openTimePicker(day, w)"
+                            size="large"
+                            format="HH:mm"
+                            :allowEmpty="false"
+                            :defaultOpenValue="$moment().startOf('hour')"
+                            inputReadOnly
+                            :minuteStep="5"
+                            :placeholder="timeData.when[w]"
+                            :disabled="isTimePickerDisabled(day, w)"
+                            :value="availableTimes[day][w] != '' ? $moment(availableTimes[day][w], 'HH:mm'): null"
+                        >
+                            <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose()">Ok</button>
+                        </a-time-picker>
+                        <a v-show="currentTimePicker.lastSelectedDay == day" href="#" class="link" @click.prevent="timeEverywhere(day)">Tijd overal doorvoeren</a>
+                    </span>
                 </div>
-                <div class="form-block">
-                    <label for="email">E-mailadres</label>
-                    <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
-                </div>
-                <div class="form-block">
-                    <label>Talen</label>
-                    <input type="checkbox" id="nl" v-model="nl">
-                    <label for="nl"><span class="checkbox"></span>Nederlands</label>
-                    <input type="checkbox" id="fr" v-model="fr">
-                    <label for="fr"><span class="checkbox"></span>Frans</label>
-                    <input type="checkbox" id="en" v-model="en">
-                    <label for="en"><span class="checkbox"></span>Engels</label>
-                </div>
-                <div class="form-block">
-                    <label>Beschikbare dagen</label>
-                    <div v-for="day in Object.keys(timeData.daysOfWeek)" class="time-picker-block">
-                        <input type="checkbox" :id="day" v-model="availableTimes[day].available">
-                        <label :for="day"><span class="checkbox"></span>{{ timeData.daysOfWeek[day] }}</label>
-                        <span class="time-pickers">
-                            <a-time-picker
-                                v-for="w in Object.keys(timeData.when)"
-                                :key="day + '.' + w"
-                                @click.native="setCurrentTimePicker(day, w)"
-                                @change="onChangeTime"
-                                :open="openTimePicker(day, w)"
-                                size="large"
-                                format="HH:mm"
-                                :allowEmpty="false"
-                                :defaultOpenValue="$moment().startOf('hour')"
-                                inputReadOnly
-                                :minuteStep="5"
-                                :placeholder="timeData.when[w]"
-                                :disabled="isTimePickerDisabled(day, w)"
-                                :value="availableTimes[day][w] != '' ? $moment(availableTimes[day][w], 'HH:mm'): null"
-                            >
-                                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose()">Ok</button>
-                            </a-time-picker>
-                            <a v-show="currentTimePicker.lastSelectedDay == day" href="#" class="link" @click.prevent="timeEverywhere(day)">Tijd overal doorvoeren</a>
-                        </span>
-                    </div>
-                </div>
-                <div class="form-block">
-                    <label for="info">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
-                    <textarea v-model="formInfo" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
-                </div>
-                <div class="form-block">
-                    <LoadingButton value="Inschrijven als wandelbuddy" :loading="loading" />
-                </div>
-            </form>
-            <Message
-                v-show="success"
-                message-type="success"
-                :extra-str="successStr"
-            />
-        </div>
+            </div>
+            <div class="form-block">
+                <label for="info">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
+                <textarea v-model="formInfo" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
+            </div>
+            <div class="form-block">
+                <LoadingButton value="Inschrijven als wandelbuddy" :loading="loading" />
+            </div>
+        </form>
+        <Message
+            v-show="success"
+            message-type="success"
+            :extra-str="successStr"
+        />
     </div>
 </template>
 
