@@ -21,20 +21,6 @@
             this.getChattableBuddy();
         }
 
-        // getBuddy() {
-        //     let id = this.$route.query.id ? this.$route.query.id : this.latestChat;
-        //     this.$http({
-        //         url: `auth/get-user/${id}`,
-        //         method: 'get',
-        //     })
-        //     .then((response: any) => {
-        //         this.buddy = response.data.user_data;
-        //         this.makeTalkSession();
-        //     }, (error: any) => {
-        //         this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
-        //     });
-        // }
-
         getChattableBuddy() {
             this.$http({
                 url: `auth/get-chattable-buddy`,
