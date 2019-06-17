@@ -83,7 +83,7 @@ class AppointmentController extends Controller
             $latestAppointment = Appointment::where('buddy_id', Auth::id())->get()->last();
 
             if ($latestAppointment) {
-                $latest = User::find($latestAppointment->id);
+                $latest = User::find($latestAppointment->user_id);
             }
         }
 

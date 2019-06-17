@@ -56,7 +56,7 @@
                     name: this.buddy.name,
                     email: this.buddy.email,
                     photoUrl: this.buddy.avatar_path,
-                    welcomeMessage: 'Wandelen maar!',
+                    welcomeMessage: 'Hey ' + (this as any).$auth.user().name.split(' ')[0] + '! Wat voor wandeling wil je graag doen?',
                     role: 'seller',
                     locale: 'nl-NL',
                 });
