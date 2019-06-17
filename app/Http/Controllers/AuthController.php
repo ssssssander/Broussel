@@ -113,7 +113,7 @@ class AuthController extends Controller
         $buddy->status = 'undecided';
         $buddy->save();
 
-        Mail::to(config('app.admin_email'))->send(new BuddySubmission($buddy->name, $buddy->id));
+        Mail::to(env('ADMIN_EMAIL'))->send(new BuddySubmission($buddy->name, $buddy->id));
 
         return response()->json(['status' => 'success'], 200);
     }

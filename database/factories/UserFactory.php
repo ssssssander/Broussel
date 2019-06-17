@@ -50,11 +50,11 @@ $factory->define(User::class, function (Faker $faker) {
             $randomFromTimeHour = str_pad($faker->numberBetween(7, 15), 2, '0', STR_PAD_LEFT);
             $randomToTimeHour = str_pad($faker->numberBetween(16, 23), 2, '0', STR_PAD_LEFT);
 
-            $randomFromTimeMinute = $faker->numberBetween(0, 59);
+            $randomFromTimeMinute = $faker->numberBetween(0, 55);
             $randomFromTimeMinute = roundUpToAny($randomFromTimeMinute, 5);
             $randomFromTimeMinute = str_pad($randomFromTimeMinute, 2, '0', STR_PAD_LEFT);
 
-            $randomToTimeMinute = $faker->numberBetween(0, 59);
+            $randomToTimeMinute = $faker->numberBetween(0, 55);
             $randomToTimeMinute = roundUpToAny($randomToTimeMinute, 5);
             $randomToTimeMinute = str_pad($randomToTimeMinute, 2, '0', STR_PAD_LEFT);
 

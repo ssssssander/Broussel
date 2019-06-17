@@ -37,7 +37,7 @@
                 format="HH:mm"
                 :allowEmpty="false"
                 inputReadOnly
-                :defaultOpenValue="moment($store.state.selectedFromTime, 'HH:mm').add(2, 'hours').startOf('hour')"
+                :defaultOpenValue="moment(selectedFromTime, 'HH:mm').add(2, 'hours').startOf('hour')"
                 :disabledHours="disabledHours"
                 :disabledMinutes="disabledMinutes"
                 :minuteStep="5"
@@ -101,6 +101,9 @@
         selectedBuddy: any = {};
         minutesAfterNowActive: number = 20;
         search: string = '';
+        selectedDate: string = '';
+        selectedFromTime: string = '';
+        selectedToTime: string = '';
         finalDate: string = '';
         finalFromTime: string = '';
         finalToTime: string = '';
@@ -114,16 +117,16 @@
 
         onChangeDate(date: any, dateString: string) {
             this.isFromTimePickerDisabled = false;
-            this.$store.commit('setSelectedDate', dateString);
+            this.selectedDate = dateString;
         }
 
         onChangeFromTime(time: any, timeString: string) {
             this.isToTimePickerDisabled = false;
-            this.$store.commit('setSelectedFromTime', timeString);
+            this.selectedFromTime = timeString;
         }
 
         onChangeToTime(time: any, timeString: string) {
-            this.$store.commit('setSelectedToTime', timeString);
+            this.selectedToTime = timeString;
         }
 
         handleClose(){
@@ -137,7 +140,7 @@
         }
 
         disabledHours() {
-            if (!this.moment().isSame(this.moment(this.$store.state.selectedDate, 'DD/MM/YYYY'), 'day')) {
+            if (!this.moment().isSame(this.moment(this.selectedDate, 'DD/MM/YYYY'), 'day')) {
                 return [];
             }
 
@@ -154,7 +157,7 @@
         }
 
         disabledMinutes(selectedHour: any) {
-            if (!this.moment().isSame(this.moment(this.$store.state.selectedDate, 'DD/MM/YYYY'), 'day')) {
+            if (!this.moment().isSame(this.moment(this.selectedDate, 'DD/MM/YYYY'), 'day')) {
                 return [];
             }
 
@@ -183,18 +186,13 @@
             this.loading = true;
             this.selectedBuddy = {};
 
-            // Debug
-            // this.$store.state.selectedDate = '05/08/2019';
-            // this.$store.state.selectedFromTime = '10:00';
-            // this.$store.state.selectedToTime = '12:00';
-
             this.$http({
                 url: `auth/find-buddies`,
                 method: 'post',
                 data: {
-                    date: this.$store.state.selectedDate,
-                    from: this.$store.state.selectedFromTime,
-                    to: this.$store.state.selectedToTime,
+                    date: this.selectedDate,
+                    from: this.selectedFromTime,
+                    to: this.selectedToTime,
                 }
             })
             .then((response: any) => {
@@ -202,9 +200,9 @@
                 this.errors = {};
                 this.errorType = '';
                 this.availableBuddies = response.data.available_buddies_data;
-                this.finalDate = this.$store.state.selectedDate;
-                this.finalFromTime = this.$store.state.selectedFromTime;
-                this.finalToTime = this.$store.state.selectedToTime;
+                this.finalDate = this.selectedDate;
+                this.finalFromTime = this.selectedFromTime;
+                this.finalToTime = this.selectedToTime;
 
                 if (this.availableBuddies.length == 0) {
                     this.$message.info('Niemand gevonden');
