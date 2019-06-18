@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Carbon\Carbon;
 use App\Appointment;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class AppointmentController extends Controller
@@ -90,6 +93,74 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 'success',
             'chattable_buddies_data' => $latest,
+        ], 200);
+    }
+
+    public function makeIcal(Request $request) {
+        $user = Auth::user();
+        $appointments = [];
+        $iCalFullString =
+'BEGIN:VCALENDAR
+PRODID:-//Broussel//Broussel Calendar 1.0//NL
+METHOD:PUBLISH
+VERSION:2.0
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Broussel agenda van ' . $user->name . '
+X-WR-TIMEZONE:Europe/Brussels
+X-WR-CALDESC:Broussel agenda van ' . $user->name . ' (' . $user->email . ')';
+
+        if ($user->role == 'user') {
+            $appointments = $user->appointments;
+        }
+        if ($user->role == 'buddy') {
+            $appointments = Appointment::where('buddy_id', Auth::id())->get();
+        }
+
+        foreach ($appointments as $appointment) {
+            if ($user->role == 'user') {
+                $userOnWalkWith = User::find($appointment->buddy_id);
+            }
+            if ($user->role == 'buddy') {
+                $userOnWalkWith = User::find($appointment->user_id);
+            }
+
+            $format = 'Ymd\THis';
+            $start = Carbon::parse($appointment->day . ' ' . $appointment->time_from)->format($format);
+            $end = Carbon::parse($appointment->day . ' ' . $appointment->time_to)->format($format);
+            $now = Carbon::now()->format($format);
+            $created = Carbon::parse($appointment->created_at)->format($format);
+            $lastModified = Carbon::parse($appointment->updated_at)->format($format);
+            $summary = 'Wandelen met ' . $userOnWalkWith->name;
+            $description = $summary . ' op ' . $appointment->day . ' van ' . $appointment->time_from . ' tot ' . $appointment->time_to;
+
+            $iCalEventString =
+'
+BEGIN:VEVENT
+DTSTART:' . $start . '
+DTEND:' . $end. '
+DTSTAMP:' . $now . '
+UID:' . (string)Str::uuid() . '@broussel.be
+CREATED:' . $created .'
+DESCRIPTION:' . $description . '
+LAST-MODIFIED:' . $lastModified . '
+LOCATION:Brussel
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:' . $summary . '
+TRANSP:OPAQUE
+END:VEVENT';
+            $iCalFullString .= $iCalEventString;
+        }
+
+        $iCalFullString .= PHP_EOL . 'END:VCALENDAR';
+
+        $putDir = 'calendars/broussel-calendar-' . $user->email . '.ics';
+        $iCalUrl = url('storage/' . $putDir);
+        Storage::put($putDir, $iCalFullString);
+
+        return response()->json([
+            'status' => 'success',
+            'ical_url' => $iCalUrl,
         ], 200);
     }
 }

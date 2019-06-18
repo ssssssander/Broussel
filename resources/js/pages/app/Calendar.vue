@@ -1,5 +1,6 @@
 <template>
     <div class="calendar">
+        <a href="#" @click.prevent="makeIcal">iCal</a><p>{{ iCalUrl }}</p>
         <i v-if="!success">Kalender laden...</i>
         <a-calendar v-if="success">
             <ul class="events" slot="dateCellRender" slot-scope="value">
@@ -29,6 +30,7 @@
         appointments: any[] = [];
         moment: any = (this as any).$moment;
         success: boolean = false;
+        iCalUrl: string = '';
 
         created() {
             this.getAppointments();
@@ -75,6 +77,19 @@
             if (role == 'buddy') {
                 this.$router.push({ name: 'buddy-profile', params: { id: id } })
             }
+        }
+
+        makeIcal() {
+            this.$http({
+                url: `auth/make-ical`,
+                method: 'get',
+            })
+            .then((response: any) => {
+                this.$message.success('Success');
+                this.iCalUrl = response.data.ical_url;
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan');
+            });
         }
     }
 </script>

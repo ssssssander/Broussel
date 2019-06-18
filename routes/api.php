@@ -35,5 +35,6 @@ Route::prefix('auth')->group(function () {
         Route::get('get-chattable-buddy', 'AppointmentController@getChattableBuddy');
         Route::get('get-buddies-to-be-judged', 'AdminController@getBuddiesToBeJudged');
         Route::post('set-status', 'AdminController@setStatus');
+        Route::get('make-ical', 'AppointmentController@makeIcal');
     });
 });
