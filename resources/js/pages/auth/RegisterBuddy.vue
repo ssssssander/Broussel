@@ -53,8 +53,8 @@
                 </div>
             </div>
             <div class="form-block">
-                <label for="info">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
-                <textarea v-model="formInfo" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
+                <label for="motivation">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
+                <textarea v-model="formMotivation" id="motivation" name="motivation" required minlength="50" maxlength="65000"></textarea>
             </div>
             <div class="form-block">
                 <LoadingButton value="Inschrijven als wandelbuddy" :loading="loading" />
@@ -76,7 +76,7 @@
         name: string = 'RegisterBuddy';
         formName: string = '';
         formEmail: string = '';
-        formInfo: string = '';
+        formMotivation: string = '';
         errors: any = {};
         errorType: string = '';
         was422: boolean = false;
@@ -216,7 +216,7 @@
                 data: {
                     name: this.formName,
                     email: this.formEmail,
-                    info: this.formInfo,
+                    motivation: this.formMotivation,
                     nl: this.nl,
                     fr: this.fr,
                     en: this.en,
@@ -227,6 +227,7 @@
                 this.$message.success('Je inschrijving is goed ontvangen!');
                 this.success = true;
             }, (error: any) => {
+                console.log(error.response);
                 this.loading = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 

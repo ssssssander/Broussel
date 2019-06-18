@@ -29,13 +29,24 @@ $factory->define(User::class, function (Faker $faker) {
     $randomNl = null;
     $randomFr = null;
     $randomEn = null;
+    $randomMotivation = null;
     $randomInfo = null;
     $randomAvailableTimes= null;
     $maleOrFemale = $faker->boolean ? 'male' : 'female' ;
     $avatarMenOrWomen = $maleOrFemale == 'male' ? 'men' : 'women' ;
+    $randomAvatar = 'https://randomuser.me/api/portraits/' . $avatarMenOrWomen . '/' . $faker->numberBetween(1, 99). '.jpg';
 
     if ($randomRole == 'buddy') {
         $randomStatus = $faker->randomElement(['undecided', 'declined', 'accepted']);
+        $randomMotivation = $faker->realText(400);
+
+        if ($randomStatus == 'accepted') {
+            $randomInfo = $faker->realText(400);
+        }
+        else {
+            $randomAvatar = '/storage/uploads/avatars/default.png';
+        }
+
         $randomNl = $frenchOrDutch == 'nl_BE' ? true : $faker->boolean;
         $randomFr = $frenchOrDutch == 'fr_FR' ? true : $faker->boolean;
         $randomEn = $faker->boolean;
@@ -77,12 +88,13 @@ $factory->define(User::class, function (Faker $faker) {
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => Hash::make(Str::random(8)),
-        'avatar_path' => 'https://randomuser.me/api/portraits/' . $avatarMenOrWomen . '/' . $faker->numberBetween(1, 99). '.jpg',
+        'avatar_path' => $randomAvatar,
         'role' => $randomRole,
         'status' => $randomStatus,
         'nl' => $randomNl,
         'fr' => $randomFr,
         'en' => $randomEn,
+        'motivation' => $randomMotivation,
         'info' => $randomInfo,
         'available_times' => $randomAvailableTimes,
         'ip_address' => $faker->ipv4,

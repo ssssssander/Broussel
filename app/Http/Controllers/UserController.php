@@ -103,6 +103,26 @@ class UserController extends Controller
             ], 200);
     }
 
+    public function changeInfo(Request $request) {
+        $user = Auth::user();
+
+        $v = Validator::make($request->all(), [
+            'info'  => 'required|string|min:50|max:65000',
+        ]);
+
+        if ($v->fails())  {
+            return response()->json([
+                'status' => 'error',
+                'errors' => $v->errors(),
+            ], 422);
+        }
+
+        $user->info = $request->info;
+        $user->save();
+
+        return response()->json(['status' => 'success'], 200);
+    }
+
     public function uploadAvatar(Request $request) {
         $user = Auth::user();
         $imageQuality = 60;
@@ -123,7 +143,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success'], 200);
     }
 
-    public function changeInfo(Request $request) {
+    public function changeNameEmail(Request $request) {
         $user = Auth::user();
 
         $v = Validator::make($request->all(), [

@@ -6,6 +6,15 @@
             :messages="errors"
             :extra-str="errorType"
         />
+        <form v-if="$auth.check('buddy')" @submit.prevent="changeInfo" method="post">
+            <div class="form-block">
+                <label for="name">Info over jezelf, gebruikers zien dit als ze jouw selecteren<span class="side-text">Minstens 50 tekens</span></label>
+                <textarea v-model="formInfo" type="text" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
+            </div>
+            <div class="form-block">
+                <LoadingButton value="Aanpassen" :loading="changeInfoLoading" />
+            </div>
+        </form>
         <form enctype="multipart/form-data" @submit.prevent="uploadAvatar" method="post">
             <div class="form-block">
                 <div class="file-area">
@@ -17,7 +26,7 @@
         </form>
         <a-divider />
         <h3>Verander je informatie</h3>
-        <form @submit.prevent="changeInfo" method="post">
+        <form @submit.prevent="changeNameEmail" method="post">
             <div class="form-block">
                 <label for="name">Naam</label>
                 <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255">
@@ -27,7 +36,7 @@
                 <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
             </div>
             <div class="form-block">
-                <LoadingButton value="Aanpassen" :loading="changeInfoLoading" />
+                <LoadingButton value="Aanpassen" :loading="changeNameEmailLoading" />
             </div>
         </form>
         <a-divider />
@@ -60,8 +69,10 @@
         name: string = 'Settings';
         file: any = '';
         uploadAvatarLoading: boolean = false;
-        changeInfoLoading: boolean = false;
+        changeNameEmailLoading: boolean = false;
         changePasswordLoading: boolean = false;
+        changeInfoLoading: boolean = false;
+        formInfo: string = '';
         formName: string = '';
         formEmail: string = '';
         formOldPassword: string = '';
@@ -72,6 +83,7 @@
         was422: boolean = false;
 
         created() {
+            this.formInfo = (this as any).$auth.user().info;
             this.formName = (this as any).$auth.user().name;
             this.formEmail = (this as any).$auth.user().email;
         }
@@ -143,12 +155,12 @@
             document.getElementsByTagName('h1')[0].scrollIntoView();
         }
 
-        changeInfo() {
-            this.changeInfoLoading = true;
+        changeNameEmail() {
+            this.changeNameEmailLoading = true;
             this.removeErrors();
 
             this.$http({
-                url: `auth/change-info`,
+                url: `auth/change-name-email`,
                 method: 'post',
                 data: {
                     name: this.formName,
@@ -163,7 +175,7 @@
                 this.setErrors(error);
             })
             .then(() => {
-                this.changeInfoLoading = false;
+                this.changeNameEmailLoading = false;
             });
         }
 
@@ -191,6 +203,28 @@
             })
             .then(() => {
                 this.changePasswordLoading = false;
+            });
+        }
+
+        changeInfo() {
+            this.changeInfoLoading = true;
+            this.removeErrors();
+
+            this.$http({
+                url: `auth/change-info`,
+                method: 'post',
+                data: {
+                    info: this.formInfo,
+                },
+            })
+            .then((response: any) => {
+                this.$message.success('Succes!');
+            }, (error: any) => {
+                this.$message.error('Er is iets misgegaan');
+                this.setErrors(error);
+            })
+            .then(() => {
+                this.changeInfoLoading = false;
             });
         }
     }
@@ -234,7 +268,7 @@
     .form-block {
         width: 50%;
     }
-    label, input {
+    label, input, textarea {
         width: 100%;
     }
     label {

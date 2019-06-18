@@ -28,8 +28,9 @@ Route::prefix('auth')->group(function () {
         Route::post('charge-request', 'PaymentController@chargeRequest');
         Route::post('make-appointment', 'AppointmentController@makeAppointment');
         Route::get('get-appointments', 'AppointmentController@getAppointments');
-        Route::post('upload-avatar', 'UserController@uploadAvatar');
         Route::post('change-info', 'UserController@changeInfo');
+        Route::post('upload-avatar', 'UserController@uploadAvatar');
+        Route::post('change-name-email', 'UserController@changeNameEmail');
         Route::post('change-password', 'UserController@changePassword');
         Route::get('get-chattable-buddy', 'AppointmentController@getChattableBuddy');
         Route::get('get-buddies-to-be-judged', 'AdminController@getBuddiesToBeJudged');

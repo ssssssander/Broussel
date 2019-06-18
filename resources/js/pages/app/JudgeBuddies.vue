@@ -14,7 +14,7 @@
                             <span>{{ buddy.ip_address }}</span>
                         </div>
                         <div class="description">
-                            <p>{{ buddy.info }}</p>
+                            <p>{{ buddy.motivation }}</p>
                             <AvailableTimesTable :available-times="JSON.parse(buddy.available_times)" />
                         </div>
                     </div>

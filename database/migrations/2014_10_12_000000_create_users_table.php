@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->boolean('nl')->nullable();
             $table->boolean('fr')->nullable();
             $table->boolean('en')->nullable();
+            $table->text('motivation')->nullable();
             $table->text('info')->nullable();
             $table->text('available_times')->nullable();
             $table->ipAddress('ip_address')->nullable();

@@ -24,6 +24,7 @@ class UsersTableSeeder extends Seeder
             'nl' => null,
             'fr' => null,
             'en' => null,
+            'motivation' => null,
             'info' => null,
             'available_times' => null,
         ],
@@ -36,7 +37,8 @@ class UsersTableSeeder extends Seeder
             'nl' => true,
             'fr' => false,
             'en' => false,
-            'info' => 'Uilenspiegel en sprak tot den prins, het geld te ontvangen--die voor een kroezeken water; maar dit.',
+            'motivation' => 'Oranje noemen. Zijne heilige Majesteit spreekt dien man niet dadelijk opkraamt! En met den neus omhoog, zeggende: --Riekt gij dien donderslag? Ziet gij die vrouwe? --Ik ken ze niet, \'t zijn die eener rijke hoeve, goed voorzien van groot en struisch, diep is mijn bus, sprak Uilenspiegel, gij ziet er niet in, om den schoot Onzer Moeder de Heilige Kerk; moest ik hem in en bedekte hem met de.',
+            'info' => 'De mannen stemden hiermee in, en antwoordde niet, dronk, betaalde en vertrok. De zeven vertrokken naar Petegem, langsheen de Leie, met het beste schip van Treslong eene kog van Biscaye, die geladen was met de tanden in bijtend, groef hij een man geeft, en ik drink op den weg deed meer dan drie vademen achteruit gleed; en, vlug als eene musch op een gebarsten doedelzak, terwijl een lieftallig.',
             'available_times' => '"[{\"day\":\"monday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"wednesday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"friday\",\"available\":true,\"from\":\"08:00\",\"to\":\"16:15\"},{\"day\":\"saturday\",\"available\":true,\"from\":\"18:15\",\"to\":\"23:20\"}]"',
         ],
         [
@@ -48,6 +50,7 @@ class UsersTableSeeder extends Seeder
             'nl' => null,
             'fr' => null,
             'en' => null,
+            'motivation' => null,
             'info' => null,
             'available_times' => null,
         ],
@@ -60,6 +63,7 @@ class UsersTableSeeder extends Seeder
             'nl' => null,
             'fr' => null,
             'en' => null,
+            'motivation' => null,
             'info' => null,
             'available_times' => null,
         ]]);

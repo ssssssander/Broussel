@@ -62,7 +62,7 @@ class AuthController extends Controller
         $requestValidator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'info'  => 'required|string|min:50|max:65000',
+            'motivation'  => 'required|string|min:50|max:65000',
             'nl'  => 'boolean',
             'fr'  => 'boolean',
             'en'  => 'boolean',
@@ -104,7 +104,7 @@ class AuthController extends Controller
         $buddy->email = $request->email;
         $buddy->password =  null;
         $buddy->ip_address = $request->ip();
-        $buddy->info = $request->info;
+        $buddy->motivation = $request->motivation;
         $buddy->nl = $request->nl;
         $buddy->fr = $request->fr;
         $buddy->en = $request->en;
