@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://broussel.be'),
+    'url' => env('APP_URL', 'https://broussel.be'),
 
     'asset_url' => env('ASSET_URL', null),
 

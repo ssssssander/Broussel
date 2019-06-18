@@ -7,6 +7,7 @@ use App\Mail\BuddyJudged;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -27,7 +28,12 @@ class AdminController extends Controller
         $buddy->password = Hash::make($password);
         $buddy->save();
 
-        Mail::to($buddy)->send(new BuddyJudged($buddy->name, $buddy->status, $password));
+        try {
+            Mail::to($buddy)->send(new BuddyJudged($buddy->name, $buddy->status, $password));
+        }
+        catch(\Exception $e) {
+            Log::error($e);
+        }
 
         return response()->json(['status' => 'success'], 200);
     }
