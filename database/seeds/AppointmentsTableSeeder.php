@@ -1,6 +1,5 @@
 <?php
 
-use App\Appointment;
 use Illuminate\Database\Seeder;
 
 class AppointmentsTableSeeder extends Seeder

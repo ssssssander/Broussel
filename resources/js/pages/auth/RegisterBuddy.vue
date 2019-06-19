@@ -227,7 +227,6 @@
                 this.$message.success('Je inschrijving is goed ontvangen!');
                 this.success = true;
             }, (error: any) => {
-                console.log(error.response);
                 this.loading = false;
                 this.$message.error('Niet alle velden zijn juist ingevuld!');
 
