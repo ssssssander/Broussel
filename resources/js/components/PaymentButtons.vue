@@ -11,7 +11,7 @@
             @payment-cancelled="paymentCancelled"
             class="paypal"
         />
-        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price * 100)">
+<!--        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price * 100)">-->
     </div>
 </template>
 
@@ -69,13 +69,13 @@
         }
 
         created() {
-            const sourceId: any = this.$route.query.source;
-            const clientSecret: any = this.$route.query.client_secret;
-            const amount: any = this.$route.query.amount;
-
-            if (sourceId && clientSecret) {
-                this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
-            }
+            // const sourceId: any = this.$route.query.source;
+            // const clientSecret: any = this.$route.query.client_secret;
+            // const amount: any = this.$route.query.amount;
+            //
+            // if (sourceId && clientSecret) {
+            //     this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
+            // }
         }
 
         bancontactPoll(sourceId: string, clientSecret: string, amount: number) {
@@ -144,12 +144,16 @@
         justify-content: space-between;
         margin-top: 24px;
 
-        .bancontact, .paypal {
+/*      .bancontact, .paypal {
             width: 45%;
         }
         .bancontact {
             align-self: center;
             cursor: pointer;
+        }*/
+
+        .paypal {
+            width: 100%;
         }
     }
 </style>
