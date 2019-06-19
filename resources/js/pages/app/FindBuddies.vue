@@ -112,7 +112,8 @@
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
-                return availableBuddy.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                let normalized = availableBuddy.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                return normalized.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
             });
         }
 

@@ -42,7 +42,8 @@
 
         get filteredBuddies() {
             return this.buddiesToBeJudged.filter(buddyToBeJudged => {
-                return buddyToBeJudged.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 || buddyToBeJudged.email.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                let normalized = buddyToBeJudged.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                return normalized.toLowerCase().indexOf(this.search.toLowerCase()) > -1 || buddyToBeJudged.email.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
             });
         }
 
