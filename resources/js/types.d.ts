@@ -6,3 +6,4 @@ declare module 'ant-design-vue/lib/locale-provider/nl_BE';
 declare module 'ant-design-vue/lib/locale-provider/fr_BE';
 declare module 'vue-paypal-checkout';
 declare module 'vue-burger-menu';
+declare module 'vue-clipboard2';

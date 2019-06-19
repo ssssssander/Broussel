@@ -110,5 +110,8 @@ return [
     'home_step3_title' => 'Prendre rendez-vous',
     'home_step3_p1' => 'Commencez à discuter avec votre compagnon de marche choisi et rendez-vous.',
     'home_step3_p2' => 'Dites-nous quel itinéraire vous souhaitez et votre compagnon de marche le réalisera, car il/elle est un expert de la nature à Bruxelles.',
+    'copy' => 'Copie',
+    'copied' => 'Copié!',
+    'copy_this_url' => 'Copiez cette URL et importez votre calendrier dans un programme de calendrier tel que Google Agenda ou Outlook.',
 
 ];

@@ -154,7 +154,7 @@ END:VEVENT';
 
         $iCalFullString .= PHP_EOL . 'END:VCALENDAR';
 
-        $putDir = 'calendars/broussel-calendar-' . $user->email . Str::random(8) . '.ics';
+        $putDir = 'calendars/broussel-calendar-' . $user->email . '-' . Str::random(8) . '.ics';
         $iCalUrl = url('storage/' . $putDir);
         Storage::put($putDir, $iCalFullString);
 

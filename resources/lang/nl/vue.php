@@ -110,5 +110,8 @@ return [
     'home_step3_title' => 'Spreek af',
     'home_step3_p1' => 'Begin te chatten met je gekozen wandelbuddy en spreek af.',
     'home_step3_p2' => 'Vertel wat voor route je wil en je wandelbuddy maakt het waar, hij/zij is immers een expert in de Brusselse natuur.',
+    'copy' => 'Kopieer',
+    'copied' => 'Gekopieerd!',
+    'copy_this_url' => 'Kopieer deze URL en importeer je agenda in een kalenderprogramma zoals Google Calendar of Outlook.',
 
 ];
