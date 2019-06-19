@@ -1,8 +1,8 @@
 <template>
     <div class="dashboard">
-            <div class="card" @click="toBuddy">
+            <div class="card" @click="toFindBuddies">
                 <span>+</span>
-                <p>Nieuwe wandeling</p>
+                <p>{{ 'vue.new_walk' | trans }}</p>
             </div>
     </div>
 </template>
@@ -14,8 +14,8 @@
     export default class Dashboard extends Vue {
         name: string = 'Dashboard';
 
-        toBuddy() {
-            this.$router.push({ name: 'find-buddies' });
+        toFindBuddies() {
+            this.$router.push({ name: 'find-buddies' } );
         }
     }
 </script>

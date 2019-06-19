@@ -7,26 +7,26 @@
         />
         <form @submit.prevent="register" method="post">
             <div class="form-block">
-                <label for="name">Naam</label>
+                <label for="name">{{ 'validation.attributes.name' | trans }}</label>
                 <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
             </div>
             <div class="form-block">
-                <label for="email">E-mailadres</label>
+                <label for="email">{{ 'validation.attributes.email' | trans }}</label>
                 <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                <label for="password">{{ 'validation.attributes.password' | trans }}<span class="side-text">{{ 'vue.at_least_chars' | trans({ chars: 8 }) }}</span></label>
                 <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
+                <label for="password_confirmation">{{ 'vue.type_password_again' | trans }}</label>
                 <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <LoadingButton value="Registreren" :loading="loading" />
+                <LoadingButton :value="'vue.register' | trans" :loading="loading" />
             </div>
             <div class="form-block text-center">
-                <router-link :to="{ name: 'login' }" class="link">Heb je al een account? Log hier in.</router-link>
+                <router-link :to="{ name: 'login' }" class="link">{{ 'vue.already_have_account' | trans }}</router-link>
             </div>
         </form>
     </div>
@@ -38,6 +38,7 @@
     @Component
     export default class Register extends Vue {
         name: string = 'Register';
+        lang = (this as any).$lang;
         formName: string = '';
         formEmail: string = '';
         formPassword: string = '';
@@ -79,7 +80,7 @@
                             password: this.formPassword,
                         },
                         success: (response: any) => {
-                            this.$message.success('Je bent met succes geregistreerd!');
+                            this.$message.success(this.lang.get('vue.register_success'));
                             this.$router.push({ name: 'dashboard' });
                         },
                         error: (error: any) => {
@@ -91,7 +92,7 @@
                 },
                 error: (error: any) => {
                     this.loading = false;
-                    this.$message.error('Niet alle velden zijn juist ingevuld!');
+                    this.$message.error(this.lang.get('vue.not_all_fields_correct'));
 
                     if (error.response.status == 422) {
                         this.errors = error.response.data.errors;

@@ -1,69 +1,69 @@
 <template>
-    <header v-if="rrr">
+    <header>
         <div class="wrapper">
             <router-link :to="{ name: 'home', params: { locale: $lang.getLocale() } }" class="logo">Broussel</router-link>
             <nav class="desktop">
                 <ul>
                     <li>
-                        <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">FAQ</router-link>
+                        <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">{{ 'vue.faq' | trans }}</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">Word wandelbuddy</router-link>
+                        <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">{{ 'vue.become_walking_buddy' | trans }}</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">Contact</router-link>
+                        <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">{{ 'vue.contact' | trans }}</router-link>
                     </li>
                 </ul>
                 <ul v-if="$auth.check()">
                     <li>
-                        <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">App</router-link>
+                        <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">{{ 'vue.app' | trans }}</router-link>
                     </li><li>
-                        <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
+                        <a href="#" @click.prevent="logout()" class="btn">{{ 'vue.log_out' | trans }}</a>
                     </li>
                 </ul>
                 <ul v-else>
                     <li>
-                        <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">Log in</router-link>
+                        <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">{{ 'vue.log_in' | trans }}</router-link>
                     </li><li>
-                        <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">Registreren</router-link>
+                        <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">{{ 'vue.register' | trans }}</router-link>
                     </li>
                 </ul>
             </nav>
             <ul class="langs">
                 <li>
-                    <a href="#" @click.prevent="setLocale('nl')">Nederlands</a>
+                    <a href="#" @click.prevent="setLocale('nl')">{{ $lang.getLocale() == 'nl' ? 'vue.nl' : 'vue.nl_change' | trans }}</a>
                 </li><li>
-                    <a href="#" @click.prevent="setLocale('fr')">Français</a>
+                    <a href="#" @click.prevent="setLocale('fr')">{{$lang.getLocale() == 'fr' ? 'vue.fr' : 'vue.fr_change' | trans }}</a>
                 </li>
             </ul>
             <Slide right noOverlay>
                 <nav class="mobile">
                     <ul>
                         <li>
-                            <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">FAQ</router-link>
+                            <router-link :to="{ name: 'faq', params: { locale: $lang.getLocale() } }">{{ 'vue.faq' | trans }}</router-link>
                         </li><li>
-                            <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">Word wandelbuddy</router-link>
+                            <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">{{ 'vue.become_walking_buddy' | trans }}</router-link>
                         </li><li>
-                            <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">Contact</router-link>
+                            <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">>{{ 'vue.contact' | trans }}</router-link>
                         </li>
                         <a-divider></a-divider>
                         <template v-if="$auth.check()">
                             <li>
-                                <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">App</router-link>
+                                <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">>{{ 'vue.app' | trans }}</router-link>
                             </li><li>
-                                <a href="#" @click.prevent="logout()" class="btn">Uitloggen</a>
+                                <a href="#" @click.prevent="logout()" class="btn">>{{ 'vue.log_out' | trans }}</a>
                             </li>
                         </template>
                         <template v-else>
                             <li>
-                                <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">Log in</router-link>
+                                <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">>{{ 'vue.log_in' | trans }}</router-link>
                             </li><li>
-                                <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">Registreren</router-link>
+                                <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">>{{ 'vue.register' | trans }}</router-link>
                             </li>
                         </template>
                         <a-divider></a-divider>
                         <li>
-                            <a href="#" @click.prevent="setLocale('nl')">Nederlands</a>
+                            <a href="#" @click.prevent="setLocale('nl')">{{ $lang.getLocale() == 'nl' ? 'vue.nl' : 'vue.nl_change' | trans }}</a>
                         </li><li>
-                            <a href="#" @click.prevent="setLocale('fr')">Français</a>
+                            <a href="#" @click.prevent="setLocale('fr')">{{$lang.getLocale() == 'fr' ? 'vue.fr' : 'vue.fr_change' | trans }}</a>
                         </li>
                     </ul>
                 </nav>
@@ -83,17 +83,17 @@
     })
     export default class Header extends Vue {
         name: string = 'Header';
-        appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
-        rrr: boolean = true;
         lang = (this as any).$lang;
+        appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
 
         logout() {
             (this as any).$auth.logout({
                 success: (response: any) => {
-                    this.$message.success('Je bent met succes uitgelogd!');
+                    this.$message.success(this.lang.get('vue.log_out_success'));
+                    this.$router.push({ name: 'home' } );
                 },
                 error: (error: any) => {
-                    this.$message.error('Er is iets misgegaan bij het uitloggen, probeer het opnieuw.');
+                    this.$message.error(this.lang.get('vue.something_went_wrong'));
                 },
             });
         }
@@ -128,7 +128,7 @@
     .bm-cross {
         background-color: $light-color;
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
         .bm-burger-button {
             display: initial;
         }
@@ -200,7 +200,7 @@
             text-decoration: underline;
         }
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
         nav.desktop, nav.desktop + .langs {
             display: none;
         }

@@ -1,8 +1,8 @@
 <template>
     <div class="chats">
         <div id="talkjs-container">
-            <i v-if="!success">Chats laden...</i>
-            <i v-if="success && !Object.keys(buddy).length">Je hebt nog geen chats.</i></div>
+            <i v-if="!success">{{ 'vue.loading' | trans }}</i>
+            <i v-if="success && !Object.keys(buddy).length">{{ 'vue.no_chats' | trans }}</i></div>
     </div>
 </template>
 
@@ -13,8 +13,8 @@
     @Component
     export default class Chats extends Vue {
         name: string = 'Chats';
+        lang = (this as any).$lang;
         buddy: any = {};
-        latestChat: number = this.$store.state.latestChat;
         success: boolean = false;
 
         created() {
@@ -33,7 +33,7 @@
                 this.makeTalkSession();
             }, (error: any) => {
                 console.log(error.response);
-                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
 
@@ -45,7 +45,7 @@
                     email: (this as any).$auth.user().email,
                     photoUrl: (this as any).$auth.user().avatar_path,
                     role: 'buyer',
-                    locale: 'nl-NL',
+                    locale: this.lang.getLocale() == 'nl' ? 'nl-NL' : 'fr-FR',
                 });
                 (window as any).talkSession = new Talk.Session({
                     appId: 'tXjVxKb4',
@@ -57,7 +57,7 @@
                     email: this.buddy.email,
                     photoUrl: this.buddy.avatar_path,
                     role: 'seller',
-                    locale: 'nl-NL',
+                    locale: this.lang.getLocale() == 'nl' ? 'nl-NL' : 'fr-FR',
                 });
 
                 let conversation = (window as any).talkSession.getOrCreateConversation(Talk.oneOnOneId(me, other));
@@ -65,7 +65,6 @@
                 conversation.setParticipant(other);
                 let inbox = (window as any).talkSession.createInbox({selected: conversation});
                 inbox.mount(document.getElementById('talkjs-container'));
-                this.$store.commit('setLatestChat', this.buddy.id);
             });
         }
     }

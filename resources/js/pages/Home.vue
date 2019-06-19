@@ -2,23 +2,23 @@
     <div class="home">
         <Hero></Hero>
         <div class="content">
-            <h2>Hoe het werkt</h2>
+            <h2>{{ 'vue.how_it_works' | trans }}</h2>
             <a-divider></a-divider>
             <div class="steps">
                 <div class="step">
-                    <h3>Kies je tijdstip</h3>
-                    <p>Kies een dag en het van en tot tijstip waarop je wil wandelen.</p>
-                    <p>Dit kan op de huidige dag en al 20 minuten op voorhand!</p>
+                    <h3>{{ 'vue.home_step1_title' | trans }}</h3>
+                    <p>{{ 'vue.home_step1_p1' | trans }}</p>
+                    <p>{{ 'vue.home_step1_p2' | trans }}</p>
                 </div>
                 <div class="step">
-                    <h3>Kies je wandelbudddy</h3>
-                    <p>Kies uit alle beschikbare wandelbuddies op jouw tijdstip en kies er een naar jouw keuze.</p>
-                    <p>Of zoek op naam als je al iemand kent!</p>
+                    <h3>{{ 'vue.home_step2_title' | trans }}</h3>
+                    <p>{{ 'vue.home_step2_p1' | trans }}</p>
+                    <p>{{ 'vue.home_step2_p2' | trans }}</p>
                 </div>
                 <div class="step">
-                    <h3>Spreek af</h3>
-                    <p>Begin te chatten met je gekozen wandelbuddy en spreek af.</p>
-                    <p>Vertel wat voor route je wil en je wandelbuddy maakt het waar, hij/zij is immers een expert in de Brusselse natuur.</p>
+                    <h3>{{ 'vue.home_step3_title' | trans }}</h3>
+                    <p>{{ 'vue.home_step3_p1' | trans }}</p>
+                    <p>{{ 'vue.home_step3_p2' | trans }}</p>
                 </div>
             </div>
         </div>

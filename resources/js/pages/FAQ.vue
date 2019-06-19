@@ -1,16 +1,16 @@
 <template>
     <div class="faq">
-        <h1>FAQ</h1>
+        <h1>{{ 'vue.faq' | trans }}</h1>
         <a-divider></a-divider>
         <a-collapse :bordered="false">
-            <a-collapse-panel header="Wat zijn de tarieven?" key="1">
-                <p>Een wandelbuddy boeken kost altijd 12 euro per uur, 5% van het totale bedrag per boeking gaat naar Broussel, de rest naar de wandelbuddy.</p>
+            <a-collapse-panel :header="'vue.faq_title1' | trans" key="1">
+                <p>{{ 'vue.faq_text1' | trans }}</p>
             </a-collapse-panel>
-            <a-collapse-panel header="Wanneer kan ik met iemand wandelen?" key="2">
-                <p>Je kan op elke datum en tijdstip met iemand wandelen zolang er iemand beschikbaar is op je gekozen datum en tijdstip.</p>
+            <a-collapse-panel :header="'vue.faq_title2' | trans" key="2">
+                <p>{{ 'vue.faq_text2' | trans }}</p>
             </a-collapse-panel>
-            <a-collapse-panel header="Kan ik op dezelfde dag nog een wandeling boeken?" key="3">
-                <p>Ja, dat kan zelfs al 20 minuten op voorhand.</p>
+            <a-collapse-panel :header="'vue.faq_title3' | trans" key="3">
+                <p>{{ 'vue.faq_text3' | trans }}</p>
             </a-collapse-panel>
         </a-collapse>
     </div>

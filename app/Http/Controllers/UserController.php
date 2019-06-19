@@ -69,11 +69,19 @@ class UserController extends Controller
                             $timeAppointmentTo = Carbon::createFromTime($explodedAppointmentTo[0], $explodedAppointmentTo[1]);
 
                             if ($appointmentDay->format('Y-m-d') == $date->format('Y-m-d')) {
-                                if ($timeFrom->between($timeAppointmentFrom, $timeAppointmentTo)
-                                    || $timeTo->between($timeAppointmentFrom, $timeAppointmentTo)) {
+                                if (($timeFrom < $timeAppointmentFrom && $timeTo < $timeAppointmentFrom)
+                                    || ($timeTo > $timeAppointmentTo && $timeFrom > $timeAppointmentTo)) {
+                                    //
+                                }
+                                else {
                                     $alreadyHasAppointment = true;
                                     break;
                                 }
+//                                if ($timeFrom->between($timeAppointmentFrom, $timeAppointmentTo)
+//                                    || $timeTo->between($timeAppointmentFrom, $timeAppointmentTo)) {
+//                                    $alreadyHasAppointment = true;
+//                                    break;
+//                                }
                             }
                         }
                     }

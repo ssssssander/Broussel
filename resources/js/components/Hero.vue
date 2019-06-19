@@ -1,11 +1,11 @@
 <template>
     <div class="hero">
         <div class="hero-text">
-            <h1>Ontdek het groen in Brussel</h1>
-            <p>Vind wandelbuddies met expertise die je one-on-one begeleiden en ontdek unieke natuurroutes in Brussel.</p>
+            <h1>{{ 'vue.hero_title' | trans }}</h1>
+            <p>{{ 'vue.hero_text' | trans }}</p>
             <div class="buttons">
-                <router-link :to="{ name: beginLink, params: { locale: $lang.getLocale() } }" class="btn">Begin nu</router-link>
-                <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }" class="link">Of word een wandelbuddy →</router-link>
+                <router-link :to="{ name: beginLink, params: { locale: $lang.getLocale() } }" class="btn">{{ 'vue.start_now' | trans }}</router-link>
+                <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }" class="link">{{ 'vue.or_become_walking_buddy' | trans }}</router-link>
             </div>
         </div>
     </div>

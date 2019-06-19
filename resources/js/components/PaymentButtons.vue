@@ -4,14 +4,14 @@
             :amount="selectedBuddy.price.toString()"
             currency="EUR"
             :client="payPalCredentials"
-            locale="nl_BE"
+            :locale="payPalLocale"
             :button-style="payPalButtonStyle"
             env="sandbox"
             @payment-completed="paymentCompleted"
             @payment-cancelled="paymentCancelled"
             class="paypal"
         />
-        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price * 100)">
+<!--        <img src="~@/images/bancontact-logo.png" class="bancontact" @click="bancontactPay(selectedBuddy.price * 100)">-->
     </div>
 </template>
 
@@ -32,6 +32,7 @@
         @Prop(String) finalToTime: string;
 
         name: string = 'PaymentButtons';
+        lang = (this as any).$lang;
         moment: any = (this as any).$moment;
         payPalCredentials: any = PaymentCredentials.PAYPAL;
         payPalButtonStyle: any = {
@@ -40,6 +41,7 @@
             shape: 'rect',
             color: 'blue',
         };
+        payPalLocale: string = this.lang.getLocale() == 'nl' ? 'nl_BE' : 'fr_BE';
         stripe: any = Stripe(PaymentCredentials.STRIPE);
 
         paymentCompleted() {
@@ -55,25 +57,25 @@
                 }
             })
             .then((response: any) => {
-                this.$message.success('Betaling geslaagd');
-                this.$router.push({ path: 'chats' })
+                this.$message.success(this.lang.get('vue.payment_success'));
+                this.$router.push({ path: 'chats' } );
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
 
         paymentCancelled() {
-            this.$message.warning('Betaling stopgezet');
+            this.$message.warning(this.lang.get('vue.payment_cancelled'));
         }
 
         created() {
-            const sourceId: any = this.$route.query.source;
-            const clientSecret: any = this.$route.query.client_secret;
-            const amount: any = this.$route.query.amount;
-
-            if (sourceId && clientSecret) {
-                this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
-            }
+            // const sourceId: any = this.$route.query.source;
+            // const clientSecret: any = this.$route.query.client_secret;
+            // const amount: any = this.$route.query.amount;
+            //
+            // if (sourceId && clientSecret) {
+            //     this.bancontactPoll(sourceId, clientSecret, parseInt(amount));
+            // }
         }
 
         bancontactPoll(sourceId: string, clientSecret: string, amount: number) {
@@ -96,7 +98,7 @@
                             this.paymentCompleted();
                         }, (error: any) => {
                             console.log(error.response);
-                            this.$message.error('Betaling mislukt');
+                            this.$message.error(this.lang.get('vue.something_went_wrong'));
                         });
                     } else if (source.status === 'pending' && pollCount < MAX_POLL_COUNT) {
                         console.log(source);
@@ -142,12 +144,16 @@
         justify-content: space-between;
         margin-top: 24px;
 
-        .bancontact, .paypal {
+/*      .bancontact, .paypal {
             width: 45%;
         }
         .bancontact {
             align-self: center;
             cursor: pointer;
+        }*/
+
+        .paypal {
+            width: 100%;
         }
     }
 </style>

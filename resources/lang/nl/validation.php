@@ -180,6 +180,7 @@ return [
         'username'              => 'Gebruikersnaam',
         'year'                  => 'Jaar',
 
+        'motivation'            => 'Motivatie',
         'info'                  => 'Informatie',
         'from'                  => 'Van',
         'to'                    => 'Tot',

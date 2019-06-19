@@ -4,6 +4,7 @@ import VueAxios from 'vue-axios';
 import VueAuth from '@websanova/vue-auth'
 import auth from './auth';
 import router from './router';
+import VueClipboard from 'vue-clipboard2';
 
 import * as moment from 'moment';
 moment.locale('nl-be');
@@ -21,6 +22,7 @@ Vue.use(LocaleProvider);
 Vue.use(Skeleton);
 Vue.use(Divider);
 Vue.use(Collapse);
+Vue.use(VueClipboard);
 
 Vue.prototype.$moment = moment;
 Vue.prototype.$message = message;

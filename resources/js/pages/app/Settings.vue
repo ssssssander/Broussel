@@ -1,6 +1,6 @@
 <template>
     <div class="settings">
-        <h3>Stel je profielfoto in</h3>
+        <h3>{{ 'vue.set_avatar' | trans }}</h3>
         <Message
             message-type="error"
             :messages="errors"
@@ -8,54 +8,54 @@
         />
         <form v-if="$auth.check('buddy')" @submit.prevent="changeInfo" method="post">
             <div class="form-block">
-                <label for="name">Info over jezelf, gebruikers zien dit als ze jouw selecteren<span class="side-text">Minstens 50 tekens</span></label>
+                <label for="name">{{ 'vue.info_about_you' | trans }}<span class="side-text">{{ 'vue.at_least_chars' | trans({ chars: 50 }) }}</span></label>
                 <textarea v-model="formInfo" type="text" id="info" name="info" required minlength="50" maxlength="65000"></textarea>
             </div>
             <div class="form-block">
-                <LoadingButton value="Aanpassen" :loading="changeInfoLoading" />
+                <LoadingButton :value="'vue.edit' | trans" :loading="changeInfoLoading" />
             </div>
         </form>
         <form enctype="multipart/form-data" @submit.prevent="uploadAvatar" method="post">
             <div class="form-block">
                 <div class="file-area">
                     <input type="file" id="file" ref="file" name="file" @change="handleFileUpload">
-                    <label for="file" class="btn"><a-icon type="upload" />Kies een profielfoto</label>
+                    <label for="file" class="btn"><a-icon type="upload" />{{ 'vue.choose_avatar' | trans }}</label>
                 </div>
-                <LoadingButton value="Uploaden" :loading="uploadAvatarLoading" />
+                <LoadingButton :value="'vue.upload' | trans" :loading="uploadAvatarLoading" />
             </div>
         </form>
         <a-divider />
-        <h3>Verander je informatie</h3>
+        <h3>{{ 'vue.change_name_email' | trans }}</h3>
         <form @submit.prevent="changeNameEmail" method="post">
             <div class="form-block">
-                <label for="name">Naam</label>
+                <label for="name">{{ 'validation.attributes.name' | trans }}</label>
                 <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="email">E-mailadres</label>
+                <label for="email">{{ 'validation.attributes.email' | trans }}</label>
                 <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
             </div>
             <div class="form-block">
-                <LoadingButton value="Aanpassen" :loading="changeNameEmailLoading" />
+                <LoadingButton :value="'vue.edit' | trans" :loading="changeNameEmailLoading" />
             </div>
         </form>
         <a-divider />
-        <h3>Verander je wachtwoord</h3>
+        <h3>{{ 'vue.change_password' | trans }}</h3>
         <form @submit.prevent="changePassword" method="post">
             <div class="form-block">
-                <label for="old_password">Huidig wachtwoord</label>
+                <label for="old_password">{{ 'vue.current_password' | trans }}</label>
                 <input v-model="formOldPassword" type="password" id="old_password" name="old_password" required autocomplete="current-password" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password">Nieuw wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                <label for="password">{{ 'vue.new_password' | trans }}<span class="side-text">{{ 'vue.at_least_chars' | trans({ chars: 8 }) }}</span></label>
                 <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password_confirmation">Typ je nieuw wachtwoord opnieuw</label>
+                <label for="password_confirmation">{{ 'vue.retype_new_password' | trans }}</label>
                 <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <LoadingButton value="Aanpassen" :loading="changePasswordLoading" />
+                <LoadingButton :value="'vue.edit' | trans" :loading="changePasswordLoading" />
             </div>
         </form>
     </div>
@@ -67,6 +67,7 @@
     @Component
     export default class Settings extends Vue {
         name: string = 'Settings';
+        lang = (this as any).$lang;
         file: any = '';
         uploadAvatarLoading: boolean = false;
         changeNameEmailLoading: boolean = false;
@@ -105,12 +106,12 @@
             })
             .then((response: any) => {
                 (this as any).$auth.fetch();
-                this.$message.success('Profielfoto geüpload!');
+                this.$message.success(this.lang.get('vue.avatar_uploaded'));
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
                 this.setErrors(error);
                 if (this.errorType) {
-                    this.errorType = 'Bestand kon niet worden geüpload.';
+                    this.errorType = this.lang.get('vue.avatar_could_not_be_uploaded');
                 }
             })
             .then(() => {
@@ -169,9 +170,9 @@
             })
             .then((response: any) => {
                 (this as any).$auth.fetch();
-                this.$message.success('Succes!');
+                this.$message.success(this.lang.get('vue.success'));
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
                 this.setErrors(error);
             })
             .then(() => {
@@ -196,9 +197,9 @@
                 this.formOldPassword = '';
                 this.formPassword = '';
                 this.formPasswordConfirmation = '';
-                this.$message.success('Succes!');
+                this.$message.success(this.lang.get('vue.success'));
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
                 this.setErrors(error);
             })
             .then(() => {
@@ -218,9 +219,9 @@
                 },
             })
             .then((response: any) => {
-                this.$message.success('Succes!');
+                this.$message.success(this.lang.get('vue.success'));
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
                 this.setErrors(error);
             })
             .then(() => {

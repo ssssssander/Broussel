@@ -8,56 +8,56 @@
         />
         <form v-show="!success" @submit.prevent="registerBuddy" method="post">
             <div class="form-block">
-                <label for="name">Naam</label>
+                <label for="name">{{ 'validation.attributes.name' | trans }}</label>
                 <input v-model="formName" type="text" id="name" name="name" required autocomplete="name" maxlength="255" autofocus>
             </div>
             <div class="form-block">
-                <label for="email">E-mailadres</label>
+                <label for="email">{{ 'validation.attributes.email' | trans }}</label>
                 <input v-model="formEmail" type="email" id="email" name="email" required autocomplete="email" maxlength="255">
             </div>
             <div class="form-block">
-                <label>Talen</label>
+                <label>{{ 'vue.languages' | trans }}</label>
                 <input type="checkbox" id="nl" v-model="nl">
-                <label for="nl"><span class="checkbox"></span>Nederlands</label>
+                <label for="nl"><span class="checkbox"></span>{{ 'vue.nl' | trans }}</label>
                 <input type="checkbox" id="fr" v-model="fr">
-                <label for="fr"><span class="checkbox"></span>Frans</label>
+                <label for="fr"><span class="checkbox"></span>{{ 'vue.fr' | trans }}</label>
                 <input type="checkbox" id="en" v-model="en">
-                <label for="en"><span class="checkbox"></span>Engels</label>
+                <label for="en"><span class="checkbox"></span>{{ 'vue.en' | trans }}</label>
             </div>
             <div class="form-block">
-                <label>Beschikbare dagen</label>
-                <div v-for="day in Object.keys(timeData.daysOfWeek)" class="time-picker-block">
-                    <input type="checkbox" :id="day" v-model="availableTimes[day].available">
-                    <label :for="day"><span class="checkbox"></span>{{ timeData.daysOfWeek[day] }}</label>
+                <label>{{ 'vue.available_days' | trans }}</label>
+                <div v-for="availableTime in availableTimes" class="time-picker-block">
+                    <input type="checkbox" :id="availableTime.day" v-model="availableTime.available">
+                    <label :for="availableTime.day"><span class="checkbox"></span>{{ 'vue.' + availableTime.day | trans  }}</label>
                     <span class="time-pickers">
                         <a-time-picker
-                            v-for="w in Object.keys(timeData.when)"
-                            :key="day + '.' + w"
-                            @click.native="setCurrentTimePicker(day, w)"
+                            v-for="w in when"
+                            :key="availableTime.day + '.' + w"
+                            @click.native="setCurrentTimePicker(availableTime.day, w)"
                             @change="onChangeTime"
-                            :open="openTimePicker(day, w)"
+                            :open="openTimePicker(availableTime.day, w)"
                             size="large"
                             format="HH:mm"
                             :allowEmpty="false"
                             :defaultOpenValue="$moment().startOf('hour')"
                             inputReadOnly
                             :minuteStep="5"
-                            :placeholder="timeData.when[w]"
-                            :disabled="isTimePickerDisabled(day, w)"
-                            :value="availableTimes[day][w] != '' ? $moment(availableTimes[day][w], 'HH:mm'): null"
+                            :placeholder="'validation.attributes.' + w | trans"
+                            :disabled="isTimePickerDisabled(availableTime.day, w)"
+                            :value="availableTime[w] != '' ? $moment(availableTime[w], 'HH:mm'): null"
                         >
-                            <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose()">Ok</button>
+                            <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose()">{{ 'vue.ok' | trans }}</button>
                         </a-time-picker>
-                        <a v-show="currentTimePicker.lastSelectedDay == day" href="#" class="link" @click.prevent="timeEverywhere(day)">Tijd overal doorvoeren</a>
+                        <a v-show="currentTimePicker.lastSelectedDay == availableTime.day" href="#" class="link" @click.prevent="timeEverywhere(availableTime.day)">{{ 'vue.apply_time_everywhere' | trans }}</a>
                     </span>
                 </div>
             </div>
             <div class="form-block">
-                <label for="motivation">Vertel wat meer over jezelf, waarom wil je wandelbuddy worden?<span class="side-text">Minstens 50 tekens</span></label>
+                <label for="motivation">{{ 'vue.buddy_motivation' | trans }}<span class="side-text">{{ 'vue.at_least_chars' | trans({ chars: 50 }) }}</span></label>
                 <textarea v-model="formMotivation" id="motivation" name="motivation" required minlength="50" maxlength="65000"></textarea>
             </div>
             <div class="form-block">
-                <LoadingButton value="Inschrijven als wandelbuddy" :loading="loading" />
+                <LoadingButton :value="'vue.enlist_as_walking_buddy' | trans" :loading="loading" />
             </div>
         </form>
         <Message
@@ -74,6 +74,7 @@
     @Component
     export default class RegisterBuddy extends Vue {
         name: string = 'RegisterBuddy';
+        lang = (this as any).$lang;
         formName: string = '';
         formEmail: string = '';
         formMotivation: string = '';
@@ -82,7 +83,7 @@
         was422: boolean = false;
         loading: boolean = false;
         success: boolean = false;
-        successStr: string = 'We hebben jouw inschrijving goed ontvangen, we gaan jouw aanmelding bekijken en spoedig krijg je van ons een e-mail, veel succes en nog een fijne dag!';
+        successStr: string = this.lang.get('vue.submission_success');
         currentTimePicker: any = {
             lastSelectedDay: '',
             day: '',
@@ -132,21 +133,7 @@
                 to: '',
             },
         };
-        timeData: any = {
-            daysOfWeek: {
-                'monday': 'Maandag',
-                'tuesday': 'Dinsdag',
-                'wednesday': 'Woensdag',
-                'thursday': 'Donderdag',
-                'friday': 'Vrijdag',
-                'saturday': 'Zaterdag',
-                'sunday': 'Zondag',
-            },
-            when: {
-                'from': 'Van',
-                'to': 'Tot',
-            }
-        };
+        when = ['from', 'to'];
         nl: boolean = false;
         fr: boolean = false;
         en: boolean = false;
@@ -224,11 +211,11 @@
                 }
             })
             .then((response: any) => {
-                this.$message.success('Je inschrijving is goed ontvangen!');
+                this.$message.success(this.lang.get('vue.submission_received'));
                 this.success = true;
             }, (error: any) => {
                 this.loading = false;
-                this.$message.error('Niet alle velden zijn juist ingevuld!');
+                this.$message.error(this.lang.get('vue.not_all_fields_correct'));
 
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;

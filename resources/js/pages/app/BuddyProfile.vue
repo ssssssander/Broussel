@@ -14,6 +14,7 @@
     @Component
     export default class BuddyProfile extends Vue {
         name: string = 'BuddyProfile';
+        lang = (this as any).$lang;
         buddy: any = {};
 
         created() {
@@ -28,13 +29,13 @@
             .then((response: any) => {
                 if (response.data.user_data.role == 'buddy' && response.data.user_data.status == 'accepted') {
                     this.buddy = response.data.user_data;
-                    document.title = this.buddy.name;
+                    document.title = this.buddy.name + ' - Broussel';
                 }
                 else {
-                    this.$router.replace({ name: 'error404' });
+                    this.$router.replace({ name: 'error404'} );
                 }
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
     }

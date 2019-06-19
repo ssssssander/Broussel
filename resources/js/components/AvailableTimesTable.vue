@@ -2,15 +2,15 @@
     <table class="available-times-table">
         <thead>
         <tr>
-            <th>Dag</th>
-            <th>Van</th>
-            <th>Tot</th>
+            <th>{{ 'vue.day' | trans }}</th>
+            <th>{{ 'validation.attributes.from' | trans }}</th>
+            <th>{{ 'validation.attributes.to' | trans }}</th>
         </tr>
         </thead>
         <tbody>
         <template v-for="availableTime in availableTimes">
             <tr v-if="availableTime.available">
-                <td>{{ availableTime.day }}</td>
+                <td>{{ 'vue.' + availableTime.day | trans }}</td>
                 <td>{{ availableTime.from }}</td>
                 <td>{{ availableTime.to }}</td>
             </tr>

@@ -4,9 +4,9 @@
             <img class="avatar avatar-large" :src="selectedBuddy.avatar_path" :alt="selectedBuddy.name">
             <div class="name">
                 <h2>{{ selectedBuddy.name }}</h2>
-                <p>Talen:
+                <p>{{ 'vue.languages' | trans }}:
                     <span v-for="lang in langsWhereKnows">
-                        <a-divider type="vertical" />{{ lang.trans }}
+                        <a-divider type="vertical" />{{ 'vue.' + lang.name | trans }}
                     </span>
                 </p>
             </div>
@@ -15,9 +15,9 @@
         <p>{{ selectedBuddy.info }}</p>
         <template v-if="payment">
             <a-divider />
-            <h3>Wandelen met {{ selectedBuddy.name }}</h3>
-            <p>Op {{ finalDate }} van {{ finalFromTime }} tot {{ finalToTime }} voor <strong>€ {{ selectedBuddy.price }}</strong>.</p>
-            <p>Je kan hierna met hem/haar chatten om de locatie af te spreken.</p>
+            <h3>{{ 'vue.walk_with' | trans({ name: selectedBuddy.name }) }}</h3>
+            <p v-html="$options.filters.trans('vue.on_from_until_for', { day: finalDate, from: finalFromTime, to: finalToTime, price: selectedBuddy.price })"></p>
+            <p>{{ 'vue.chat_afterwards' | trans }}</p>
             <PaymentButtons
                 :selected-buddy="selectedBuddy"
                 :final-date="finalDate"
@@ -26,7 +26,7 @@
             />
         </template>
         <a-divider />
-        <h3>Alle beschikbare tijden van {{ selectedBuddy.name }}</h3>
+        <h3>{{ 'vue.all_available_times' | trans({ name: selectedBuddy.name }) }}</h3>
         <AvailableTimesTable :available-times="JSON.parse(selectedBuddy.available_times)" />
     </div>
 </template>
@@ -45,16 +45,16 @@
         name: string = 'BuddyDetail';
         langs: any = [
             {
+                name: 'nl',
                 knows: this.selectedBuddy.nl,
-                trans: 'Nederlands',
             },
             {
+                name: 'fr',
                 knows: this.selectedBuddy.fr,
-                trans: 'Frans',
             },
             {
+                name: 'en',
                 knows: this.selectedBuddy.en,
-                trans: 'Engels',
             },
         ];
         langsWhereKnows: any = this.langs.filter((lang: any) => lang.knows);

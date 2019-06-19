@@ -25,10 +25,10 @@
                 :disabledHours="disabledHours"
                 :disabledMinutes="disabledMinutes"
                 :minuteStep="5"
-                placeholder="Van"
+                :placeholder="'validation.attributes.from' | trans"
                 :disabled="isFromTimePickerDisabled"
             >
-                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">{{ 'vue.ok' | trans }}</button>
             </a-time-picker>
             <a-time-picker
                 @change="onChangeToTime"
@@ -41,16 +41,16 @@
                 :disabledHours="disabledHours"
                 :disabledMinutes="disabledMinutes"
                 :minuteStep="5"
-                placeholder="Tot"
+                :placeholder="'validation.attributes.to' | trans"
                 :disabled="isToTimePickerDisabled"
             >
-                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">Ok</button>
+                <button slot="addon" slot-scope="panel" class="btn btn-time-picker" @click="handleClose">{{ 'vue.ok' | trans }}</button>
             </a-time-picker>
-            <LoadingButton value="Zoek naar wandelbuddies" :loading="loading" />
+            <LoadingButton :value="'vue.search_for_walking_buddies' | trans" :loading="loading" />
         </form>
         <div v-if="showResults && !firstPress" class="buddies">
             <div class="side">
-                <input type="search" v-model="search" placeholder="Zoeken op naam">
+                <input type="search" v-model="search" :placeholder="'vue.search_by_name' | trans">
                 <ul>
                     <a-skeleton active avatar :title="false" :paragraph="{ rows: 3, width: [250, 250] }" :loading="loading">
                         <div>
@@ -63,7 +63,7 @@
                             </li>
                         </div>
                     </a-skeleton>
-                    <li v-if="!filteredBuddies.length && !loading"><i>Er werd niemand gevonden.</i></li>
+                    <li v-if="!filteredBuddies.length && !loading"><i>{{ 'vue.nobody_found' | trans }}</i></li>
                 </ul>
             </div>
             <BuddyDetail
@@ -75,9 +75,9 @@
                 :final-from-time="finalFromTime"
                 :final-to-time="finalToTime"
             />
-            <i class="text-center hint" v-else>Klik op namen om meer info te zien</i>
+            <i class="text-center hint" v-else>{{ 'vue.click_names' | trans }}</i>
         </div>
-        <i class="text-center no-results" v-if="!showResults && !firstPress">Er is niemand beschikbaar op deze dag en tijdstip, probeer op een ander tijdstip.</i>
+        <i class="text-center no-results" v-if="!showResults && !firstPress">{{ 'vue.nobody_available' | trans }}</i>
     </div>
 </template>
 
@@ -87,6 +87,7 @@
     @Component
     export default class FindBuddies extends Vue {
         name: string = 'FindBuddies';
+        lang = (this as any).$lang;
         moment: any = (this as any).$moment;
         isFromTimePickerDisabled: boolean = true;
         isToTimePickerDisabled: boolean = true;
@@ -111,7 +112,8 @@
 
         get filteredBuddies() {
             return this.availableBuddies.filter(availableBuddy => {
-                return availableBuddy.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+                let normalized = availableBuddy.name.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+                return normalized.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
             });
         }
 
@@ -205,15 +207,15 @@
                 this.finalToTime = this.selectedToTime;
 
                 if (this.availableBuddies.length == 0) {
-                    this.$message.info('Niemand gevonden');
+                    this.$message.info(this.lang.get('vue.nobody_found'));
                     this.showResults = false;
                 }
                 else {
-                    this.$message.success('Er zijn wandelbuddies gevonden!');
+                    this.$message.success(this.lang.get('vue.found_walking_buddies'));
                 }
             }, (error: any) => {
                 this.showResults = false;
-                this.$message.error('Niet alle velden zijn juist ingevuld!');
+                this.$message.error(this.lang.get('vue.not_all_fields_correct'));
 
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors;

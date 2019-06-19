@@ -2,15 +2,15 @@
     <div class="forgot-password">
         <form @submit.prevent="resetPassword" method="post">
             <div class="form-block">
-                <label for="password">Wachtwoord<span class="side-text">Minstens 8 tekens</span></label>
+                <label for="password">{{ 'validation.attributes.password' | trans }}<span class="side-text">{{ 'vue.at_least_chars' | trans({ chars: 8 }) }}</span></label>
                 <input v-model="formPassword" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <label for="password_confirmation">Typ je wachtwoord opnieuw</label>
+                <label for="password_confirmation">{{ 'vue.type_password_again' | trans }}</label>
                 <input v-model="formPasswordConfirmation" type="password" id="password_confirmation" name="password_confirmation" required autocomplete="new-password" minlength="8" maxlength="255">
             </div>
             <div class="form-block">
-                <LoadingButton value="Aanpassen" :loading="loading" />
+                <LoadingButton :value="'vue.edit' | trans" :loading="loading" />
             </div>
         </form>
     </div>
@@ -22,6 +22,7 @@
     @Component
     export default class ResetPassword extends Vue {
         name: string = 'ResetPassword';
+        lang = (this as any).$lang;
         formEmail: string = '';
         formPassword: string = '';
         formPasswordConfirmation: string = '';
@@ -60,7 +61,7 @@
                         password: this.formPassword,
                     },
                     success: (response: any) => {
-                        this.$message.success('Je wachtwoord is aangepast!');
+                        this.$message.success(this.lang.get('vue.password_edited'));
                         this.$router.replace({ name: 'home' });
                     },
                     error: (error: any) => {
@@ -70,7 +71,7 @@
                     fetchUser: true
                 });
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             })
             .then(() => {
                 this.loading = false;
