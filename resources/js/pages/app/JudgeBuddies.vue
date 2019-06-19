@@ -1,9 +1,9 @@
 <template>
     <div class="judge-buddies">
-        <i v-if="success && !buddiesToBeJudged.length">Niemand om te beoordelen.</i>
+        <i v-if="success && !buddiesToBeJudged.length">{{ 'vue.nobody_to_judge' | trans }}</i>
         <a-skeleton active :title="false" :loading="!success">
             <ul v-if="buddiesToBeJudged.length">
-                <input type="search" v-model="search" placeholder="Zoeken op naam/mail">
+                <input type="search" v-model="search" :placeholder="'vue.search_by_name_mail' | trans">
                 <li v-for="buddy in filteredBuddies" :id="buddy.id">
                     <div class="info">
                         <div>
@@ -19,11 +19,11 @@
                         </div>
                     </div>
                     <div class="buttons">
-                        <button class="btn" @click="setStatus(buddy, 'accepted')"><a-icon type="check-circle" />Accepteren</button>
-                        <button class="btn btn-danger" @click="setStatus(buddy, 'declined')"><a-icon type="close-circle" />Afwijzen</button>
+                        <button class="btn" @click="setStatus(buddy, 'accepted')"><a-icon type="check-circle" />{{ 'vue.accept' | trans }}</button>
+                        <button class="btn btn-danger" @click="setStatus(buddy, 'declined')"><a-icon type="close-circle" />{{ 'vue.decline' | trans }}</button>
                     </div>
                 </li>
-                <li v-if="!filteredBuddies.length && !firstTime"><i>Er werd niemand gevonden.</i></li>
+                <li v-if="!filteredBuddies.length && !firstTime"><i>{{ 'vue.nobody_found' | trans }}</i></li>
             </ul>
         </a-skeleton>
     </div>
@@ -35,6 +35,7 @@
     @Component
     export default class JudgeBuddies extends Vue {
         name: string = 'JudgeBuddies';
+        lang = (this as any).$lang;
         buddiesToBeJudged: any[] = [];
         success: boolean = false;
         search: string = '';
@@ -65,7 +66,7 @@
                     }, 500);
                 }
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
 
@@ -82,7 +83,7 @@
                 this.$message.success(`${buddy.name} is ${status}.`);
                 this.getBuddiesToBeJudged();
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan.');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
     }

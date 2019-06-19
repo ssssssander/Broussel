@@ -58,7 +58,7 @@
             })
             .then((response: any) => {
                 this.$message.success(this.lang.get('vue.payment_success'));
-                this.$router.push({ path: 'chats', params: { locale: this.lang.getLocale() } });
+                this.$router.push({ path: 'chats' } );
             }, (error: any) => {
                 this.$message.error(this.lang.get('vue.something_went_wrong'));
             });

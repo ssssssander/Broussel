@@ -1,7 +1,7 @@
 <template>
     <div class="calendar">
-        <a href="#" @click.prevent="makeIcal">iCal</a><p>{{ iCalUrl }}</p>
-        <i v-if="!success">Kalender laden...</i>
+        <a href="#" class="link" @click.prevent="makeIcal">{{ 'vue.export_calendar' | trans }}</a><p>{{ iCalUrl }}</p>
+        <i v-if="!success">{{ 'vue.loading' | trans }}</i>
         <a-calendar v-if="success">
             <ul class="events" slot="dateCellRender" slot-scope="value">
                 <li v-for="appointment in getAppointmentsByValue(value)"
@@ -9,12 +9,12 @@
                     @click="goToProfile(appointment.person_role, appointment.person_id)"
                     class="appointment"
                 >
-                    <span><span class="dot"></span>Van {{ moment(appointment.time_from, 'HH:mm').format('HH:mm') }} tot {{ moment(appointment.time_to, 'HH:mm').format('HH:mm') }} met {{ appointment.person_name }}</span>
+                    <span><span class="dot"></span>{{ 'vue.from_until_with' | trans({ from: moment(appointment.time_from, 'HH:mm').format('HH:mm'), to: moment(appointment.time_to, 'HH:mm').format('HH:mm'), name: appointment.person_name }) }}</span>
                 </li>
             </ul>
             <template slot="monthCellRender" slot-scope="value">
                 <div v-if="getAppointmentsPerMonth(value)" class="month">
-                    <span>{{ getAppointmentsPerMonth(value) }} wandelingen deze maand</span>
+                    <span>{{ 'vue.walks_this_month' | trans({ appointments: getAppointmentsPerMonth(value) }) }}</span>
                 </div>
             </template>
         </a-calendar>
@@ -27,6 +27,7 @@
     @Component
     export default class Calendar extends Vue {
         name: string = 'Calendar';
+        lang = (this as any).$lang;
         appointments: any[] = [];
         moment: any = (this as any).$moment;
         success: boolean = false;
@@ -45,7 +46,7 @@
                 this.appointments = response.data.appointments_data;
                 this.success = true;
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan bij het ophalen van de gegevens');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
 
@@ -75,7 +76,7 @@
 
         goToProfile(role: string, id: string) {
             if (role == 'buddy') {
-                this.$router.push({ name: 'buddy-profile', params: { id: id } })
+                this.$router.push({ name: 'buddy-profile', params: { id: id } });
             }
         }
 
@@ -85,10 +86,9 @@
                 method: 'get',
             })
             .then((response: any) => {
-                this.$message.success('Success');
                 this.iCalUrl = response.data.ical_url;
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
     }

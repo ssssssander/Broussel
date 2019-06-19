@@ -29,9 +29,9 @@
             </nav>
             <ul class="langs">
                 <li>
-                    <a href="#" @click.prevent="setLocale('nl')">{{ 'vue.nl' | trans }}</a>
+                    <a href="#" @click.prevent="setLocale('nl')">{{ $lang.getLocale() == 'nl' ? 'vue.nl' : 'vue.nl_change' | trans }}</a>
                 </li><li>
-                    <a href="#" @click.prevent="setLocale('fr')">{{ 'vue.fr' | trans }}</a>
+                    <a href="#" @click.prevent="setLocale('fr')">{{$lang.getLocale() == 'fr' ? 'vue.fr' : 'vue.fr_change' | trans }}</a>
                 </li>
             </ul>
             <Slide right noOverlay>
@@ -61,9 +61,9 @@
                         </template>
                         <a-divider></a-divider>
                         <li>
-                            <a href="#" @click.prevent="setLocale('nl')">>{{ 'vue.nl' | trans }}</a>
+                            <a href="#" @click.prevent="setLocale('nl')">{{ $lang.getLocale() == 'nl' ? 'vue.nl' : 'vue.nl_change' | trans }}</a>
                         </li><li>
-                            <a href="#" @click.prevent="setLocale('fr')">>{{ 'vue.fr' | trans }}</a>
+                            <a href="#" @click.prevent="setLocale('fr')">{{$lang.getLocale() == 'fr' ? 'vue.fr' : 'vue.fr_change' | trans }}</a>
                         </li>
                     </ul>
                 </nav>
@@ -83,14 +83,14 @@
     })
     export default class Header extends Vue {
         name: string = 'Header';
-        appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
         lang = (this as any).$lang;
+        appLink: string = (this as any).$auth.check('admin') ? 'judge-buddies' : 'dashboard';
 
         logout() {
             (this as any).$auth.logout({
                 success: (response: any) => {
                     this.$message.success(this.lang.get('vue.log_out_success'));
-                    this.$router.push({ name: 'home', params: { locale: this.lang.getLocale() } });
+                    this.$router.push({ name: 'home' } );
                 },
                 error: (error: any) => {
                     this.$message.error(this.lang.get('vue.something_went_wrong'));

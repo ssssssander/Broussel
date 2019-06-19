@@ -223,7 +223,12 @@ router.beforeEach((to: any, from: any, next: any) => {
 });
 
 router.afterEach((to: any, from: any) => {
-    document.title = to.meta.title ? to.meta.title + ' - Broussel' : 'Broussel';
+    if (to.meta['title_' + Vue.prototype.$lang.getLocale()]) {
+        document.title = to.meta['title_' + Vue.prototype.$lang.getLocale()] + ' - Broussel';
+    }
+    else {
+        document.title = 'Broussel';
+    }
 
     document.getElementsByTagName('header')[0].className = '';
     document.body.className = '';
