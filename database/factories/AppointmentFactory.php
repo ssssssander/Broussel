@@ -6,9 +6,9 @@ use App\Appointment;
 use Faker\Generator as Faker;
 
 $factory->define(Appointment::class, function (Faker $faker) {
-    $randomDayOfMonth = $faker->numberBetween(1, 30);
+    $randomDayOfMonth = $faker->numberBetween(1, 28);
     $randomDayOfMonth = str_pad($randomDayOfMonth, 2, '0', STR_PAD_LEFT);
-    $randomMonth = $faker->numberBetween(1, 12);
+    $randomMonth = $faker->numberBetween(6, 12);
     $randomMonth = str_pad($randomMonth, 2, '0', STR_PAD_LEFT);
     $randomDay = '2019-' . $randomMonth . '-' . $randomDayOfMonth;
 
