@@ -1,6 +1,6 @@
 <template>
     <div class="fullscreen-form">
-        <h1>{{ $route.meta.title }}</h1>
+        <h1>{{ $route.meta['title_' + $lang.getLocale()] }}</h1>
         <router-view></router-view>
     </div>
 </template>

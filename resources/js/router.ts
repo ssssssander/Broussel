@@ -29,7 +29,8 @@ const router = new VueRouter({
                     name: 'faq',
                     component: () => import(/* webpackChunkName: "js/chunks/faq" */ '@/js/pages/FAQ'),
                     meta: {
-                        title: 'FAQ',
+                        title_nl: 'FAQ',
+                        title_fr: 'FAQ',
                         auth: undefined,
                     },
                 },
@@ -38,7 +39,8 @@ const router = new VueRouter({
                     name: 'contact',
                     component: () => import(/* webpackChunkName: "js/chunks/contact" */ '@/js/pages/Contact'),
                     meta: {
-                        title: 'Contact',
+                        title_nl: 'Contact',
+                        title_fr: 'Contact',
                         auth: undefined,
                     },
                 },
@@ -51,7 +53,8 @@ const router = new VueRouter({
                             name: 'register',
                             component: () => import(/* webpackChunkName: "js/chunks/register" */ '@/js/pages/auth/Register'),
                             meta: {
-                                title: 'Registreren',
+                                title_nl: 'Registreren',
+                                title_fr: "S'inscrire",
                                 auth: false,
                             },
                         },
@@ -60,7 +63,8 @@ const router = new VueRouter({
                             name: 'register-buddy',
                             component: () => import(/* webpackChunkName: "js/chunks/register-buddy" */ '@/js/pages/auth/RegisterBuddy'),
                             meta: {
-                                title: 'Word wandelbuddy',
+                                title_nl: 'Word wandelbuddy',
+                                title_fr: 'Devenir un compagnon de marche',
                                 auth: undefined,
                             },
                         },
@@ -69,7 +73,8 @@ const router = new VueRouter({
                             name: 'login',
                             component: () => import(/* webpackChunkName: "js/chunks/login" */ '@/js/pages/auth/Login'),
                             meta: {
-                                title: 'Log in',
+                                title_nl: 'Log in',
+                                title_fr: 'Se connecter',
                                 auth: false,
                             },
                         },
@@ -78,7 +83,8 @@ const router = new VueRouter({
                             name: 'forgot-password',
                             component: () => import(/* webpackChunkName: "js/chunks/forgot-password" */ '@/js/pages/auth/ForgotPassword'),
                             meta: {
-                                title: 'Wachtwoord vergeten?',
+                                title_nl: 'Wachtwoord vergeten?',
+                                title_fr: 'Vous avez oublié votre mot de passe?',
                                 auth: false,
                             },
                         },
@@ -87,7 +93,8 @@ const router = new VueRouter({
                             name: 'reset-password',
                             component: () => import(/* webpackChunkName: "js/chunks/reset-password" */ '@/js/pages/auth/ResetPassword'),
                             meta: {
-                                title: 'Wachtwoord resetten',
+                                title_nl: 'Wachtwoord resetten',
+                                title_fr: 'Réinitialiser le mot de passe',
                                 auth: false,
                             },
                         },
@@ -102,7 +109,8 @@ const router = new VueRouter({
                             name: 'dashboard',
                             component: () => import(/* webpackChunkName: "js/chunks/dashboard" */ '@/js/pages/app/Dashboard'),
                             meta: {
-                                title: 'Dashboard',
+                                title_nl: 'Dashboard',
+                                title_fr: 'Dashboard',
                                 auth: ['user', 'buddy'],
                             },
                         },
@@ -111,7 +119,8 @@ const router = new VueRouter({
                             name: 'find-buddies',
                             component: () => import(/* webpackChunkName: "js/chunks/find-buddies" */ '@/js/pages/app/FindBuddies'),
                             meta: {
-                                title: 'Vind een wandelbuddy',
+                                title_nl: 'Vind een wandelbuddy',
+                                title_fr: 'Trouver un compagnon de marche',
                                 auth: ['user'],
                             },
                         },
@@ -120,7 +129,8 @@ const router = new VueRouter({
                             name: 'calendar',
                             component: () => import(/* webpackChunkName: "js/chunks/calendar" */ '@/js/pages/app/Calendar'),
                             meta: {
-                                title: 'Kalender',
+                                title_nl: 'Kalender',
+                                title_fr: 'Calendrier',
                                 auth: ['user', 'buddy'],
                             },
                         },
@@ -129,7 +139,8 @@ const router = new VueRouter({
                             name: 'chats',
                             component: () => import(/* webpackChunkName: "js/chunks/chats" */ '@/js/pages/app/Chats'),
                             meta: {
-                                title: 'Chats',
+                                title_nl: 'Chats',
+                                title_fr: 'Chats',
                                 auth: ['user', 'buddy'],
                             },
                         },
@@ -138,7 +149,8 @@ const router = new VueRouter({
                             name: 'settings',
                             component: () => import(/* webpackChunkName: "js/chunks/settings" */ '@/js/pages/app/Settings'),
                             meta: {
-                                title: 'Instellingen',
+                                title_nl: 'Instellingen',
+                                title_fr: 'Paramètres',
                                 auth: true,
                             },
                         },
@@ -147,7 +159,8 @@ const router = new VueRouter({
                             name: 'buddy-profile',
                             component: () => import(/* webpackChunkName: "js/chunks/buddy-profile" */ '@/js/pages/app/BuddyProfile'),
                             meta: {
-                                title: 'Wandelbuddy',
+                                title_nl: 'Wandelbuddy',
+                                title_fr: 'Compagnon de marche',
                                 auth: ['user'],
                             },
                         },
@@ -156,7 +169,8 @@ const router = new VueRouter({
                             name: 'judge-buddies',
                             component: () => import(/* webpackChunkName: "js/chunks/judge-buddies" */ '@/js/pages/app/JudgeBuddies'),
                             meta: {
-                                title: 'Beoordelen',
+                                title_nl: 'Beoordelen',
+                                title_fr: 'Évaluer',
                                 auth: ['admin'],
                             },
                         },
@@ -167,7 +181,8 @@ const router = new VueRouter({
                     name: 'error404',
                     component: () => import(/* webpackChunkName: "js/chunks/error404" */ '@/js/pages/Error404'),
                     meta: {
-                        title: 'Error 404',
+                        title_nl: 'Error 404',
+                        title_fr: 'Erreur 404',
                         auth: undefined,
                     },
                 },
@@ -199,8 +214,8 @@ router.beforeEach((to: any, from: any, next: any) => {
     }
 
     lang.setMessages(translations);
-    Vue.filter('trans', (...args: any) => {
-        return lang.get(...args);
+    Vue.filter('trans', (value: any, replacements: any) => {
+        return lang.get(value, replacements);
     });
     Vue.prototype.$lang = lang;
 

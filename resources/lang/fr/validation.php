@@ -178,7 +178,8 @@ return [
         'available'             => 'Disponible',
         'size'                  => 'Taille',
 
-        'info'                  => 'information',
+        'motivation'            => 'Motivation',
+        'info'                  => 'Information',
         'from'                  => 'Du',
         'to'                    => 'Au',
         '*.from'                => 'Du',

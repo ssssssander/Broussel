@@ -4,7 +4,7 @@
             :amount="selectedBuddy.price.toString()"
             currency="EUR"
             :client="payPalCredentials"
-            locale="nl_BE"
+            :locale="payPalLocale"
             :button-style="payPalButtonStyle"
             env="sandbox"
             @payment-completed="paymentCompleted"
@@ -32,6 +32,7 @@
         @Prop(String) finalToTime: string;
 
         name: string = 'PaymentButtons';
+        lang = (this as any).$lang;
         moment: any = (this as any).$moment;
         payPalCredentials: any = PaymentCredentials.PAYPAL;
         payPalButtonStyle: any = {
@@ -40,6 +41,7 @@
             shape: 'rect',
             color: 'blue',
         };
+        payPalLocale: string = this.lang.getLocale() == 'nl' ? 'nl_BE' : 'fr_BE';
         stripe: any = Stripe(PaymentCredentials.STRIPE);
 
         paymentCompleted() {
@@ -55,15 +57,15 @@
                 }
             })
             .then((response: any) => {
-                this.$message.success('Betaling geslaagd');
-                this.$router.push({ path: 'chats' })
+                this.$message.success(this.lang.get('vue.payment_success'));
+                this.$router.push({ path: 'chats', params: { locale: this.lang.getLocale() } });
             }, (error: any) => {
-                this.$message.error('Er is iets misgegaan');
+                this.$message.error(this.lang.get('vue.something_went_wrong'));
             });
         }
 
         paymentCancelled() {
-            this.$message.warning('Betaling stopgezet');
+            this.$message.warning(this.lang.get('vue.payment_cancelled'));
         }
 
         created() {
@@ -96,7 +98,7 @@
                             this.paymentCompleted();
                         }, (error: any) => {
                             console.log(error.response);
-                            this.$message.error('Betaling mislukt');
+                            this.$message.error(this.lang.get('vue.something_went_wrong'));
                         });
                     } else if (source.status === 'pending' && pollCount < MAX_POLL_COUNT) {
                         console.log(source);
