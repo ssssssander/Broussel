@@ -42,21 +42,21 @@
                         </li><li>
                             <router-link :to="{ name: 'register-buddy', params: { locale: $lang.getLocale() } }">{{ 'vue.become_walking_buddy' | trans }}</router-link>
                         </li><li>
-                            <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">>{{ 'vue.contact' | trans }}</router-link>
+                            <router-link :to="{ name: 'contact', params: { locale: $lang.getLocale() } }">{{ 'vue.contact' | trans }}</router-link>
                         </li>
                         <a-divider></a-divider>
                         <template v-if="$auth.check()">
                             <li>
-                                <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">>{{ 'vue.app' | trans }}</router-link>
+                                <router-link :to="{ name: appLink, params: { locale: $lang.getLocale() } }">{{ 'vue.app' | trans }}</router-link>
                             </li><li>
-                                <a href="#" @click.prevent="logout()" class="btn">>{{ 'vue.log_out' | trans }}</a>
+                                <a href="#" @click.prevent="logout()" class="btn">{{ 'vue.log_out' | trans }}</a>
                             </li>
                         </template>
                         <template v-else>
                             <li>
-                                <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">>{{ 'vue.log_in' | trans }}</router-link>
+                                <router-link :to="{ name: 'login', params: { locale: $lang.getLocale() } }">{{ 'vue.log_in' | trans }}</router-link>
                             </li><li>
-                                <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">>{{ 'vue.register' | trans }}</router-link>
+                                <router-link :to="{ name: 'register', params: { locale: $lang.getLocale() } }" class="btn">{{ 'vue.register' | trans }}</router-link>
                             </li>
                         </template>
                         <a-divider></a-divider>

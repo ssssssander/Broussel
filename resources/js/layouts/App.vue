@@ -2,7 +2,7 @@
     <div class="app box">
         <div class="user-links">
             <ul v-if="$auth.check('user') || $auth.check('buddy')">
-                <li>
+                <li v-if="$auth.check('user')">
                     <router-link :to="{ name: 'dashboard' }">{{ 'vue.dashboard' | trans }}</router-link>
                 </li><li v-if="$auth.check('user')">
                     <router-link :to="{ name: 'find-buddies' }">{{ 'vue.new_walk' | trans }}</router-link>

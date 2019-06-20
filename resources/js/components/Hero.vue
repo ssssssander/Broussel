@@ -54,7 +54,7 @@
     .hero-text {
         color: $light-color;
         display: inline-block;
-        max-width: 55%;
+        max-width: 65%;
         text-shadow: $text-shadow;
 
         h1, p {

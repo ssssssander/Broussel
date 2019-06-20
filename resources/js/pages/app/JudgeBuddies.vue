@@ -72,6 +72,8 @@
         }
 
         setStatus(buddy: any, status: string) {
+            this.$message.info(this.lang.get('vue.loading'));
+
             this.$http({
                 url: `auth/set-status`,
                 method: 'post',
@@ -81,7 +83,7 @@
                 },
             })
             .then((response: any) => {
-                this.$message.success(`${buddy.name} is ${status}.`);
+                this.$message.success(this.lang.get('vue.' + status, { name: buddy.name }));
                 this.getBuddiesToBeJudged();
             }, (error: any) => {
                 this.$message.error(this.lang.get('vue.something_went_wrong'));

@@ -111,7 +111,7 @@ const router = new VueRouter({
                             meta: {
                                 title_nl: 'Dashboard',
                                 title_fr: 'Dashboard',
-                                auth: ['user', 'buddy'],
+                                auth: ['user'],
                             },
                         },
                         {

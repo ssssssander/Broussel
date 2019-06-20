@@ -67,11 +67,14 @@
                 },
                 success: (response: any) => {
                     this.$message.success(this.lang.get('vue.login_success'));
+                    if ((this as any).$auth.user().role == 'user') {
+                        this.$router.push({ name: 'dashboard' });
+                    }
+                    if ((this as any).$auth.user().role == 'buddy') {
+                        this.$router.push({ name: 'chats' });
+                    }
                     if ((this as any).$auth.user().role == 'admin') {
                         this.$router.push({ name: 'judge-buddies' });
-                    }
-                    else {
-                        this.$router.push({ name: 'dashboard' });
                     }
                 },
                 error: (error: any) => {
